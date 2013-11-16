@@ -1,0 +1,257 @@
+cd liveMedia ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/liveMedia'
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   Media.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MediaSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   FramedSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   FramedFileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   FramedFilter.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ByteStreamFileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ByteStreamMultiFileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ByteStreamMemoryBufferSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicUDPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DeviceSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AudioInputDevice.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   WAVAudioFileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2Demux.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2DemuxedElementaryStream.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEGVideoStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2VideoStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2VideoStreamDiscreteFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4VideoStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4VideoStreamDiscreteFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoStreamDiscreteFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEGVideoStreamParser.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2AudioStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2AudioRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4LATMAudioRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4ESVideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4GenericRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3FileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3Transcoder.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3ADU.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3ADUdescriptor.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3ADUinterleaving.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3ADUTranscoder.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3StreamState.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3Internals.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3InternalsHuffman.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3InternalsHuffmanTable.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3ADURTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2VideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamMultiplexor.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamFromPESSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamFromESSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ADTSAudioFileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H263plusVideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H263plusVideoStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H263plusVideoStreamParser.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AC3AudioStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AC3AudioRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DVVideoStreamFramer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DVVideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   JPEGVideoSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AMRAudioSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AMRAudioFileSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   InputFile.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   StreamReplicator.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MediaSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   FileSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicUDPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AMRAudioFileSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoFileSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2AudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3ADURTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2VideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4LATMAudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4GenericRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4ESVideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H263plusVideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DVVideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AC3AudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VorbisAudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VP8VideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   GSMAudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   JPEGVideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   SimpleRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AMRAudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   T140TextRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   TCPStreamSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   OutputFile.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   uLawAudioFilter.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MultiFramedRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   SimpleRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H261VideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   QCELPAudioRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AMRAudioRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   JPEGVideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VorbisAudioRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VP8VideoRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MultiFramedRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AudioRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VideoRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   TextRTPSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTPInterface.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTCP.cpp
+cc -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64   rtcp_from_spec.c
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTSPServer.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTSPClient.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTSPCommon.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTSPServerSupportingHTTPStreaming.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   RTSPRegisterSender.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   SIPClient.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MediaSession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ServerMediaSession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   PassiveServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   OnDemandServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   FileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG4VideoFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H263plusVideoFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   WAVAudioFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AMRAudioFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3AudioFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2VideoFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2FileServerDemux.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG1or2DemuxedServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ADTSAudioFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DVVideoFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AC3AudioFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportUDPServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   ProxyServerMediaSession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   QuickTimeFileSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   QuickTimeGenericRTPSource.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AVIFileSink.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2IndexFromTransportStream.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamIndexFile.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamTrickModeFilter.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MatroskaFile.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MatroskaFileParser.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   EBMLNumber.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MatroskaDemuxedTrack.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MatroskaFileServerDemux.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   H264VideoMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VP8VideoMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AACAudioMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   AC3AudioMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MP3AudioMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   VorbisAudioMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   T140TextMatroskaFileServerMediaSubsession.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DarwinInjector.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BitVector.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   StreamParser.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DigestAuthentication.cpp
+cc -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64   our_md5.c
+cc -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64   our_md5hl.c
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   Base64.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   Locale.cpp
+ar cr libliveMedia.a  \
+	Media.o MediaSource.o FramedSource.o FramedFileSource.o FramedFilter.o ByteStreamFileSource.o ByteStreamMultiFileSource.o ByteStreamMemoryBufferSource.o BasicUDPSource.o DeviceSource.o AudioInputDevice.o WAVAudioFileSource.o MPEG1or2Demux.o MPEG1or2DemuxedElementaryStream.o MPEGVideoStreamFramer.o MPEG1or2VideoStreamFramer.o MPEG1or2VideoStreamDiscreteFramer.o MPEG4VideoStreamFramer.o MPEG4VideoStreamDiscreteFramer.o H264VideoStreamFramer.o H264VideoStreamDiscreteFramer.o MPEGVideoStreamParser.o MPEG1or2AudioStreamFramer.o MPEG1or2AudioRTPSource.o MPEG4LATMAudioRTPSource.o MPEG4ESVideoRTPSource.o MPEG4GenericRTPSource.o MP3FileSource.o MP3Transcoder.o MP3ADU.o MP3ADUdescriptor.o MP3ADUinterleaving.o MP3ADUTranscoder.o MP3StreamState.o MP3Internals.o MP3InternalsHuffman.o MP3InternalsHuffmanTable.o MP3ADURTPSource.o MPEG1or2VideoRTPSource.o MPEG2TransportStreamMultiplexor.o MPEG2TransportStreamFromPESSource.o MPEG2TransportStreamFromESSource.o MPEG2TransportStreamFramer.o ADTSAudioFileSource.o H263plusVideoRTPSource.o H263plusVideoStreamFramer.o H263plusVideoStreamParser.o AC3AudioStreamFramer.o AC3AudioRTPSource.o DVVideoStreamFramer.o DVVideoRTPSource.o JPEGVideoSource.o AMRAudioSource.o AMRAudioFileSource.o InputFile.o StreamReplicator.o MediaSink.o FileSink.o BasicUDPSink.o AMRAudioFileSink.o H264VideoFileSink.o MPEG1or2AudioRTPSink.o MP3ADURTPSink.o MPEG1or2VideoRTPSink.o MPEG4LATMAudioRTPSink.o MPEG4GenericRTPSink.o MPEG4ESVideoRTPSink.o H263plusVideoRTPSink.o H264VideoRTPSink.o DVVideoRTPSink.o AC3AudioRTPSink.o VorbisAudioRTPSink.o VP8VideoRTPSink.o GSMAudioRTPSink.o JPEGVideoRTPSink.o SimpleRTPSink.o AMRAudioRTPSink.o T140TextRTPSink.o TCPStreamSink.o OutputFile.o uLawAudioFilter.o RTPSource.o MultiFramedRTPSource.o SimpleRTPSource.o H261VideoRTPSource.o H264VideoRTPSource.o QCELPAudioRTPSource.o AMRAudioRTPSource.o JPEGVideoRTPSource.o VorbisAudioRTPSource.o VP8VideoRTPSource.o RTPSink.o MultiFramedRTPSink.o AudioRTPSink.o VideoRTPSink.o TextRTPSink.o RTPInterface.o RTCP.o rtcp_from_spec.o RTSPServer.o RTSPClient.o RTSPCommon.o RTSPServerSupportingHTTPStreaming.o RTSPRegisterSender.o SIPClient.o MediaSession.o ServerMediaSession.o PassiveServerMediaSubsession.o OnDemandServerMediaSubsession.o FileServerMediaSubsession.o MPEG4VideoFileServerMediaSubsession.o H264VideoFileServerMediaSubsession.o H263plusVideoFileServerMediaSubsession.o WAVAudioFileServerMediaSubsession.o AMRAudioFileServerMediaSubsession.o MP3AudioFileServerMediaSubsession.o MPEG1or2VideoFileServerMediaSubsession.o MPEG1or2FileServerDemux.o MPEG1or2DemuxedServerMediaSubsession.o MPEG2TransportFileServerMediaSubsession.o ADTSAudioFileServerMediaSubsession.o DVVideoFileServerMediaSubsession.o AC3AudioFileServerMediaSubsession.o MPEG2TransportUDPServerMediaSubsession.o ProxyServerMediaSession.o QuickTimeFileSink.o QuickTimeGenericRTPSource.o AVIFileSink.o MPEG2IndexFromTransportStream.o MPEG2TransportStreamIndexFile.o MPEG2TransportStreamTrickModeFilter.o MatroskaFile.o MatroskaFileParser.o EBMLNumber.o MatroskaDemuxedTrack.o MatroskaFileServerDemux.o H264VideoMatroskaFileServerMediaSubsession.o VP8VideoMatroskaFileServerMediaSubsession.o AACAudioMatroskaFileServerMediaSubsession.o AC3AudioMatroskaFileServerMediaSubsession.o MP3AudioMatroskaFileServerMediaSubsession.o VorbisAudioMatroskaFileServerMediaSubsession.o T140TextMatroskaFileServerMediaSubsession.o DarwinInjector.o BitVector.o StreamParser.o DigestAuthentication.o our_md5.o our_md5hl.o Base64.o Locale.o
+make[1]: Leaving directory '/home/matt/cpile/live555/live/liveMedia'
+cd groupsock ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/groupsock'
+c++ -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   GroupsockHelper.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   GroupEId.cpp
+cc -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64   inet.c
+c++ -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   Groupsock.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   NetInterface.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   NetAddress.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   IOHandlers.cpp
+ar cr libgroupsock.a  \
+	GroupsockHelper.o GroupEId.o inet.o Groupsock.o NetInterface.o NetAddress.o IOHandlers.o
+make[1]: Leaving directory '/home/matt/cpile/live555/live/groupsock'
+cd UsageEnvironment ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/UsageEnvironment'
+c++ -c -Iinclude -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   UsageEnvironment.cpp
+c++ -c -Iinclude -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   HashTable.cpp
+c++ -c -Iinclude -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   strDup.cpp
+ar cr libUsageEnvironment.a  UsageEnvironment.o HashTable.o strDup.o
+make[1]: Leaving directory '/home/matt/cpile/live555/live/UsageEnvironment'
+cd BasicUsageEnvironment ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/BasicUsageEnvironment'
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicUsageEnvironment0.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicUsageEnvironment.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicTaskScheduler0.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicTaskScheduler.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DelayQueue.cpp
+c++ -c -Iinclude -I../UsageEnvironment/include -I../groupsock/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   BasicHashTable.cpp
+ar cr libBasicUsageEnvironment.a  \
+	BasicUsageEnvironment0.o BasicUsageEnvironment.o BasicTaskScheduler0.o BasicTaskScheduler.o DelayQueue.o BasicHashTable.o
+make[1]: Leaving directory '/home/matt/cpile/live555/live/BasicUsageEnvironment'
+cd testProgs ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/testProgs'
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMP3Streamer.cpp
+c++ -otestMP3Streamer -L.  testMP3Streamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG1or2VideoStreamer.cpp
+c++ -otestMPEG1or2VideoStreamer -L.  testMPEG1or2VideoStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG1or2AudioVideoStreamer.cpp
+c++ -otestMPEG1or2AudioVideoStreamer -L.  testMPEG1or2AudioVideoStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG2TransportStreamer.cpp
+c++ -otestMPEG2TransportStreamer -L.  testMPEG2TransportStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG4VideoStreamer.cpp
+c++ -otestMPEG4VideoStreamer -L.  testMPEG4VideoStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testH264VideoStreamer.cpp
+c++ -otestH264VideoStreamer -L.  testH264VideoStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testDVVideoStreamer.cpp
+c++ -otestDVVideoStreamer -L.  testDVVideoStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testWAVAudioStreamer.cpp
+c++ -otestWAVAudioStreamer -L.  testWAVAudioStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testAMRAudioStreamer.cpp
+c++ -otestAMRAudioStreamer -L.  testAMRAudioStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   vobStreamer.cpp
+c++ -ovobStreamer -L.  vobStreamer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMP3Receiver.cpp
+c++ -otestMP3Receiver -L.  testMP3Receiver.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG1or2VideoReceiver.cpp
+c++ -otestMPEG1or2VideoReceiver -L.  testMPEG1or2VideoReceiver.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG2TransportReceiver.cpp
+c++ -otestMPEG2TransportReceiver -L.  testMPEG2TransportReceiver.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   sapWatch.cpp
+c++ -osapWatch -L.  sapWatch.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testRelay.cpp
+c++ -otestRelay -L.  testRelay.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testReplicator.cpp
+c++ -otestReplicator -L.  testReplicator.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testOnDemandRTSPServer.cpp
+c++ -otestOnDemandRTSPServer -L.  testOnDemandRTSPServer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG1or2AudioVideoToDarwin.cpp
+c++ -otestMPEG1or2AudioVideoToDarwin -L.  testMPEG1or2AudioVideoToDarwin.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG4VideoToDarwin.cpp
+c++ -otestMPEG4VideoToDarwin -L.  testMPEG4VideoToDarwin.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testRTSPClient.cpp
+c++ -otestRTSPClient -L.  testRTSPClient.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   openRTSP.cpp
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   playCommon.cpp
+c++ -oopenRTSP -L.  openRTSP.o playCommon.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   playSIP.cpp
+c++ -oplaySIP -L.  playSIP.o playCommon.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG1or2Splitter.cpp
+c++ -otestMPEG1or2Splitter -L.  testMPEG1or2Splitter.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG1or2ProgramToTransportStream.cpp
+c++ -otestMPEG1or2ProgramToTransportStream -L.  testMPEG1or2ProgramToTransportStream.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testH264VideoToTransportStream.cpp
+c++ -otestH264VideoToTransportStream -L.  testH264VideoToTransportStream.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   MPEG2TransportStreamIndexer.cpp
+c++ -oMPEG2TransportStreamIndexer -L.  MPEG2TransportStreamIndexer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   testMPEG2TransportStreamTrickPlay.cpp
+c++ -otestMPEG2TransportStreamTrickPlay -L.  testMPEG2TransportStreamTrickPlay.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   registerRTSPStream.cpp
+c++ -oregisterRTSPStream -L.  registerRTSPStream.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+make[1]: Leaving directory '/home/matt/cpile/live555/live/testProgs'
+cd mediaServer ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/mediaServer'
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   live555MediaServer.cpp
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   DynamicRTSPServer.cpp
+c++ -olive555MediaServer -L.  live555MediaServer.o DynamicRTSPServer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+make[1]: Leaving directory '/home/matt/cpile/live555/live/mediaServer'
+cd proxyServer ; make
+make[1]: Entering directory '/home/matt/cpile/live555/live/proxyServer'
+c++ -c -I../UsageEnvironment/include -I../groupsock/include -I../liveMedia/include -I../BasicUsageEnvironment/include -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -Wall -DBSD=1   live555ProxyServer.cpp
+c++ -olive555ProxyServer -L.  live555ProxyServer.o ../liveMedia/libliveMedia.a ../groupsock/libgroupsock.a ../BasicUsageEnvironment/libBasicUsageEnvironment.a ../UsageEnvironment/libUsageEnvironment.a 
+make[1]: Leaving directory '/home/matt/cpile/live555/live/proxyServer'
