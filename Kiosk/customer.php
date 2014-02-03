@@ -23,13 +23,23 @@ $encryptionMethod = 'aes128';
 $password = 'ESD';
 $encryptedCardNumber = openssl_encrypt($cardNumber, $encryptionMethod, $password);
 
+$connection = mysqli_connect("localhost:3306", "root", "", "esd");
+
+if (mysqli_connect_errno())
+{
+	echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
+}
+
 // Write the contents to the file, 
 // using the FILE_APPEND flag to append the content to the end of the file
 // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
 if (isset($name, $address, $number, $language, $knowledge) && !empty($cardNumber)){
-	file_put_contents($file, "$name, $address, $number, $language, $knowledge, $encryptedCardNumber, $pin \r\n", FILE_APPEND);
+	mysqli_query($connection, "INSERT INTO customer (name, phone, address, language, competence, cardNumber)
+	VALUES ('$name', '$address', '$number', '$language', '$knowledge', '$encryptedCardNumber')");
 	$recordCreated = true;
 }
+
+mysqli_close($connection);
 
 if ($recordCreated == true)
 {
