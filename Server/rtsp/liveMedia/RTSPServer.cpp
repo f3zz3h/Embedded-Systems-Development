@@ -25,6 +25,10 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "Base64.hh"
 #include <GroupsockHelper.hh>
 
+#ifndef DEBUG
+#define DEBUG
+#endif
+
 ////////// RTSPServer implementation //////////
 
 RTSPServer*
@@ -293,7 +297,7 @@ int RTSPServer::setUpOurSocket(UsageEnvironment& env, Port& ourPort) {
 }
 
 char const* RTSPServer::allowedCommandNames() {
-  return "OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER";
+  return "OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER, RETRIEVE";
 }
 
 Boolean RTSPServer::weImplementREGISTER(char const* /*proxyURLSuffix*/, char*& responseStr) {
@@ -549,6 +553,24 @@ void RTSPServer::RTSPClientConnection
   
   delete[] sdpDescription;
   delete[] rtspURL;
+}
+
+void RTSPServer::RTSPClientConnection
+::handleCmd_RETRIEVE(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr) {
+
+  do {
+
+    //setRTSPResponse("404 File Not Found, Or In Incorrect Format");
+
+
+    snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+	     "RTSP/1.0 200 OK\r\nCSeq: %s\r\n"
+	     "%s",
+	     fCurrentCSeq,
+	     dateHeader());
+
+  } while (0);
+
 }
 
 static void lookForHeader(char const* headerName, char const* source, unsigned sourceLen, char* resultStr, unsigned resultMaxSize) {
@@ -971,6 +993,8 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
 	  if (clientSession != NULL) clientSession->noteLiveness();
 	}
 	handleCmd_OPTIONS();
+      } else if (strcmp(cmdName, "RETRIEVE") == 0) {
+      	handleCmd_RETRIEVE(urlPreSuffix, urlSuffix, (char const*)fRequestBuffer);
       } else if (urlPreSuffix[0] == '\0' && urlSuffix[0] == '*' && urlSuffix[1] == '\0') {
 	// The special "*" URL means: an operation on the entire server.  This works only for GET_PARAMETER and SET_PARAMETER:
 	if (strcmp(cmdName, "GET_PARAMETER") == 0) {
