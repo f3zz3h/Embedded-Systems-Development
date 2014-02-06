@@ -297,7 +297,7 @@ int RTSPServer::setUpOurSocket(UsageEnvironment& env, Port& ourPort) {
 }
 
 char const* RTSPServer::allowedCommandNames() {
-  return "OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER, RETRIEVE";
+  return "OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER, AUTH, DEAUTH";
 }
 
 Boolean RTSPServer::weImplementREGISTER(char const* /*proxyURLSuffix*/, char*& responseStr) {
@@ -571,6 +571,41 @@ void RTSPServer::RTSPClientConnection
 
   } while (0);
 
+}
+
+void RTSPServer::RTSPClientConnection
+::handleCmd_AUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId) {
+
+	do {
+		if(9999 == pinId) {
+			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+					"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
+					fCurrentCSeq, pinId);
+			break;
+		}
+		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+				"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
+				fCurrentCSeq, pinId);
+
+	} while (0);
+
+}
+
+void RTSPServer::RTSPClientConnection
+::handleCmd_DEAUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId) {
+
+	do {
+		if(9999 == pinId) {
+			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+					"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
+					fCurrentCSeq, pinId);
+			break;
+		}
+		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+				"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
+				fCurrentCSeq, pinId);
+
+	} while (0);
 }
 
 static void lookForHeader(char const* headerName, char const* source, unsigned sourceLen, char* resultStr, unsigned resultMaxSize) {
@@ -965,6 +1000,7 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
     char urlSuffix[RTSP_PARAM_STRING_MAX];
     char cseq[RTSP_PARAM_STRING_MAX];
     char sessionIdStr[RTSP_PARAM_STRING_MAX];
+    unsigned pinId = 0;
     unsigned contentLength = 0;
     fLastCRLF[2] = '\0'; // temporarily, for parsing
     Boolean parseSucceeded = parseRTSPRequestString((char*)fRequestBuffer, fLastCRLF+2 - fRequestBuffer,
@@ -973,7 +1009,7 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
 						    urlSuffix, sizeof urlSuffix,
 						    cseq, sizeof cseq,
 						    sessionIdStr, sizeof sessionIdStr,
-						    contentLength);
+						    contentLength, pinId);
     fLastCRLF[2] = '\r'; // restore its value
     if (parseSucceeded) {
 #ifdef DEBUG
@@ -995,6 +1031,10 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
 	handleCmd_OPTIONS();
       } else if (strcmp(cmdName, "RETRIEVE") == 0) {
       	handleCmd_RETRIEVE(urlPreSuffix, urlSuffix, (char const*)fRequestBuffer);
+      } else if (strcmp(cmdName, "AUTH") == 0) {
+    	  handleCmd_AUTH(urlPreSuffix, urlSuffix, (char const*)fRequestBuffer, pinId);
+      } else if (strcmp(cmdName, "DEAUTH") == 0) {
+    	  handleCmd_DEAUTH(urlPreSuffix, urlSuffix, (char const*)fRequestBuffer, pinId);
       } else if (urlPreSuffix[0] == '\0' && urlSuffix[0] == '*' && urlSuffix[1] == '\0') {
 	// The special "*" URL means: an operation on the entire server.  This works only for GET_PARAMETER and SET_PARAMETER:
 	if (strcmp(cmdName, "GET_PARAMETER") == 0) {

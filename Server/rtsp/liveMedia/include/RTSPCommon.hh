@@ -49,7 +49,8 @@ Boolean parseRTSPRequestString(char const *reqStr, unsigned reqStrSize,
 			       unsigned resultCSeqMaxSize,
 			       char* resultSessionId,
 			       unsigned resultSessionIdMaxSize,
-			       unsigned& contentLength);
+			       unsigned& contentLength,
+			       unsigned& pinId);
 
 Boolean parseRangeParam(char const* paramStr, double& rangeStart, double& rangeEnd, char*& absStartTime, char*& absEndTime);
 Boolean parseRangeHeader(char const* buf, double& rangeStart, double& rangeEnd, char*& absStartTime, char*& absEndTime);

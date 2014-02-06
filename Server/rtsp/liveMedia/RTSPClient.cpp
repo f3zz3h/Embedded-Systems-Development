@@ -888,13 +888,14 @@ void RTSPClient::handleIncomingRequest() {
   char cseq[RTSP_PARAM_STRING_MAX];
   char sessionId[RTSP_PARAM_STRING_MAX];
   unsigned contentLength;
+  unsigned pinId;
   if (!parseRTSPRequestString(fResponseBuffer, fResponseBytesAlreadySeen,
 			      cmdName, sizeof cmdName,
 			      urlPreSuffix, sizeof urlPreSuffix,
 			      urlSuffix, sizeof urlSuffix,
 			      cseq, sizeof cseq,
 			      sessionId, sizeof sessionId,
-			      contentLength)) {
+			      contentLength, pinId)) {
     return;
   } else {
     if (fVerbosityLevel >= 1) {
