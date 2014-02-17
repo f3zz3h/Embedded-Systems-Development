@@ -6,22 +6,21 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
-    <div class="container">
-      <div class="jumbotron">
+    <div class="jumbotron createCustomer">
+	<a class="homeLink" href="/index.html"><span class="glyphicon glyphicon-home"></span></a>
         <h1>Museum handset PIN portal</h1>
         <p class="lead subHeading">Use this portal to give up your card details so they can be stored unprotected in a text file on our server.</p>
 		<div class="imgHolder wobble rotateIn">
         <img src="pixel-museum.gif" style="width:220px; margin-bottom:20px;"/>
 		</div>
-      </div>
 
-	<div class="inputBoxes">
 	  <form action="customer.php" method="post">
-			<label>Name:</label><input type="text" name="name" required="required"/>
-			<label>Address:</label><input type="text" name="address" required="required"/>
-			<label>Mobile #:</label><input type="text" name="mobileNumber" required="required"/>
+	  <div class="form-group">
+			<label>Name:</label><input class="form-control" type="text" name="name" required="required"/><br/>
+			<label>Address:</label><input class="form-control" type="text" name="address" required="required"/><br/>
+			<label>Mobile #:</label><input class="form-control" type="text" name="mobileNumber" required="required"/><br/>
 			<label>Language:</label>
-			<select name="language">
+			<select class="form-control" name="language">
 				<?php
 					$lines = file('Languages.txt');
 					
@@ -30,21 +29,21 @@
 						echo "<option>".$line."</option>";
 					}
 				?>
-			</select>
+			</select><br/>
 			<label>Competence level:</label>
-			<select name="knowledge">
+			<select class="form-control" name="knowledge">
 				<option>No knowledge</option>
 				<option>Primary School</option>
 				<option>GCSE</option>
 				<option>A-level</option>
 				<option>Degree</option>
 				<option>Nobel Prize winner</option>
-			</select>
-			<label>Payment card number:</label><input id="CardNumber" name="cardNumber" type="text" />
+			</select><br/>
+			<label>Payment card number:</label><input class="form-control" id="CardNumber" name="cardNumber" type="text" /><br/>
 			<div class="clear"/>
-			<input type="submit" value="Save" class="btn" id="btn"/>
+			<input type="submit" value="Save" class="btn btn-primary" id="btn"/>
 		</form>
+		</div>
 	</div>
-    </div>
   </body>
 </html>

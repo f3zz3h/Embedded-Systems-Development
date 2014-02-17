@@ -1,10 +1,14 @@
 .jumbotron {
   text-align: center;
-  background-color:#E6E6E6;
 }
 
-.inputBoxes
+.homeLink
 {
-	text-align:center;
-	background-color:#E6E6E6;
+	float:left;
+}
+
+.createCustomer, .manageUsers, .index
+{
+	margin-left:25%;
+	margin-right:25%;
 }
