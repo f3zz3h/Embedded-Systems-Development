@@ -7,8 +7,13 @@
 	float:left;
 }
 
-.createCustomer, .manageUsers, .index
+.createCustomer, .userManagement, .index, .delete, .updateCustomer
 {
 	margin-left:25%;
 	margin-right:25%;
+}
+
+.table thead th
+{
+	text-align:center;
 }
