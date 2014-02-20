@@ -11,6 +11,8 @@
         <h1>Museum portal manage users</h1>
 		<br/>
 	<?php
+		phpinfo();
+	
 		$con=mysqli_connect("mysql.chrissewell.co.uk:3306","root","Lambda01","museum");
 		// Check connection
 		if (mysqli_connect_errno())

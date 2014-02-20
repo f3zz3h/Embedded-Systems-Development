@@ -1,0 +1,14 @@
+[18-Feb-2014 04:16:31 America/Los_Angeles] PHP Warning:  openssl_encrypt(): Using an empty Initialization Vector (iv) is potentially insecure and not recommended in D:\home\site\wwwroot\customer.php on line 29
+[18-Feb-2014 04:16:47 America/Los_Angeles] PHP Notice:  Undefined index: id in D:\home\site\wwwroot\customer.php on line 25
+[18-Feb-2014 04:16:47 America/Los_Angeles] PHP Warning:  openssl_encrypt(): Using an empty Initialization Vector (iv) is potentially insecure and not recommended in D:\home\site\wwwroot\customer.php on line 29
+[18-Feb-2014 04:31:34 America/Los_Angeles] PHP Warning:  openssl_encrypt(): Using an empty Initialization Vector (iv) is potentially insecure and not recommended in D:\home\site\wwwroot\customer.php on line 29
+[20-Feb-2014 03:56:01 America/Los_Angeles] PHP Warning:  POST Content-Length of 12012335 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[20-Feb-2014 03:56:02 America/Los_Angeles] PHP Notice:  Undefined index: file in D:\home\site\wwwroot\fileUpload.php on line 14
+[20-Feb-2014 05:15:44 America/Los_Angeles] PHP Warning:  POST Content-Length of 12012337 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[20-Feb-2014 05:15:44 America/Los_Angeles] PHP Notice:  Undefined index: file in D:\home\site\wwwroot\fileUpload.php on line 14
+[20-Feb-2014 05:25:33 America/Los_Angeles] PHP Warning:  POST Content-Length of 12012337 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[20-Feb-2014 05:25:33 America/Los_Angeles] PHP Notice:  Undefined index: file in D:\home\site\wwwroot\fileUpload.php on line 14
+[20-Feb-2014 05:50:34 America/Los_Angeles] PHP Warning:  POST Content-Length of 12012337 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[20-Feb-2014 05:50:34 America/Los_Angeles] PHP Notice:  Undefined index: file in D:\home\site\wwwroot\fileUpload.php on line 14
+[20-Feb-2014 09:48:21 America/Los_Angeles] PHP Warning:  move_uploaded_file(D:\siteiles\01 Falling Slowly.mp3): failed to open stream: Permission denied in D:\home\site\wwwroot\fileUpload.php on line 31
+[20-Feb-2014 09:48:21 America/Los_Angeles] PHP Warning:  move_uploaded_file(): Unable to move 'C:\DWASFiles\Sites\museumkiosk\Temp\phpBAA0.tmp' to 'D:\siteiles\01 Falling Slowly.mp3' in D:\home\site\wwwroot\fileUpload.php on line 31

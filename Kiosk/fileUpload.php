@@ -6,15 +6,19 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<div class="jumbotron customer">
+		<div class="jumbotron fileUpload">
 			<a class="homeLink" href="/index.html"><span class="glyphicon glyphicon-home"></span></a>
 			
 			<?php
 				$allowedExts = "mp3";
 				$temp = explode(".", $_FILES["file"]["name"]);
 				$extension = end($temp);
+				$language = $_POST["language"];
+				$difficulty = $_POST["difficulty"];
 				
-				if (isset($_FILES) && $extension == $allowedExts)
+				$connection = mysqli_connect("mysql.chrissewell.co.uk:3306", "root", "Lambda01", "museum");
+				
+				if (isset($_FILES) && strpos($_FILES["file"]["type"], "audio/") !== false && $extension == $allowedExts)
 				{	
 					if ($_FILES["file"]["error"] > 0)
 					{
@@ -24,19 +28,39 @@
 					{
 						echo "Upload: " . $_FILES["file"]["name"] . "<br>";
 						echo "Type: " . $_FILES["file"]["type"] . "<br>";
-						echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+						echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
 						
-						$saveLocation = "/site/files/" . $_FILES["file"]["name"];
+						$saveLocation = "D:\\home\\site\\files\\$language$difficulty." .$extension;
+						
+						$sql = "INSERT INTO audio_file (language, difficulty, dir)
+						VALUES ('$language', '$difficulty', '$saveLocation')";
 						
 						if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
 						{
-							echo "<p>Stored in: " . "/site/files" . $_FILES["file"]["name"];
+							echo "<br/><p>Stored in: $saveLocation";
+						}
+						
+						if (mysqli_connect_errno())
+						{
+							echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
+						}
+						
+						if (isset($language, $difficulty))
+						{
+							if (mysqli_query($connection, $sql))
+							{
+								echo "<p>Database entry created.</p>";
+							}
+							else
+							{
+								echo "<p>" . mysqli_error($connection) . "</p>";
+							}
 						}
 					}
 				}
 				else
 				{
-					echo "<p> umm no. </p>";
+					echo "<p>Please upload a valid audio file.</p>";
 				}
 			?>	
 		</div>

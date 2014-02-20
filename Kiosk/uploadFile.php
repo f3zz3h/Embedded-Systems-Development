@@ -12,8 +12,26 @@
 				<br />
 			<form action="fileUpload.php" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label>Language</label><input class="form-control" type="text" name="name" required="required"/><br/>
-					<label>Difficulty</label><input class="form-control" type="text" name="address" required="required"/><br/>
+					<label>Language</label>
+					<select class="form-control" name="language">
+						<?php
+						$lines = file('Languages.txt');
+
+						foreach ($lines as $line_num => $line)
+						{
+						echo "<option>".$line."</option>";
+						}
+						?>
+					</select><br/>
+					<label>Difficulty</label>
+					<select class="form-control" name="difficulty">
+						<option>No knowledge</option>
+						<option>Primary School</option>
+						<option>GCSE</option>
+						<option>A-level</option>
+						<option>Degree</option>
+						<option>Nobel Prize winner</option>
+					</select><br/>
 					<input class="form-control" type="file" name="file" id="file"><br/>
 					<input type="submit" class="btn btn-primary" />
 				</div>
