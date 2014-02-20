@@ -20,7 +20,7 @@
 
 		$result = mysqli_query($con,"SELECT * FROM customer");
 
-		echo "<table class=\"table\">";
+		echo "<table class=\"table table-striped\">";
 		echo "<thead><th>ID</th><th>Name</th><th>Phone #</th><th>Address</th><th>Language</th><th>Competence</th><th>Edit</th><th>Delete</th></thead>";
 		echo "<tbody>";
 		
