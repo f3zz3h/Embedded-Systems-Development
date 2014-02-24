@@ -7,7 +7,7 @@
 	float:left;
 }
 
-.createCustomer, .userManagement, .index, .delete, .updateCustomer, .fileUpload, .fileManagement, .manageFiles, .manageUsers
+.createCustomer, .userManagement, .index, .delete, .updateCustomer, .fileUpload, .fileManagement, .manageFiles, .manageUsers, .deleteFile
 {
 	margin-left:25%;
 	margin-right:25%;

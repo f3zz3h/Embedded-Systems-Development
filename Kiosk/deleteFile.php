@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<meta charset="UTF-8" http-equiv="refresh" content="4;url=/manageUsers.php">
+<meta charset="UTF-8" http-equiv="refresh" content="4;url=/manageFiles.php">
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
