@@ -32,9 +32,6 @@
 						
 						$saveLocation = "D:\\home\\site\\files\\$language$difficulty." .$extension;
 						
-						$sql = "INSERT INTO audio_file (language, difficulty, dir)
-						VALUES ('$language', '$difficulty', '$saveLocation')";
-						
 						if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
 						{
 							echo "<br/><p>Stored in: $saveLocation";
@@ -45,8 +42,13 @@
 							echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
 						}
 						
+						$saveLocation = $city = mysqli_real_escape_string($connection, $saveLocation);
+						
 						if (isset($language, $difficulty))
 						{
+							$sql = "INSERT INTO audio_file (language, difficulty, dir)
+									VALUES ('$language', '$difficulty', '$saveLocation')";
+						
 							if (mysqli_query($connection, $sql))
 							{
 								echo "<p>Database entry created.</p>";
