@@ -207,7 +207,7 @@ public: // should be protected, but some old compilers complain otherwise
 				    Boolean reuseConnection, Boolean deliverViaTCP, char const* proxyURLSuffix);
         // You probably won't need to subclass/reimplement this function;
         //     reimplement "RTSPServer::weImplementREGISTER()" and "RTSPServer::implementCmd_REGISTER()" instead.
-    virtual void handleCmd_RETRIEVE(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr);
+    virtual void handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId);
     virtual void handleCmd_AUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId);
     virtual void handleCmd_DEAUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId);
     virtual void handleCmd_bad();

@@ -67,7 +67,8 @@ Boolean parseRTSPRequestString(char const* reqStr,
                                char* resultSessionIdStr,
                                unsigned resultSessionIdStrMaxSize,
 			       unsigned& contentLength,
-	               unsigned& resultPinId) {
+	               unsigned& resultPinId,
+	               unsigned& resultDisplayId) {
   // This parser is currently rather dumb; it should be made smarter #####
 
   // Read everything up to the first space as the command name:
@@ -207,6 +208,19 @@ Boolean parseRTSPRequestString(char const* reqStr,
   }
 
   // Also: Look for "Content-Length:" (optional, case insensitive)
+  resultDisplayId = 1; // default value
+  for (j = i; (int)j < (int)(reqStrSize-10); ++j) {
+    if (_strncasecmp("Display:", &(reqStr[j]), 10) == 0) {
+      j += 10;
+      while (j < reqStrSize && (reqStr[j] ==  ' ' || reqStr[j] == '\t')) ++j;
+      unsigned num;
+      if (sscanf(&reqStr[j], "%u", &num) == 1) {
+        resultDisplayId = num;
+      }
+    }
+  }
+
+  // Also: Look for "Content-Length:" (optional, case insensitive)
   resultPinId = 0; // default value
   for (j = i; (int)j < (int)(reqStrSize-4); ++j) {
     if (_strncasecmp("Pin:", &(reqStr[j]), 4) == 0) {
@@ -214,7 +228,7 @@ Boolean parseRTSPRequestString(char const* reqStr,
       while (j < reqStrSize && (reqStr[j] ==  ' ' || reqStr[j] == '\t')) ++j;
       unsigned num;
       if (sscanf(&reqStr[j], "%u", &num) == 1) {
-	resultPinId = num;
+        resultPinId = num;
       }
     }
   }
