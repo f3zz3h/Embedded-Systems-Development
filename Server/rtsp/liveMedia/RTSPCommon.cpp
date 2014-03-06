@@ -210,7 +210,7 @@ Boolean parseRTSPRequestString(char const* reqStr,
   // Also: Look for "Content-Length:" (optional, case insensitive)
   resultDisplayId = 1; // default value
   for (j = i; (int)j < (int)(reqStrSize-10); ++j) {
-    if (_strncasecmp("Display:", &(reqStr[j]), 10) == 0) {
+    if (_strncasecmp("DisplayId:", &(reqStr[j]), 10) == 0) {
       j += 10;
       while (j < reqStrSize && (reqStr[j] ==  ' ' || reqStr[j] == '\t')) ++j;
       unsigned num;
