@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
+<?php session_start(); ?>
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
@@ -7,62 +8,77 @@
 	</head>
 	<body>
 		<div class="jumbotron fileUpload">
-			<a class="homeLink" href="/index.html"><span class="glyphicon glyphicon-home"></span></a>
-			
 			<?php
-				$allowedExts = "mp3";
-				$temp = explode(".", $_FILES["file"]["name"]);
-				$extension = end($temp);
-				$language = $_POST["language"];
-				$difficulty = $_POST["difficulty"];
-				
-				$connection = mysqli_connect("mysql.chrissewell.co.uk:3306", "root", "Lambda01", "museum");
-				
-				if (isset($_FILES) && strpos($_FILES["file"]["type"], "audio/") !== false && $extension == $allowedExts)
-				{	
-					if ($_FILES["file"]["error"] > 0)
+				if (isset($_SESSION["CanView"]))
+				{
+					if ($_SESSION["CanView"] == true)
 					{
-						echo "Error: " . $_FILES["file"]["error"] . "<br>";
-					}
-					else
-					{
-						echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-						echo "Type: " . $_FILES["file"]["type"] . "<br>";
-						echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
+						echo "<a class=\"homeLink\" href=\"/portalHome.html\"><span class=\"glyphicon glyphicon-home\"></span></a>";
+			
+			
+						$allowedExts = "mp3";
+						$temp = explode(".", $_FILES["file"]["name"]);
+						$extension = end($temp);
+						$language = $_POST["language"];
+						$difficulty = $_POST["difficulty"];
 						
-						$saveLocation = "D:\\home\\site\\files\\$language$difficulty." .$extension;
+						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
 						
-						if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
-						{
-							echo "<br/><p>Stored in: $saveLocation";
-						}
-						
-						if (mysqli_connect_errno())
-						{
-							echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
-						}
-						
-						$saveLocation = $city = mysqli_real_escape_string($connection, $saveLocation);
-						
-						if (isset($language, $difficulty))
-						{
-							$sql = "INSERT INTO audio_file (language, difficulty, dir)
-									VALUES ('$language', '$difficulty', '$saveLocation')";
-						
-							if (mysqli_query($connection, $sql))
+						if (isset($_FILES) && $extension == $allowedExts)
+						{	
+							if ($_FILES["file"]["error"] > 0)
 							{
-								echo "<p>Database entry created.</p>";
+								echo "Error: " . $_FILES["file"]["error"] . "<br>";
 							}
 							else
 							{
-								echo "<p>" . mysqli_error($connection) . "</p>";
+								echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+								echo "Type: " . $_FILES["file"]["type"] . "<br>";
+								echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
+								
+								$saveLocation = "D:\\home\\site\\files\\$language$difficulty." .$extension;
+								
+								if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
+								{
+									echo "<br/><p>Stored in: $saveLocation";
+								}
+								
+								if (mysqli_connect_errno())
+								{
+									echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
+								}
+								
+								$saveLocation = $city = mysqli_real_escape_string($connection, $saveLocation);
+								
+								if (isset($language, $difficulty))
+								{
+									$sql = "INSERT INTO audio_file (language, difficulty, dir)
+											VALUES ('$language', '$difficulty', '$saveLocation')";
+								
+									if (mysqli_query($connection, $sql))
+									{
+										echo "<p>Database entry created.</p>";
+									}
+									else
+									{
+										echo "<p>" . mysqli_error($connection) . "</p>";
+									}
+								}
 							}
 						}
+						else
+						{
+							echo "<p>Please upload a valid audio file.</p>";
+						}
+					}
+					else
+					{
+						echo "<p style=\"color:red;\"><b>You do not have permission to view this page.</b></p>";
 					}
 				}
 				else
 				{
-					echo "<p>Please upload a valid audio file.</p>";
+					echo "<p style=\"color:red;\"><b>You do not have permission to view this page.</b></p>";
 				}
 			?>	
 		</div>

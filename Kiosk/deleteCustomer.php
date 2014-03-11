@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<meta charset="UTF-8" http-equiv="refresh" content="4;url=/manageFiles.php">
+<meta charset="UTF-8" http-equiv="refresh" content="4;url=/manageUsers.php">
 <?php session_start(); ?>
 <html>
 <head>
@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="jumbotron deleteFile">
+	<div class="jumbotron deleteCustomer">
 		<?php
 			if (isset($_SESSION["CanView"]))
 			{
@@ -17,36 +17,23 @@
 				
 					if (!isset($_GET['id']))
 					{
-						echo "<p><b>Error: No file ID found.. Please wait.</b></p>";
-						echo "<br/>";
-						echo "<span class=\"glyphicon glyphicon-refresh\"</span>";
+						echo 'No ID was given...';
 						exit;
 					}
 					else
 					{
 						$id = $_GET['id'];
 					}
-					
-					if (!isset($_GET['loc']))
-					{
-						echo "<p><b>Error: No file location found.. Please wait.</b></p>";
-						echo "<br/>";
-						echo "<span class=\"glyphicon glyphicon-refresh\"</span>";
-						exit;
-					}
-					else
-					{
-						$loc = $_GET['loc'];
-					}
 
 					$con = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
-					if ($con->connect_error)
 					
+					if ($con->connect_error)
 					{
 						die('Connect Error (' . $con->connect_errno . ') ' . $con->connect_error);
 					}
 
-					$sql = "DELETE FROM audio_file WHERE id = $id";
+					$sql = "DELETE FROM customer WHERE id = $id";
+					
 					if (!$result = $con->prepare($sql))
 					{
 						die('Query failed: (' . $con->errno . ') ' . $con->error);
@@ -57,19 +44,15 @@
 						die('Execute failed: (' . $result->errno . ') ' . $result->error);
 					}
 
-					if (unlink($loc))
+					if ($result->affected_rows > 0)
 					{
-						echo "<p><b>File deleted.. Please wait.</b></p>";
+						echo "<b>Customer Deleted.. Please wait.</b>";
 						echo "<br/>";
 						echo "<span class=\"glyphicon glyphicon-refresh\"</span>";
-						exit;
 					}
 					else
 					{
-						echo "<p><b>Error deleting file.. Please wait.</b></p>";
-						echo "<br/>";
-						echo "<span class=\"glyphicon glyphicon-refresh\"</span>";
-						exit;
+						echo "Couldn't delete the ID.";
 					}
 					
 					$result->close();
