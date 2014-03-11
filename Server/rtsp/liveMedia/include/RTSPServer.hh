@@ -30,7 +30,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _DIGEST_AUTHENTICATION_HH
 #include "DigestAuthentication.hh"
 #endif
+#include <mysql_connection.h>
+#include <mysql_driver.h>
 
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
 // A data structure used for optional user/password authentication:
 
 class UserAuthenticationDatabase {
@@ -194,6 +200,7 @@ public: // should be protected, but some old compilers complain otherwise
       char* fURLSuffix;
       Boolean fReuseConnection, fDeliverViaTCP;
       char* fProxyURLSuffix;
+
     };
   protected:
     friend class RTSPClientSession;
@@ -208,6 +215,7 @@ public: // should be protected, but some old compilers complain otherwise
         // You probably won't need to subclass/reimplement this function;
         //     reimplement "RTSPServer::weImplementREGISTER()" and "RTSPServer::implementCmd_REGISTER()" instead.
     virtual void handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId);
+    virtual char* handleMySQLQuery(char* query, int& row, int& col);
     virtual void handleCmd_AUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId);
     virtual void handleCmd_DEAUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId);
     virtual void handleCmd_bad();
@@ -260,6 +268,7 @@ public: // should be protected, but some old compilers complain otherwise
     Authenticator fCurrentAuthenticator; // used if access control is needed
     char* fOurSessionCookie; // used for optional RTSP-over-HTTP tunneling
     unsigned fBase64RemainderCount; // used for optional RTSP-over-HTTP tunneling (possible values: 0,1,2,3)
+    sql::Driver *driver;
   };
 
   // The state of an individual client session (using one or more sequential TCP connections) handled by a RTSP server:

@@ -21,6 +21,15 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "DynamicRTSPServer.hh"
 #include "version.hh"
 
+// MySQL Stuff
+#include <mysql_connection.h>
+#include <mysql_driver.h>
+
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+
 int main(int argc, char** argv) {
   // Begin by setting up our usage environment:
   TaskScheduler* scheduler = BasicTaskScheduler::createNew();

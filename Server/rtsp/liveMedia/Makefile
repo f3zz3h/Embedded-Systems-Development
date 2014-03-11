@@ -1,4 +1,4 @@
-INCLUDES = -Iinclude -I../UsageEnvironment/include -I../groupsock/include
+INCLUDES = -Iinclude -I../UsageEnvironment/include -I../groupsock/include 
 PREFIX = /usr/local
 LIBDIR = $(PREFIX)/lib
 ##### Change the following for your environment:
@@ -8,7 +8,7 @@ C_COMPILER =		cc
 C_FLAGS =		$(COMPILE_OPTS) $(CPPFLAGS) $(CFLAGS)
 CPP =			cpp
 CPLUSPLUS_COMPILER =	c++
-CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS)
+CPLUSPLUS_FLAGS =	-g $(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS) -I/usr/include/cppconn -L/usr/lib -lmysqlcppconn
 OBJ =			o
 LINK =			c++ -o
 LINK_OPTS =		-L. $(LDFLAGS)

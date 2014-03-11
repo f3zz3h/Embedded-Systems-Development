@@ -5,7 +5,7 @@ C_COMPILER =		cc
 C_FLAGS =		$(COMPILE_OPTS) $(CPPFLAGS) $(CFLAGS)
 CPP =			cpp
 CPLUSPLUS_COMPILER =	c++
-CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS)
+CPLUSPLUS_FLAGS =	-g $(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS)
 OBJ =			o
 LINK =			c++ -o
 LINK_OPTS =		-L. $(LDFLAGS)
@@ -34,18 +34,18 @@ all:
 	cd $(GROUPSOCK_DIR) ; $(MAKE)
 	cd $(USAGE_ENVIRONMENT_DIR) ; $(MAKE)
 	cd $(BASIC_USAGE_ENVIRONMENT_DIR) ; $(MAKE)
-	cd $(TESTPROGS_DIR) ; $(MAKE)
+	#cd $(TESTPROGS_DIR) ; $(MAKE)
 	cd $(MEDIA_SERVER_DIR) ; $(MAKE)
-	cd $(PROXY_SERVER_DIR) ; $(MAKE)
+	#cd $(PROXY_SERVER_DIR) ; $(MAKE)
 
 install:
 	cd $(LIVEMEDIA_DIR) ; $(MAKE) install
 	cd $(GROUPSOCK_DIR) ; $(MAKE) install
 	cd $(USAGE_ENVIRONMENT_DIR) ; $(MAKE) install
 	cd $(BASIC_USAGE_ENVIRONMENT_DIR) ; $(MAKE) install
-	cd $(TESTPROGS_DIR) ; $(MAKE) install
+	#cd $(TESTPROGS_DIR) ; $(MAKE) install
 	cd $(MEDIA_SERVER_DIR) ; $(MAKE) install
-	cd $(PROXY_SERVER_DIR) ; $(MAKE) install
+	#cd $(PROXY_SERVER_DIR) ; $(MAKE) install
 
 clean:
 	cd $(LIVEMEDIA_DIR) ; $(MAKE) clean

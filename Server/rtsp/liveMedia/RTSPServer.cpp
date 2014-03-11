@@ -18,12 +18,22 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // A RTSP server
 // Implementation
 
+// MySQL for Museum custom RTSP methods
+#include <mysql_connection.h>
+#include <mysql_driver.h>
+
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+
 #include "RTSPServer.hh"
 #include "RTSPCommon.hh"
 #include "RTSPRegisterSender.hh"
 #include "ProxyServerMediaSession.hh"
 #include "Base64.hh"
 #include <GroupsockHelper.hh>
+
 
 #ifndef DEBUG
 #define DEBUG
@@ -438,6 +448,10 @@ RTSPServer::RTSPClientConnection
   // Add ourself to our 'client connections' table:
   fOurServer.fClientConnections->Add((char const*)this, this);
   
+  // MySQL Connect
+
+  driver = get_driver_instance();
+
   // Arrange to handle incoming requests:
   resetRequestBuffer();
   envir().taskScheduler().setBackgroundHandling(fClientInputSocket, SOCKET_READABLE|SOCKET_EXCEPTION,
@@ -555,6 +569,65 @@ void RTSPServer::RTSPClientConnection
   delete[] rtspURL;
 }
 
+char* RTSPServer::RTSPClientConnection
+::handleMySQLQuery(char* query, int& row, int& col) {
+
+	  try {
+
+	    sql::Connection *con;
+	    sql::Statement *stmt;
+	    sql::ResultSet *res;
+	    sql::ResultSetMetaData *meta;
+
+
+	    int rowsIndex = 0;
+
+	    /* Create a connection */
+	    con = driver->connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637");
+	    /* Connect to the MySQL test database */
+	    con->setSchema("museum");
+	    stmt = con->createStatement();
+	    std::cout << "\tQuery: " << query << std::endl;
+	    res = stmt->executeQuery(query);
+	    meta = res->getMetaData();
+
+	    const int rowsNumber = res->getRow();
+	    const int columnsNumber = meta->getColumnCount();
+
+	    char* retarr[rowsNumber][columnsNumber];
+
+	    while (res->next()) {
+	    	for(int columnsIndex = 0; columnsIndex < columnsNumber; columnsIndex++) {
+	    		retarr[rowsIndex][columnsIndex] = (char *) res->getString(columnsIndex+1).c_str();
+	    		std::cout << retarr[rowsIndex][columnsIndex] << ", ";
+	    	}
+	    	rowsIndex++;
+	    	std::cout << std::endl;
+	    }
+
+
+
+	    delete res;
+	    delete stmt;
+	    delete con;
+	    row = rowsNumber;
+	    col = columnsNumber;
+	    return (char*)retarr;
+
+	  } catch (sql::SQLException &e) {
+	    std::cout << "# ERR: SQLException in " << __FILE__;
+	    std::cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << std::endl;
+	    std::cout << "# ERR: " << e.what();
+	    std::cout << " (MySQL error code: " << e.getErrorCode();
+	    std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+
+	    return NULL;
+	  }
+
+
+
+}
+
 void RTSPServer::RTSPClientConnection
 ::handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId) {
 	  do {
@@ -580,9 +653,29 @@ void RTSPServer::RTSPClientConnection
 					fCurrentCSeq, pinId);
 			break;
 		}
+		// Construct SQL Query
+		char* buff = new char [37];
+		snprintf(buff, 37, "SELECT * FROM `group` WHERE PIN=%u", pinId);
+
+		// Get results from query
+		int row, col;
+		char* result = handleMySQLQuery(buff, row, col);
+
+		// Here I am trying to now read the contents of the array. I have row and col updated, just now need to be able to
+		// read into a 2d array. Help please!
+
+		//char* parsedResult[(const int)row][(const int)(col-1)];
+		//(parsedResult)[0][0] = (char*)(result);
+
+		//std::cout << parsedResult[0][3] << std::endl;
+
+		delete buff;
+
 		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 				"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
 				fCurrentCSeq, pinId);
+
+
 	} while (0);
 
 }

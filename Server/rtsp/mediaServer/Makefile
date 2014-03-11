@@ -5,13 +5,13 @@ libBasicUsageEnvironment_LIB_SUFFIX = $(LIB_SUFFIX)
 libUsageEnvironment_LIB_SUFFIX = $(LIB_SUFFIX)
 libgroupsock_LIB_SUFFIX = $(LIB_SUFFIX)
 ##### Change the following for your environment:
-COMPILE_OPTS =		$(INCLUDES) -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
+COMPILE_OPTS =		-g $(INCLUDES) -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
 C =			c
 C_COMPILER =		cc
 C_FLAGS =		$(COMPILE_OPTS) $(CPPFLAGS) $(CFLAGS)
 CPP =			cpp
 CPLUSPLUS_COMPILER =	c++
-CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS)
+CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS) -I/usr/include/cppconn -L/usr/lib -lmysqlcppconn
 OBJ =			o
 LINK =			c++ -o
 LINK_OPTS =		-L. $(LDFLAGS)
@@ -50,7 +50,7 @@ GROUPSOCK_DIR = ../groupsock
 GROUPSOCK_LIB = $(GROUPSOCK_DIR)/libgroupsock.$(libgroupsock_LIB_SUFFIX)
 LOCAL_LIBS =	$(LIVEMEDIA_LIB) $(GROUPSOCK_LIB) \
 		$(BASIC_USAGE_ENVIRONMENT_LIB) $(USAGE_ENVIRONMENT_LIB)
-LIBS =			$(LOCAL_LIBS) $(LIBS_FOR_CONSOLE_APPLICATION)
+LIBS =			$(LOCAL_LIBS) $(LIBS_FOR_CONSOLE_APPLICATION) -I/usr/include/cppconn -L/usr/lib -lmysqlcppconn
 
 live555MediaServer$(EXE):	$(MEDIA_SERVER_OBJS) $(LOCAL_LIBS)
 	$(LINK)$@ $(CONSOLE_LINK_OPTS) $(MEDIA_SERVER_OBJS) $(LIBS)
