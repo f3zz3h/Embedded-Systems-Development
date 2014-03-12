@@ -609,22 +609,8 @@ sql::ResultSet * RTSPServer::RTSPClientConnection
 void RTSPServer::RTSPClientConnection
 ::handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId) {
 	do {
-
-		// Check count
-		char* buff = new char [96];
-		snprintf(buff, 96, "SELECT count(*) FROM audio_file a INNER JOIN `group` b ON a.id = b.audio_file_id WHERE PIN=%u", pinId);
-		sql::ResultSet *result = handleMySQLQuery(buff);
-		result->next();
-		if(result->getInt(1) != 1) {
-			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
-											"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
-											fCurrentCSeq, pinId);
-			delete buff;
-			delete result;
-			break;
-		}
-
-		delete buff;
+		char *buff;
+		sql::ResultSet *result;
 
 		// Construct SQL Query
 		buff = new char [114];
@@ -632,19 +618,29 @@ void RTSPServer::RTSPClientConnection
 
 		// Get results from query
 		result = handleMySQLQuery(buff);
-
 		result->next();
+
+		// Check we have some results. If we got nothing, return a 404
+		if(result->isNull(1)) {
+			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+											"RTSP/1.0 404 Not Found\r\nCSeq: %s\r\nPin: %u\r\n",
+											fCurrentCSeq, pinId);
+			delete buff;
+			delete result;
+			break;
+		}
+		// Spit out the results.
 		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 					"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n"
 					"Language: %s\r\n"
 					"Difficulty: %s\r\n"
 					"URL: \\%s\\%s\\%s\r\n",
 					fCurrentCSeq, pinId,
-					result->getString(1).c_str(),
-					result->getString(2).c_str(),
-					result->getString(1).c_str(),
-					result->getString(2).c_str(),
-					result->getString(3).c_str());
+					result->getString("language").c_str(),
+					result->getString("difficulty").c_str(),
+					result->getString("language").c_str(),
+					result->getString("difficulty").c_str(),
+					result->getString("dir").c_str());
 
 
 		delete buff;
@@ -652,7 +648,6 @@ void RTSPServer::RTSPClientConnection
 
 	} while (0);
 	return;
-
 }
 
 void RTSPServer::RTSPClientConnection
