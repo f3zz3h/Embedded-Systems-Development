@@ -215,7 +215,7 @@ public: // should be protected, but some old compilers complain otherwise
         // You probably won't need to subclass/reimplement this function;
         //     reimplement "RTSPServer::weImplementREGISTER()" and "RTSPServer::implementCmd_REGISTER()" instead.
     virtual void handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId);
-    virtual char* handleMySQLQuery(char* query, int& row, int& col);
+    virtual sql::ResultSet * handleMySQLQuery(char* query);
     virtual void handleCmd_AUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId);
     virtual void handleCmd_DEAUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId);
     virtual void handleCmd_bad();

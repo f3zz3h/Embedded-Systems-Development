@@ -569,50 +569,28 @@ void RTSPServer::RTSPClientConnection
   delete[] rtspURL;
 }
 
-char* RTSPServer::RTSPClientConnection
-::handleMySQLQuery(char* query, int& row, int& col) {
+sql::ResultSet * RTSPServer::RTSPClientConnection
+::handleMySQLQuery(char* query) {
 
 	  try {
 
 	    sql::Connection *con;
 	    sql::Statement *stmt;
 	    sql::ResultSet *res;
-	    sql::ResultSetMetaData *meta;
 
-
-	    int rowsIndex = 0;
-
-	    /* Create a connection */
+	    // Establish connection
 	    con = driver->connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637");
-	    /* Connect to the MySQL test database */
 	    con->setSchema("museum");
+
+	    // Execute query
 	    stmt = con->createStatement();
 	    std::cout << "\tQuery: " << query << std::endl;
 	    res = stmt->executeQuery(query);
-	    meta = res->getMetaData();
 
-	    const int rowsNumber = res->getRow();
-	    const int columnsNumber = meta->getColumnCount();
-
-	    char* retarr[rowsNumber][columnsNumber];
-
-	    while (res->next()) {
-	    	for(int columnsIndex = 0; columnsIndex < columnsNumber; columnsIndex++) {
-	    		retarr[rowsIndex][columnsIndex] = (char *) res->getString(columnsIndex+1).c_str();
-	    		std::cout << retarr[rowsIndex][columnsIndex] << ", ";
-	    	}
-	    	rowsIndex++;
-	    	std::cout << std::endl;
-	    }
-
-
-
-	    delete res;
+	    //delete res;
 	    delete stmt;
 	    delete con;
-	    row = rowsNumber;
-	    col = columnsNumber;
-	    return (char*)retarr;
+	    return res;
 
 	  } catch (sql::SQLException &e) {
 	    std::cout << "# ERR: SQLException in " << __FILE__;
@@ -630,16 +608,50 @@ char* RTSPServer::RTSPClientConnection
 
 void RTSPServer::RTSPClientConnection
 ::handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId) {
-	  do {
-		if((9999 == pinId) || (9999 == displayId)) {
-			handleCmd_bad();
+	do {
+
+		// Check count
+		char* buff = new char [96];
+		snprintf(buff, 96, "SELECT count(*) FROM audio_file a INNER JOIN `group` b ON a.id = b.audio_file_id WHERE PIN=%u", pinId);
+		sql::ResultSet *result = handleMySQLQuery(buff);
+		result->next();
+		if(result->getInt(1) != 1) {
+			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+											"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
+											fCurrentCSeq, pinId);
+			delete buff;
+			delete result;
+			break;
 		}
 
-			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
-					"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\nLanguage: n\r\nDifficulty: 3\r\nURL: \\en\\3\\%u.mp3\r\nControl: 0\r\n",
-					fCurrentCSeq, pinId, displayId);
+		delete buff;
 
-	  } while (0);
+		// Construct SQL Query
+		buff = new char [114];
+		snprintf(buff, 114, "SELECT `language`,difficulty,dir FROM audio_file a INNER JOIN `group` b ON a.id = b.audio_file_id WHERE PIN=%u", pinId);
+
+		// Get results from query
+		result = handleMySQLQuery(buff);
+
+		result->next();
+		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+					"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n"
+					"Language: %s\r\n"
+					"Difficulty: %s\r\n"
+					"URL: \\%s\\%s\\%s\r\n",
+					fCurrentCSeq, pinId,
+					result->getString(1).c_str(),
+					result->getString(2).c_str(),
+					result->getString(1).c_str(),
+					result->getString(2).c_str(),
+					result->getString(3).c_str());
+
+
+		delete buff;
+		delete result;
+
+	} while (0);
+	return;
 
 }
 
@@ -647,37 +659,32 @@ void RTSPServer::RTSPClientConnection
 ::handleCmd_AUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId) {
 
 	do {
-		if(9999 == pinId) {
-			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
-					"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
-					fCurrentCSeq, pinId);
-			break;
-		}
 		// Construct SQL Query
-		char* buff = new char [37];
-		snprintf(buff, 37, "SELECT * FROM `group` WHERE PIN=%u", pinId);
+		char* buff = new char [44];
+		snprintf(buff, 44, "SELECT count(*) FROM `group` WHERE PIN=%u", pinId);
 
 		// Get results from query
-		int row, col;
-		char* result = handleMySQLQuery(buff, row, col);
+		sql::ResultSet *result = handleMySQLQuery(buff);
 
-		// Here I am trying to now read the contents of the array. I have row and col updated, just now need to be able to
-		// read into a 2d array. Help please!
-
-		//char* parsedResult[(const int)row][(const int)(col-1)];
-		//(parsedResult)[0][0] = (char*)(result);
-
-		//std::cout << parsedResult[0][3] << std::endl;
+		result->next();
+		// Check if there is a valid record, count number of rows. 1==valid
+		if(result->getInt(1) == 1) {
+			// Valid PIN
+			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+							"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
+							fCurrentCSeq, pinId);
+		} else {
+			// Not a valid PIN
+			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
+								"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
+								fCurrentCSeq, pinId);
+		}
 
 		delete buff;
-
-		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
-				"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
-				fCurrentCSeq, pinId);
-
+		delete result;
 
 	} while (0);
-
+	return;
 }
 
 void RTSPServer::RTSPClientConnection
