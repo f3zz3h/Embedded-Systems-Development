@@ -655,12 +655,14 @@ void RTSPServer::RTSPClientConnection
 
 	do {
 		// Construct SQL Query
-		char* buff = new char [44];
+		char* buff;
+		sql::ResultSet *result;
+
+		buff = new char [44];
 		snprintf(buff, 44, "SELECT count(*) FROM `group` WHERE PIN=%u", pinId);
 
 		// Get results from query
-		sql::ResultSet *result = handleMySQLQuery(buff);
-
+		result = handleMySQLQuery(buff);
 		result->next();
 		// Check if there is a valid record, count number of rows. 1==valid
 		if(result->getInt(1) == 1) {
@@ -684,7 +686,7 @@ void RTSPServer::RTSPClientConnection
 
 void RTSPServer::RTSPClientConnection
 ::handleCmd_DEAUTH(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId) {
-
+	// Not required, just dummy function
 	do {
 		if(9999 == pinId) {
 			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
