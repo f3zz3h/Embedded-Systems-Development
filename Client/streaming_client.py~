@@ -3,7 +3,6 @@
 import sys, os, time, thread
 import glib, gobject
 import pygst
-import live555
 pygst.require("0.10")
 import gst
 
