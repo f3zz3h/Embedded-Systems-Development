@@ -21,6 +21,7 @@
 						$extension = end($temp);
 						$language = $_POST["language"];
 						$difficulty = $_POST["difficulty"];
+						$fileName = $_POST["roomNumber"];
 						
 						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
 						
@@ -36,7 +37,7 @@
 								echo "Type: " . $_FILES["file"]["type"] . "<br>";
 								echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
 								
-								$saveLocation = "D:\\home\\site\\files\\$language$difficulty." .$extension;
+								$saveLocation = "D:\\home\\site\\files\\$fileName." .$extension;
 								
 								if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
 								{

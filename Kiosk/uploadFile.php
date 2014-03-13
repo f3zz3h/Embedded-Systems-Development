@@ -37,8 +37,12 @@
 									<option>Degree</option>
 									<option>Nobel Prize winner</option>
 								</select><br/>
+								<label>File</label>
 								<input class=\"form-control\" type=\"file\" name=\"file\" id=\"file\"><br/>
-								<input type=\"submit\" class=\"btn btn-primary\" />
+								<label>Room number</label>
+								<input class=\"form-control\" type=\"textbox\" name=\"roomNumber\" />
+								</br>
+								<input type=\"submit\" class=\"btn btn-primary\" />	
 							</div>
 						</form>";
 					}
