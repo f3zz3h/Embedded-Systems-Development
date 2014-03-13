@@ -13,8 +13,11 @@
 			{
 				if ($_SESSION["CanView"] == true)
 				{
-					echo "<a class=\"homeLink\" href=\"/portalHome.html\"><span class=\"glyphicon glyphicon-home\"></span></a>
+					echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>
 					<h1>Museum Portal User Management</h1>
+					<br/>
+					<a href=\"/createGroup.php\"><button type=\"button\" class=\"btn btn-primary\">Create Group</button></a>
+					<br/>
 					<br/>
 					<a href=\"/createCustomer.php\"><button type=\"button\" class=\"btn btn-primary\">Create Customer</button></a>
 					<br/>

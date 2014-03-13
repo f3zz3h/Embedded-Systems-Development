@@ -27,12 +27,12 @@
 				$result = mysqli_query($con,"SELECT * FROM customer");
 
 				echo "<table class=\"table table-striped\">";
-				echo "<thead><th>Name</th><th>Phone #</th><th>Address</th><th>Language</th><th>Competence</th><th>Edit</th><th>Delete</th></thead>";
+				echo "<thead><th>Name</th><th>Phone #</th><th>Address</th><th>Delete</th></thead>";
 				echo "<tbody>";
 				
 				while($row = mysqli_fetch_array($result))
 				{
-					echo "<tr><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td>$row[4]</td><td>$row[5]</td><td><a href=\"/updateCustomer.php?id=$row[0]\"><span class=\"glyphicon glyphicon-cog\"></span></a></td><td><a href=\"/deleteCustomer.php?id=$row[0]\"><span class=\"glyphicon glyphicon-remove\"></span></a></td></tr>";
+					echo "<tr><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a href=\"/deleteCustomer.php?id=$row[0]\"><span class=\"glyphicon glyphicon-remove\"></span></a></td></tr>";
 				}
 
 				echo "</tbody></table>";

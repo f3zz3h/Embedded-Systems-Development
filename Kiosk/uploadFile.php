@@ -13,7 +13,7 @@
 				{
 					if ($_SESSION["CanView"] == true)
 					{
-						echo "<a class=\"homeLink\" href=\"/portalHome.html\"><span class=\"glyphicon glyphicon-home\"></span></a>
+						echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>
 						<h1>Museum Portal File Upload</h1>
 						<br />
 						<form action=\"fileUpload.php\" method=\"post\" enctype=\"multipart/form-data\">

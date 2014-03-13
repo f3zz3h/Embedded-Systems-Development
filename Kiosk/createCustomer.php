@@ -13,6 +13,10 @@
 		{
 			if ($_SESSION["CanView"] == true)
 			{
+				$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
+				$sql = "SELECT DISTINCT language from audio_file";
+				$result = mysqli_query($connection, $sql);
+			
 				echo "
 				<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>
 				<h1>Museum handset PIN portal</h1>
@@ -26,25 +30,8 @@
 						<label>Name:</label><input class=\"form-control\" type=\"text\" name=\"name\" required=\"required\"/><br/>
 						<label>Address:</label><input class=\"form-control\" type=\"text\" name=\"address\" required=\"required\"/><br/>
 						<label>Mobile #:</label><input class=\"form-control\" type=\"text\" name=\"mobileNumber\" required=\"required\"/><br/>
-						<label>Language:</label>
-						<select class=\"form-control\" name=\"language\">";
-								$lines = file('Languages.txt');
-								
-								foreach ($lines as $line_num => $line)
-								{
-									echo "<option>".$line."</option>";
-								}
-						echo "
-						</select><br/>
-						<label>Competence level:</label>
-						<select class=\"form-control\" name=\"knowledge\">
-							<option>No knowledge</option>
-							<option>Primary School</option>
-							<option>GCSE</option>
-							<option>A-level</option>
-							<option>Degree</option>
-							<option>Nobel Prize winner</option>
-						</select><br/>
+						<label>Group:</label>
+						<input class=\"form-control\" type=\"text\" name=\"groupPin\" required=\"required\"/></br>
 						<label>Payment card number:</label><input class=\"form-control\" id=\"CardNumber\" name=\"cardNumber\" type=\"text\" /><br/>
 						<div class=\"clear\"/>
 						<input type=\"submit\" value=\"Save\" class=\"btn btn-primary\" id=\"btn\"/>
@@ -60,6 +47,8 @@
 		{
 			echo "<p style=\"color:red;\"><b>You do not have permission to access this page.";
 		}
+		
+		mysqli_close($connection);
 		?>
 	</div>
   </body>
