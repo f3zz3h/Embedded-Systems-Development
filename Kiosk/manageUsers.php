@@ -17,7 +17,7 @@
 				<h1>Museum portal manage users</h1>
 				<br/>";
 			
-				$con = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
+				$con = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
 				// Check connection
 				if (mysqli_connect_errno())
 				{
