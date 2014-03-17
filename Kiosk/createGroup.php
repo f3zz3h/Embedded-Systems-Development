@@ -12,7 +12,7 @@
 		{
 			if ($_SESSION["CanView"] == true)
 			{
-				$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
+				$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
 				$sql = "SELECT DISTINCT language from audio_file";
 				$result = mysqli_query($connection, $sql);
 				

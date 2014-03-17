@@ -22,7 +22,7 @@
 						$language = $_POST["language"];
 						$difficulty = $_POST["difficulty"];
 						
-						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net:3306", "bc39afe900a22c", "ab25d637", "museum");
+						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
 						
 						if (isset($_FILES) && $extension == $allowedExts)
 						{	
@@ -36,7 +36,7 @@
 								echo "Type: " . $_FILES["file"]["type"] . "<br>";
 								echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
 								
-								$saveLocation = "D:\\home\\site\\files\\";
+								$saveLocation = "\\audio\\";
 								
 								if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
 								{
@@ -48,7 +48,7 @@
 									echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
 								}
 								
-								$saveLocation = $city = mysqli_real_escape_string($connection, $saveLocation);
+								$saveLocation = mysqli_real_escape_string($connection, $saveLocation);
 								
 								if (isset($language, $difficulty))
 								{
