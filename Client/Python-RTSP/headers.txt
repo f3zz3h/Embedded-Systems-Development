@@ -758,3 +758,33 @@ content-length: 389
 content-base: rtsp://95.85.31.224:8554/hk9.mp3/
 cseq: 2
 
+date: Mon, Mar 17 2014 22:48:49 GMT
+cseq: 1
+public: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER, AUTH, DEAUTH, REQUEST
+
+date: Mon, Mar 17 2014 22:48:49 GMT
+content-type: application/sdp
+content-length: 389
+content-base: rtsp://95.85.31.224:8554/hk9.mp3/
+cseq: 2
+
+date: Mon, Mar 17 2014 22:50:07 GMT
+cseq: 1
+public: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER, AUTH, DEAUTH, REQUEST
+
+date: Mon, Mar 17 2014 22:50:07 GMT
+content-type: application/sdp
+content-length: 389
+content-base: rtsp://95.85.31.224:8554/hk9.mp3/
+cseq: 2
+
+date: Mon, Mar 17 2014 22:51:39 GMT
+cseq: 1
+public: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, GET_PARAMETER, SET_PARAMETER, AUTH, DEAUTH, REQUEST
+
+date: Mon, Mar 17 2014 22:51:39 GMT
+content-type: application/sdp
+content-length: 389
+content-base: rtsp://95.85.31.224:8554/hk9.mp3/
+cseq: 2
+

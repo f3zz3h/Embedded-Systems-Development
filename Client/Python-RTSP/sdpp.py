@@ -119,7 +119,6 @@ class SDPParser:
             self.last_desc.b.append(value)
         else:
             # Need to add email and phone
-            print "Error Here?"
             raise TypeError('Unknown type: %s' % type)
 
 class SdpplinMediaDesc(SDPMediaDesc):

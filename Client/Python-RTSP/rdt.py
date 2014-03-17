@@ -35,8 +35,14 @@ import base64
 import sys
 import struct
 import re
+import math
+import time
 import hashlib
+from md5 import md5
+from rmff import *
 from rtsp import RTSPClient, RTSPClientFactory
+from sdpp import Sdpplin
+from asmrp import Asmrp
 
 
 # http://blogmag.net/blog/read/38/Print_human_readable_file_size
@@ -55,6 +61,50 @@ def rn5_auth(username, realm, password, nonce, uuid):
     munged = MUNGE_TEMPLATE % (first_pass, nonce, uuid)
     return hashlib.md5(munged).hexdigest()
     print first_pass
+class RealChallenge(object):
+    XOR_TABLE = [ 0x05, 0x18, 0x74, 0xd0, 0x0d, 0x09, 0x02, 0x53, 0xc0, 0x01,
+                  0x05, 0x05, 0x67, 0x03, 0x19, 0x70, 0x08, 0x27, 0x66, 0x10,
+                  0x10, 0x72, 0x08, 0x09, 0x63, 0x11, 0x03, 0x71, 0x08, 0x08,
+                  0x70,    0x02, 0x10, 0x57, 0x05, 0x18, 0x54 ]
+    def AV_WB32(d):
+        """ Used by RealChallenge() """
+        d = d.decode('hex')
+        return list(struct.unpack('%sB' % len(d), d))
+    def compute(rc1):
+        """ Translated from MPlayer's source
+        Computes the realchallenge response and checksum """
+        buf = list()
+        buf.extend( RealChallenge.AV_WB32('a1e9149d') )
+        buf.extend( RealChallenge.AV_WB32('0e6b3b59') )
+
+        rc1 = rc1.strip()
+
+        if rc1:from md5 import md5
+from rmff import *
+from rtsp import RTSPClient, RTSPClientFactory
+from sdpp import Sdpplin
+from asmrp import Asmrp
+            if len(rc1) == 40: rc1 = rc1[:32]
+            if len(rc1) > 56: rc1 = rc1[:56]
+            buf.extend( [ ord(i) for i in rc1 ] )
+            buf.extend( [ 0 for i in range(0, 56 - len(rc1)) ] )
+
+        # xor challenge bytewise with xor_table
+        for i in range(0, len(RealChallenge.XOR_TABLE)):
+            buf[8 + i] ^= RealChallenge.XOR_TABLE[i];
+
+        sum = md5( ''.join([ chr(i) for i in buf ]) )
+
+        response = sum.hexdigest() + '01d0a8e3'
+
+        chksum = list()
+        for i in range(0, 8):
+            chksum.append(response[i * 4])
+        chksum = ''.join(chksum)
+
+        return (response, chksum)
+    compute = staticmethod(compute)
+    AV_WB32 = staticmethod(AV_WB32)
 
 class RDTClient(RTSPClient):
     data_received = 0
@@ -93,7 +143,84 @@ class RDTClient(RTSPClient):
         if self.content_length is None:
             self.sendNextMessage()
 
+    def handleSdp(self, data):
+        """ Called with SDP Response data
+        Uses the SDP response to construct the file header """
+        sdp = Sdpplin(data)
+        header = rmff_header_t()
+        try: abstract = sdp['Abstract']
+        except KeyError: abstract = ''
+        header.fileheader = rmff_fileheader_t(4 + sdp['StreamCount'])
+        try: title = sdp['Title']
+        except KeyError: title = ''
+        try: author = sdp['Author']
+        except KeyError: author = ''
+        try: copyright = sdp['Copyright']
+        except KeyError: copyright = ''
+        header.cont = rmff_cont_t(title, author,
+                                  copyright, abstract)
+        header.data = rmff_data_t(0, 0)
 
+        duration = 0
+        max_bit_rate = 0
+        avg_bit_rate = 0
+        max_packet_size = 0
+        avg_packet_size = None
+
+        self.streammatches = {}
+
+        # the rulebook is sometimes truncated and spread across the streams
+        # not sure if this is common, or even the correct way to handle it
+        rulebook = ''.join([s['ASMRuleBook'] for s in sdp.streams])
+        symbols = {'Bandwidth':self.factory.bandwidth,'OldPNMPlayer':'0'}
+        rulematches, symbols = Asmrp.asmrp_match(rulebook, symbols)
+        # Avg packet size seems off
+
+        for s in sdp.streams:
+            self.streammatches[s['streamid']] = rulematches
+            mlti = self.select_mlti_data(s['OpaqueData'], rulematches[0])
+
+            # some streams don't have the starttime, but do have endtime
+            # and other meta data
+            try: start_time = s['StartTime']
+            except: start_time = 0
+
+            mdpr = rmff_mdpr_t(s['streamid'], s['MaxBitRate'],
+                               s['AvgBitRate'], s['MaxPacketSize'],
+                               s['AvgPacketSize'], start_time,
+                               s['Preroll'], s.duration,
+                               s['StreamName'], s['mimetype'], mlti)
+            header.streams.append(mdpr)
+            if s.duration > duration:
+                duration = s.duration
+            if mdpr.max_packet_size > max_packet_size:
+                max_packet_size = mdpr.max_packet_size
+            max_bit_rate += mdpr.max_bit_rate
+            avg_bit_rate += mdpr.avg_bit_rate
+            if avg_packet_size is None:
+                avg_packet_size = mdpr.avg_packet_size
+            else:
+                avg_packet_size = (avg_packet_size + mdpr.avg_packet_size)/2
+        header.prop = rmff_prop_t(max_bit_rate, avg_bit_rate,
+                                  max_packet_size, avg_packet_size,
+                                  0, duration, 0, 0, 0, sdp['StreamCount'],
+                                  sdp['Flags'])
+        return header
+
+    def heartbeat(self):
+        target = '%s://%s:%s' % (self.factory.scheme,
+                                 self.factory.host,
+                                 self.factory.port)
+        headers = {}
+        headers['User-Agent'] = self.factory.agent
+        headers['PlayerStarttime'] = self.factory.PLAYER_START_TIME
+        headers['CompanyID'] = self.factory.companyID
+        headers['GUID'] = self.factory.GUID
+        headers['RegionData'] = '0'
+        headers['ClientID'] = self.factory.clientID
+        headers['Pragma'] = 'initiate-session'
+        self.sendOptions('*', headers)
+        reactor.callLater(30, self.heartbeat)
 
     def handleContentResponse(self, data, content_type):
         """ Called when the entire content-length has been received
@@ -104,6 +231,18 @@ class RDTClient(RTSPClient):
         if content_type == 'application/sdp':
             print 'Correct content found'
             print 'Process with gstreamer'
+            reactor.callLater(30, self.heartbeat)
+            self.out_file = open(self.factory.filename, 'wb')
+            self.header = self.handleSdp(data)
+            self.streamids = [i for i in range(self.header.prop.num_streams)]
+            self.subscribe = ''
+            for i,rules in self.streammatches.items():
+                for r in rules:
+                    self.subscribe += 'stream=%s;rule=%s,' % (i,r)
+            self.subscribe = self.subscribe[:-1] # Removes trailing comma
+            self.out_file.write(self.header.dump())
+            self.num_packets = 0
+            self.data_size = 0
 
  
     def handleInterleavedData(self, data):
@@ -243,6 +382,21 @@ class RDTClient(RTSPClient):
             print 'Sending describe'
             self.sent_describe = True
             self._sendDescribe()
+            return True
+        if len(self.streamids) > len(self.setup_streamids):
+            headers = {}
+            if not self.sent_realchallenge2:
+                self.sent_realchallenge2 = True
+                challenge_tuple = RealChallenge.compute(self.realchallenge1)
+                headers['RealChallenge2'] = '%s, sd=%s' % challenge_tuple
+            # Gets a streamid that hasn't been setup yet
+            s = [s for s in self.streamids if s not in self.setup_streamids][0]
+            self.setup_streamids.append(s)
+            self._sendSetup(streamid=s, headers=headers)
+            return True
+        if not self.sent_parameter:
+            self.sent_parameter = True
+            self._sendSetParameter('Subscribe', self.subscribe)
             return True
         if self.sent_describe: #and not self.sent_auth():
             print 'Sending auth pin: %d' % self.factory.pin 
