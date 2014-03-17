@@ -44,7 +44,6 @@ from rtsp import RTSPClient, RTSPClientFactory
 from sdpp import Sdpplin
 from asmrp import Asmrp
 
-
 # http://blogmag.net/blog/read/38/Print_human_readable_file_size
 def sizeof_fmt(num):
     for x in ['bytes','KB','MB','GB','TB']:
@@ -79,11 +78,7 @@ class RealChallenge(object):
 
         rc1 = rc1.strip()
 
-        if rc1:from md5 import md5
-from rmff import *
-from rtsp import RTSPClient, RTSPClientFactory
-from sdpp import Sdpplin
-from asmrp import Asmrp
+        if rc1:
             if len(rc1) == 40: rc1 = rc1[:32]
             if len(rc1) > 56: rc1 = rc1[:56]
             buf.extend( [ ord(i) for i in rc1 ] )
