@@ -618,10 +618,9 @@ void RTSPServer::RTSPClientConnection
 
 		// Get results from query
 		result = handleMySQLQuery(buff);
-		result->next();
 
 		// Check we have some results. If we got nothing, return a 404
-		if(result->isNull(1)) {
+		if(!result->next()) {
 			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 											"RTSP/1.0 404 Not Found\r\nCSeq: %s\r\nPin: %u\r\n",
 											fCurrentCSeq, pinId);
@@ -663,9 +662,9 @@ void RTSPServer::RTSPClientConnection
 
 		// Get results from query
 		result = handleMySQLQuery(buff);
-		result->next();
+
 		// Check if there is a valid record, count number of rows. 1==valid
-		if(result->getInt(1) == 1) {
+		if((result->next()) && (result->getInt(1) == 1)) {
 			// Valid PIN
 			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 							"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
