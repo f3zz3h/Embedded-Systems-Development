@@ -40,7 +40,7 @@
 							}
 							else
 							{
-								echo "<p>Something went wrong.</p>";
+								echo "<p>Something went wrong (Possibly difficulty/language mismatch)</p>";
 							}
 						}
 					}
