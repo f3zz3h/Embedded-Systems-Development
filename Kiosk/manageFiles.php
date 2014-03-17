@@ -27,12 +27,12 @@
 				$result = mysqli_query($con, "SELECT * FROM audio_file");
 
 				echo "<table class=\"table table-striped\">";
-				echo "<thead><th>Language</th><th>Difficulty</th><th>Location</th><th>Delete</th></thead>";
+				echo "<thead><th>Language</th><th>Difficulty</th><th>Location</th></thead>";
 				echo "<tbody>";
 				
 				while($row = mysqli_fetch_array($result))
 				{
-					echo "<tr><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a href=\"/deleteFile.php?id=$row[0]&loc=$row[3]\"><span class=\"glyphicon glyphicon-remove\"></span></a></td></tr>";
+					echo "<tr><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td></tr>";
 				}
 
 				echo "</tbody></table>";

@@ -19,7 +19,7 @@
 						<form action=\"fileUpload.php\" method=\"post\" enctype=\"multipart/form-data\">
 							<div class=\"form-group\">
 								<label>Language</label>
-								<select class=\"form-control\" name=\"language\">";
+								<select class=\"form-control\" name=\"language\" required=\"required\">";
 									$lines = file('Languages.txt');
 
 									foreach ($lines as $line_num => $line)
@@ -29,7 +29,7 @@
 								echo "
 								</select><br/>
 								<label>Difficulty</label>
-								<select class=\"form-control\" name=\"difficulty\">
+								<select class=\"form-control\" name=\"difficulty\" required=\"required\">
 									<option>No knowledge</option>
 									<option>Primary School</option>
 									<option>GCSE</option>
@@ -40,7 +40,7 @@
 								<label>File</label>
 								<input class=\"form-control\" type=\"file\" name=\"file\" id=\"file\"><br/>
 								<label>Room number</label>
-								<input class=\"form-control\" type=\"textbox\" name=\"roomNumber\" />
+								<input class=\"form-control\" type=\"textbox\" name=\"roomNumber\" required=\"required\"/>
 								</br>
 								<input type=\"submit\" class=\"btn btn-primary\" />	
 							</div>

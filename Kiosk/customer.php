@@ -30,7 +30,7 @@
 
 						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
 						
-						$sql = "SELECT id from group where PIN = $groupPin";
+						$sql = "SELECT id FROM `group` where PIN = $groupPin";
 						$result = mysqli_query($connection, $sql);
 						
 						$val = mysqli_fetch_array($result);
@@ -42,9 +42,9 @@
 									VALUES ('$name', '$address', '$number', '$encryptedCardNumber', $val[0])";
 									
 									
-							if (mysqli_query($connection, $sql)
+							if (mysqli_query($connection, $sql))
 							{
-								echo "<p>User created.</p>";
+								echo "<p>Customer created.</p>";
 							}
 						}
 						else
