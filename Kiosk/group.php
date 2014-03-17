@@ -22,21 +22,21 @@
 						
 						if (isset($language) && isset($difficulty))
 						{
-							$sql = "SELECT id from audio_file WHERE (language = $language AND difficulty = $difficulty)";
+							$sql = "SELECT id from audio_file WHERE (language = '$language' AND difficulty = '$difficulty')";
 							$result = mysqli_query($connection, $sql);
 							$row = mysqli_fetch_array($result);
 							
 							$audioFileId = $row[0];
 							
-							$sql = "INSERT INTO group (audio_file_id, PIN) VALUES ($audioFileId, $pin)";
+							$sql = "INSERT INTO `group` (audio_file_id, PIN) VALUES ($audioFileId, $pin)";
 							$result = mysqli_query($connection, $sql);
 							
 							mysqli_close($connection);
 
 							if ($result)
 							{
-								echo "<p>Thankyou <b>".$name."</b> your unique PIN to be entered on the device is: <b>".$pin."<b><p>";
-								echo "<a href=\"/createCustomer.html\"><span class=\"glyphicon glyphicon-plane\"><br/>Go to create customer page.</span>";
+								echo "<p>Thankyou, your unique PIN to be entered on the device is: <b>".$pin."<b><p>";
+								echo "<a href=\"/createCustomer.php\"><span class=\"glyphicon glyphicon-plane\"><br/>Go to create customer page.</span>";
 							}
 							else
 							{

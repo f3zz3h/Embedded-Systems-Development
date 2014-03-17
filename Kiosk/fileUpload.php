@@ -21,6 +21,7 @@
 						$extension = end($temp);
 						$language = $_POST["language"];
 						$difficulty = $_POST["difficulty"];
+						$roomNumber = $_POST["roomNumber"];
 						
 						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
 						
@@ -36,7 +37,13 @@
 								echo "Type: " . $_FILES["file"]["type"] . "<br>";
 								echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
 								
-								$saveLocation = "\\audio\\";
+								if (!is_dir('audio/$language/$difficulty'))
+								{
+									mkdir('audio/'.$language.'/', 0777);
+									mkdir('audio/'.$language.'/'.$difficulty.'/', 0777);
+								}
+								
+								$saveLocation = "audio/$language/$difficulty/$roomNumber.$extension";
 								
 								if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
 								{
@@ -48,12 +55,14 @@
 									echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
 								}
 								
-								$saveLocation = mysqli_real_escape_string($connection, $saveLocation);
+								$databaseDirectory = "audio/$language/$difficulty/";
+								
+								$databaseDirectory = mysqli_real_escape_string($connection, $databaseDirectory);
 								
 								if (isset($language, $difficulty))
 								{
 									$sql = "INSERT INTO audio_file (language, difficulty, dir)
-											VALUES ('$language', '$difficulty', '$saveLocation')";
+											VALUES ('$language', '$difficulty', '$databaseDirectory')";
 								
 									if (mysqli_query($connection, $sql))
 									{

@@ -25,7 +25,7 @@
 
 				  <form action=\"group.php\" method=\"post\">
 						<label>Language:</label>
-						<select class=\"form-control\" name=\"language\">";			
+						<select class=\"form-control\" name=\"language\" required=\"required\">";			
 								while($row = mysqli_fetch_array($result))
 								{
 									echo "<option>".$row[0]."</option>";
@@ -33,7 +33,7 @@
 						echo "
 						</select><br/>
 						<label>Competence level:</label>
-						<select class=\"form-control\" name=\"knowledge\">";
+						<select class=\"form-control\" name=\"knowledge\" required=\"required\">";
 								$sql = "SELECT DISTINCT difficulty from audio_file";
 								$result = mysqli_query($connection, $sql);
 
