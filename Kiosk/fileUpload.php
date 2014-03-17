@@ -36,7 +36,7 @@
 								echo "Type: " . $_FILES["file"]["type"] . "<br>";
 								echo "Size: " . round(($_FILES["file"]["size"] / 1024)) . " kB<br>";
 								
-								$saveLocation = "D:\\home\\site\\files\\";
+								$saveLocation = "\\audio\\";
 								
 								if (move_uploaded_file($_FILES["file"]["tmp_name"], $saveLocation))
 								{
