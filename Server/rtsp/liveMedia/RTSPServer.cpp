@@ -633,10 +633,8 @@ void RTSPServer::RTSPClientConnection
 					"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n"
 					"Language: %s\r\n"
 					"Difficulty: %s\r\n"
-					"URL: \\%s\\%s\\%s\r\n",
+					"URL: %s\r\n",
 					fCurrentCSeq, pinId,
-					result->getString("language").c_str(),
-					result->getString("difficulty").c_str(),
 					result->getString("language").c_str(),
 					result->getString("difficulty").c_str(),
 					result->getString("dir").c_str());
