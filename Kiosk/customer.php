@@ -1,81 +1,70 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
+<?php session_start(); ?>
 <html>
-<head>
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-<div class="jumbotron customer">
-<a class="homeLink" href="/index.html"><span class="glyphicon glyphicon-home"></span></a>
-<?php
-ini_set("display_errors", 0);
-// the file to write too
-$file = 'customers.txt';
+	<head>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<div class="jumbotron customer">
+			<?php
+				if (isset($_SESSION["CanView"]))
+				{
+					if ($_SESSION["CanView"] == true)
+					{
+						ini_set("display_errors", 0);
 
-// The new person to add to the file
-$name = $_POST["name"];
-$address = $_POST["address"];
-$number = $_POST["mobileNumber"];
-$language = $_POST["language"];
-$knowledge = $_POST["knowledge"];
-$cardNumber = $_POST["cardNumber"];
-$pin = rand(1000,9999);
-$recordCreated = false;
-$id = $_POST["id"];
+						// The new person to add to the file
+						$name = $_POST["name"];
+						$address = $_POST["address"];
+						$number = $_POST["mobileNumber"];
+						$cardNumber = $_POST["cardNumber"];
+						$groupPin = $_POST["groupPin"];
+						
+						$recordCreated = false;
 
-$encryptionMethod = 'aes128';
-$password = 'ESD';
-$encryptedCardNumber = openssl_encrypt($cardNumber, $encryptionMethod, $password);
+						$encryptionMethod = 'aes128';
+						$password = 'ESD';
+						$encryptedCardNumber = openssl_encrypt($cardNumber, $encryptionMethod, $password);
 
-$connection = mysqli_connect("mysql.chrissewell.co.uk:3306", "root", "Lambda01", "museum");
+						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
+						
+						$sql = "SELECT id FROM `group` where PIN = $groupPin";
+						$result = mysqli_query($connection, $sql);
+						
+						$val = mysqli_fetch_array($result);
 
-if (is_null($id))
-{
-	$sql = "INSERT INTO customer (name, phone, address, language, competence, cardNumber)
-		VALUES ('$name', '$address', '$number', '$language', '$knowledge', '$encryptedCardNumber')";
-}
-else
-{
-	$sql = "UPDATE customer
-			SET name = '$name', address = '$address', language = '$language', competence = '$knowledge', cardNumber = '$encryptedCardNumber'
-			WHERE id = '$id'";
-}
-
-if (mysqli_connect_errno())
-{
-	echo "<p>Failed to conect to MySQL: " . mysqli_connect_error() . "</p>";
-}
-
-if (isset($name, $address, $number, $language, $knowledge) && !empty($cardNumber)){
-	if (mysqli_query($connection, $sql))
-	{
-		$recordCreated = true;
-	}
-	else
-	{
-		echo "<p>" . mysqli_error($connection) . "</p>";
-	}
-}
-
-mysqli_close($connection);
-
-if ($recordCreated == true && is_null($id))
-{
-	echo "<p>Thankyou <b>".$name."</b> your unique PIN to be entered on the device is: <b>".$pin."<b><p>";
-}
-else if ($recordCreated == true && isset($id))
-{
-	echo "<p>Record updated.</p>";
-	echo "<a href=\"/userManagement.html\"><span class=\"glyphicon glyphicon-plane\"><br/>Fly home!</span>";
-}
-else
-{
-	echo "<p>Something went wrong.</p>";
-}
-
-?>
-</div>
-</body>
+						if (!empty($val[0]))
+						{						
+							
+							$sql = "INSERT INTO customer (name, phone, address, cardNumber, group_id)
+									VALUES ('$name', '$address', '$number', '$encryptedCardNumber', $val[0])";
+									
+									
+							if (mysqli_query($connection, $sql))
+							{
+								echo "<p>Customer created.</p>";
+							}
+						}
+						else
+						{
+							echo "No group found with a PIN of: $groupPin";
+						}
+						
+						mysqli_close($connection);
+					}
+					else
+					{
+						echo "<p style=\"color:red;\"><b>You do not have permission to view this page.</b></p>";
+					}
+				}
+				else
+				{
+					echo "<p style=\"color:red;\"><b>You do not have permission to view this page.</b></p>";
+				}
+			?>
+		</div>
+	</body>
 </html>
 
