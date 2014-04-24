@@ -30,12 +30,12 @@
 								</select><br/>
 								<label>Difficulty</label>
 								<select class=\"form-control\" name=\"difficulty\" required=\"required\">
-									<option>No knowledge</option>
-									<option>Primary School</option>
+									<option value=\"noknowledge\">No knowledge</option>
+									<option value=\"primaryschool\">Primary School</option>
 									<option>GCSE</option>
-									<option>A-level</option>
+									<option value=\"alevel\">A-level</option>
 									<option>Degree</option>
-									<option>Nobel Prize winner</option>
+									<option value=\"nobelprize\">Nobel Prize winner</option>
 								</select><br/>
 								<label>File</label>
 								<input class=\"form-control\" type=\"file\" name=\"file\" id=\"file\"><br/>
