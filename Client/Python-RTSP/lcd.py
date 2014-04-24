@@ -5,36 +5,34 @@ from collections import namedtuple
 
 class lcd:
 	def __init__(self):
-		Constants = namedtuple('Constants', ['LineLength', 'TotalDisplaySize'])
-		self.constants = Constants(16, 32)
+		Constants = namedtuple('Constants', ['StartTopLine', 'EndTopLine', 'StartBottomLine', 'EndBottomLine'])
+		self.constants = Constants(0, 15, 16, 31)
 		SERIAL_PORT = "/dev/ttyAMA0"
 		
 		self.serialOut = serial.Serial(SERIAL_PORT, 9600) #setup for serial port
 		self.botLine = ""
-		self.cursorPos = 0		
+		self.cursorPos = self.constants.StartTopLine
 	
 	#function for shifting bottom line to top line and writing along the bottom line
 	def pageText(self, textString):
-		self.botLine = ""
-		self.cursorPos = 0
 
 		for letter in textString:
 			self.lcdWrite(letter)
 	
 			#if printing to the second line, save the deails to the botLine variable for re-use
-			if self.cursorPos > (self.constants):
+			if self.cursorPos > (self.constants.EndTopLine):
 				self.botLine = self.botLine + letter
 	
 			#if at the end of the LCD screen, print botLine on top line and start printing to the bottom line
-			if self.cursorPos < self.constants.TotalDisplaySize:
+			if self.cursorPos == (self.constants.EndBottomLine):
 				self.startAtFirstLine() #wrap to start of first line
 				self.lcdWrite(self.botLine) #print current botLine on topLine
-				self.lcdWriterite() #clear bottom line
+				self.lcdWrite() #clear bottom line
 				self.startAtSecondLine() #goto begin second line
 				self.botLine = ""
-				self.cursorPos = 15 #set cursor to beginning of second line
+				self.cursorPos = self.constants.EndTopLine #set cursor to end of top line
 	
-			self.cursorPos = self.cursorPos + 1 #move cursor
+			self.cursorPos = self.cursorPos + 1 #increase cursor number
 	
 			time.sleep(0.15)#delay between printing letter
 	
@@ -58,33 +56,23 @@ class lcd:
 
 	def menuSwitch (self, choice):
 		return {
-			"test" : test,
-			"test1": test1,
-		
-	
+			"Please Enter Pin Number: " : enterPinNumber,
+			"Please Enter Display Number: ": enterDisplayNumber,
+			"%d: %s" % (trackNumber, trackName) : trackStatus,
 		}[choice]
-	
-# USED IF THIS FILE IS LAUNCHER FROM HERE... otherwise not run
+
+#USED IF THIS FILE IS LAUNCHER FROM HERE... otherwise not run
 if __name__ == '__main__':
 	
 	myLCD = lcd()
-	
-#	while(True):
 
-		#setup for menu selection
-#		if menuSelection == "test":
-#			textString = "test"
-#		elif menuSelection == "test1":
-#			textString = "test2"
-#		else menuSelection == "test2":
-#			textString = "test2"
 	myLCD.clearScreen()
 
 	while(True):
 		myLCD.startAtFirstLine()
 		textString = "111111111111111122222222222222223333333333333333"
 		myLCD.pageText(textString) #send string and serial setup to handling function
-		time.sleep(5)
+		time.sleep(2)
 		myLCD.clearScreen()
 
 	myLCD.close
