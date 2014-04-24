@@ -44,7 +44,7 @@
 									
 							if (mysqli_query($connection, $sql))
 							{
-								echo "<p>Customer created.</p>";
+								echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a></br><p>Customer created.</p>";
 							}
 						}
 						else
