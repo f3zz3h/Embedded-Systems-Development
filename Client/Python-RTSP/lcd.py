@@ -1,13 +1,17 @@
 # sudo python serial_lcd.py
 import serial
 import time
+from collections import namedtuple
 
 class lcd:
 	def __init__(self):
+		Constants = namedtuple('Constants', ['LineLength', 'TotalDisplaySize'])
+		self.constants = Constants(16, 32)
 		SERIAL_PORT = "/dev/ttyAMA0"
+		
 		self.serialOut = serial.Serial(SERIAL_PORT, 9600) #setup for serial port
 		self.botLine = ""
-		self.cursorPos = 0
+		self.cursorPos = 0		
 	
 	#function for shifting bottom line to top line and writing along the bottom line
 	def pageText(self, textString):
@@ -15,18 +19,18 @@ class lcd:
 		self.cursorPos = 0
 
 		for letter in textString:
-			self.serialOut.write(letter)
+			self.lcdWrite(letter)
 	
 			#if printing to the second line, save the deails to the botLine variable for re-use
-			if self.cursorPos > 15:
+			if self.cursorPos > (self.constants):
 				self.botLine = self.botLine + letter
 	
 			#if at the end of the LCD screen, print botLine on top line and start printing to the bottom line
-			if self.cursorPos == 31:
-				self.startAtFirstLine #wrap to start of first line
-				self.serialOut.write(self.botLine) #print current botLine on topLine
-				self.serialOut.write("                ") #clear bottom line
-				self.startAtSecondLine #goto begin second line
+			if self.cursorPos < self.constants.TotalDisplaySize:
+				self.startAtFirstLine() #wrap to start of first line
+				self.lcdWrite(self.botLine) #print current botLine on topLine
+				self.lcdWriterite() #clear bottom line
+				self.startAtSecondLine() #goto begin second line
 				self.botLine = ""
 				self.cursorPos = 15 #set cursor to beginning of second line
 	
@@ -35,10 +39,10 @@ class lcd:
 			time.sleep(0.15)#delay between printing letter
 	
 	def startAtFirstLine(self):
-		self.serialOut.write('\xFE\x80') #start at first line
+		self.lcdWrite('\xFE\x80') #start at first line
 		
 	def clearScreen(self):
-		self.serialOut.write('\xFE\x01') #clear LCD screen
+		self.lcdWrite('\xFE\x01') #clear LCD screen
 
 	def closeConnection(self):
 		self.serialOut.close
@@ -48,6 +52,9 @@ class lcd:
 		
 	def close(self):
 		self.serialOut.close
+		
+	def lcdWrite(self, msg="                "):
+		self.serialOut.write(msg)
 
 	def menuSwitch (self, choice):
 		return {
