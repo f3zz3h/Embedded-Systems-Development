@@ -1,5 +1,4 @@
 # sudo python serial_lcd.py
-#
 
 import serial
 import time
@@ -54,5 +53,12 @@ def main():
 
 	serialOut.close
 
+def menuSwitch (choice):
+	return {
+		"test" : test,
+		"test1": test1,
+	
+
+	}[choice]
 if __name__ == '__main__':
 	main()
