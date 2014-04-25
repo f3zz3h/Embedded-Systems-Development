@@ -81,7 +81,7 @@ if __name__ == '__main__':
     time.sleep(10)"""
     keypad.setup_read()
     
-    for x in range(0, 1000):
+    for x in range(0, 10):
         time.sleep(.5)
         key = keypad.read()
         if (key > 0):
