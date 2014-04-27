@@ -2,17 +2,21 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- createGroup.php - The page used to create a group in the system-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
     <div class="jumbotron narrow">
 	<?php
+		//Check access
 		if (isset($_SESSION["CanView"]))
 		{
 			if ($_SESSION["CanView"] == true)
 			{
 				$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
+				
+				//SQl to fetch the languages we support
 				$sql = "SELECT DISTINCT language from audio_file";
 				$result = mysqli_query($connection, $sql);
 				
@@ -25,7 +29,8 @@
 
 				  <form action=\"group.php\" method=\"post\">
 						<label>Language:</label>
-						<select class=\"form-control\" name=\"language\" required=\"required\">";			
+						<select class=\"form-control\" name=\"language\" required=\"required\">";
+								//Display all available languages in a select list
 								while($row = mysqli_fetch_array($result))
 								{
 									echo "<option>".$row[0]."</option>";
@@ -34,9 +39,11 @@
 						</select><br/>
 						<label>Competence level:</label>
 						<select class=\"form-control\" name=\"knowledge\" required=\"required\">";
+								//SQL to select the available difficulties
 								$sql = "SELECT DISTINCT difficulty from audio_file";
 								$result = mysqli_query($connection, $sql);
 
+								//Display all available difficulties in a select list
 								while ($row = mysqli_fetch_array($result))
 								{
 									echo "<option>".$row[0]."</option>";

@@ -3,6 +3,7 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- portalHome.php - Home page of the Kiosk portal-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>

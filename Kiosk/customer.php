@@ -3,16 +3,19 @@
 <?php session_start(); ?>
 <html>
 	<head>
+		<!-- customer.php - Handles creation of a customer record in the database-->
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 		<div class="jumbotron narrow">
 			<?php
+				//Check access
 				if (isset($_SESSION["CanView"]))
 				{
 					if ($_SESSION["CanView"] == true)
 					{
+						//Don't display any warnings or errors (these surround encryption, not important..)
 						ini_set("display_errors", 0);
 
 						// The new person to add to the file
@@ -24,17 +27,21 @@
 						
 						$recordCreated = false;
 
+						//Encrypt our card details.
 						$encryptionMethod = 'aes128';
 						$password = 'ESD';
 						$encryptedCardNumber = openssl_encrypt($cardNumber, $encryptionMethod, $password);
 
+						//Create connection object
 						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
 						
+						//Make sure the group is real
 						$sql = "SELECT id FROM `group` where PIN = $groupPin";
 						$result = mysqli_query($connection, $sql);
 						
 						$val = mysqli_fetch_array($result);
 
+						//If the group exists, add the customer to the DB
 						if (!empty($val[0]))
 						{						
 							

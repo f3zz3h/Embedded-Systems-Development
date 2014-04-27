@@ -3,6 +3,7 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- deviceManagement.php - Device management page, add device or view devices.-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>

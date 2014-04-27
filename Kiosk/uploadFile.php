@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <meta charset="UTF-8">
 <?php session_start(); ?>
 <html>
@@ -20,8 +20,10 @@
 							<div class=\"form-group\">
 								<label>Language</label>
 								<select class=\"form-control\" name=\"language\" required=\"required\">";
+									//Extract each line from the languages file
 									$lines = file('Languages.txt');
 
+									//Iterate through the lines variable and create a select option for each language.
 									foreach ($lines as $line_num => $line)
 									{
 									echo "<option>".$line."</option>";

@@ -3,6 +3,7 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- manageFiles.php - Renders a table displaying current audio files in the system-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
@@ -26,6 +27,7 @@
 
 				$result = mysqli_query($con, "SELECT * FROM audio_file");
 
+				//Create the files table
 				echo "<table class=\"table table-striped\">";
 				echo "<thead><th>Language</th><th>Difficulty</th><th>Location</th></thead>";
 				echo "<tbody>";

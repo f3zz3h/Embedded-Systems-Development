@@ -3,6 +3,7 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- ManageUsers.php - Renders a table displaying current customers and provides management options-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
@@ -26,6 +27,7 @@
 
 				$result = mysqli_query($con,"SELECT * FROM customer");
 
+				//Create the users table.
 				echo "<table class=\"table table-striped\">";
 				echo "<thead><th>Name</th><th>Phone #</th><th>Address</th><th>Delete</th></thead>";
 				echo "<tbody>";

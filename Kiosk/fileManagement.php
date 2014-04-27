@@ -3,6 +3,7 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- fileManagement.php - File management homepage, from here, view files or add a new one-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
