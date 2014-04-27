@@ -30,7 +30,7 @@ def readKeypad(numberOfChars):
     return keys        
         
 def getFileIdFromKeypad():
-    return 99 #'hk9' + '.mp3' ##99
+    return 22 #'hk9' + '.mp3' ##99
 def getPinFromKeypad():
     ## READING FROM KEYPAD HERE
     #return (str)1007
@@ -49,14 +49,14 @@ def request(tn, pin):
     tn.read_until("URL: ",2)
     retval = tn.read_until("\r\n", 2)
     if retval:
-        return retval
+        return retval.rstrip()
     else:
         print "invalid response"
         return -1 
 def writeLCD(msg):
     print msg
 def playAudio(fileLocation, fileName ):
-        print fileLocation
+        print fileLocation+fileName
     	player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + fileName + ' ! rtpmpadepay ! mad ! alsasink sync=false') 
     	player.set_state(gst.STATE_PLAYING)
     	gtk.main()
@@ -81,7 +81,7 @@ if __name__ == '__main__':
             fileDir = request(tn, pin)
                      
             print "Starting Steam"
-            playAudio(fileDir, str(fileid) + '.mp3')
+            playAudio(fileDir, str(fileid)+'.mp3')
         
         
         
