@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
-		<div class="jumbotron createCustomer">
+		<div class="jumbotron narrow">
 			<?php
 				if (isset($_SESSION["CanView"]))
 				{
