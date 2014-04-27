@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
-		<div class="jumbotron index">
+		<div class="jumbotron narrow">
 			<h1>Museum Portal Index</h1>
 			
 		<form method="post" action="loginUser.php">

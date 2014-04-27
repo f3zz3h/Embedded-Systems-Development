@@ -14,7 +14,7 @@
 			if ($_SESSION["CanView"] == true)
 			{
 				echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>
-				<h1>Museum portal manage users</h1>
+				<h1>Museum portal manage devices</h1>
 				<br/>";
 			
 				$con = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
@@ -24,15 +24,22 @@
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 				}
 
-				$result = mysqli_query($con,"SELECT * FROM customer");
+				$result = mysqli_query($con,"SELECT * FROM device");
 
 				echo "<table class=\"table table-striped\">";
-				echo "<thead><th>Name</th><th>Phone #</th><th>Address</th><th>Delete</th></thead>";
+				echo "<thead><th>Name</th><th>Available</th><th>Group ID</th></thead>";
 				echo "<tbody>";
 				
 				while($row = mysqli_fetch_array($result))
 				{
-					echo "<tr><td>$row[1]</td><td>$row[2]</td><td>$row[3]</td><td><a href=\"/deleteCustomer.php?id=$row[0]\"><span class=\"glyphicon glyphicon-remove\"></span></a></td></tr>";
+					if ($row[2] == 0)
+					{
+						echo "<tr><td>$row[1]</td><td><span style=\"color:green\" class=\"glyphicon glyphicon-ok-sign\"</span></td><td>$row[3]</td></tr>";
+					}
+					else
+					{
+						echo "<tr><td>$row[1]</td><td><span style=\"color:red\" class=\"glyphicon glyphicon-remove-sign\"</span></td><td>$row[3]</td></tr>";
+					}
 				}
 
 				echo "</tbody></table>";

@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<div class="jumbotron fileUpload">
+		<div class="jumbotron narrow">
 			<?php
 				if (isset($_SESSION["CanView"]))
 				{

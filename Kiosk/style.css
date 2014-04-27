@@ -7,7 +7,7 @@
 	float:left;
 }
 
-.createCustomer, .userManagement, .index, .deleteCustomer, .updateCustomer, .fileUpload, .fileManagement, .manageFiles, .manageUsers, .deleteFile, .portalHome
+.narrow
 {
 	margin-left:25%;
 	margin-right:25%;

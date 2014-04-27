@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<div class="jumbotron customer">
+		<div class="jumbotron narrow">
 			<?php
 				if (isset($_SESSION["CanView"]))
 				{
@@ -44,7 +44,7 @@
 									
 							if (mysqli_query($connection, $sql))
 							{
-								echo "<p>Customer created.</p>";
+								echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a></br><p>Customer created.</p>";
 							}
 						}
 						else
