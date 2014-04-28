@@ -12,10 +12,7 @@ LED_OUTPUT = '@00D200\r' # port C/2 output
 #"@00P001\r" select first column
 #"@00P23F\r" write hex code for a 0
 CHECK_BUTTON = '@00P1?\r' #check for button pressed
-SEG_7_1 = '01'
-SEG_7_2 = '02'
-SEG_7_3 = '04'
-SEG_7_4 = '08'
+SEG_7 = ['01', '02', '04' ,'08']
 
 class PIO:
     def __init__(self):
@@ -42,24 +39,17 @@ class PIO:
             if(int(key[0]) != 0): 
                 return int(key[0])
         return -1
-    def display(self, num1, num2, num3, num4):
+    def display(self, num):
+        #Write values for appox 1 second
         for x in range (0, 100):
-            self.setup_write(SEG_7_1)
-            self.write('@00P2' + self.ledSwitch(str(num1)) + END )
-            time.sleep(0.001) 
-            
-            self.setup_write(SEG_7_2)
-            self.write('@00P2' + self.ledSwitch(str(num2)) + END )
-            time.sleep(0.001)
-            
-            self.setup_write(SEG_7_3)
-            self.write('@00P2' + self.ledSwitch(str(num3)) + END ) 
-            time.sleep(0.001)
-            
-            self.setup_write(SEG_7_4)
-            self.write('@00P2' + self.ledSwitch(str(num4)) + END ) 
-            time.sleep(0.001)
-            
+            for i in range (0,4):
+                self.setup_write(SEG_7[i])
+                self.write('@00P2' + self.ledSwitch(str(num[i])) + END )
+                time.sleep(0.001)
+        #Clear display at finish
+        for i in range (0,4):
+            self.setup_write(SEG_7[i])
+        
         
     def close(self):
         self.ser.close()
@@ -89,9 +79,9 @@ if __name__ == '__main__':
     keypad = PIO()
         
 #    test calls for lcd write
-    keypad.display(1, 2, 3, 4)
-    keypad.display(0, 4, 5, 9)
-    keypad.display(5, 0, 9, 4)
+    keypad.display([1, 2, 3, 4])
+    keypad.display([0, 4, 5, 9])
+    keypad.display([5, 0, 9, 4])
     
    
     
