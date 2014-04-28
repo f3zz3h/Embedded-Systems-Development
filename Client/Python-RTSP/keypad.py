@@ -1,7 +1,7 @@
 import serial
 import time
 import io
-import threading
+import thread
 import math
 
 TTY = '/dev/ttyACM0'
@@ -34,6 +34,7 @@ KEYPAD = [[ 1 ,2 ,3 ,10 ],
           [ 7 ,8 ,9 ,12 ],
           [ 13,0 ,14,15 ]]
 
+
 class PIO:
     def __init__(self):
         self.ser = serial.Serial(TTY, baudrate=BAUD, timeout=1)
@@ -61,53 +62,52 @@ class PIO:
         ##Should error check
         self.ser_io.flush()
         self.ser_io.write(unicode(cmd))
-        time.sleep(0.001)
+        
         retval = self.ser_io.readline()
-        time.sleep(0.001)
+        
         self.ser_io.flush()
         return retval
     
     def setup_display(self, display):
         # Clear first
         self.write('@00P200\r') 
-        time.sleep(0.0001)
+        
         # now select output display
         self.write(SELECT_COLUMN[display]) 
-        time.sleep(.001)
+        
         
     # 
+
     def display(self, num):
         """
         params: num[4] array of size 4 which takes numbers from 0-9 for each lcd item
         ToDo: Could just be a number 0-9999 and be broken into components but for now
         this works
         """
-        x = 0
-        ssd = 0
-                   
         #Write values for appox 0.1 second
-        for x in range(0, 10):
-            for ssd in range (0,4):
-                self.setup_display(ssd)
-                self.write('@00P2' + self.ledSwitch(str(num[ssd])) + END )
-                #Change this value for slower platfroms.. this is for a fast pc.. try 0.0001 for rpi to start with
-                time.sleep(0.005)
+        #for x in range(0, 10):
+        for ssd in range (0,4):
+            self.setup_display(ssd)
+            self.write('@00P2' + self.ledSwitch(str(num[ssd])) + END )
+            #Change this value for slower platfroms.. this is for a fast pc.. try 0.0001 for rpi to start with
+            
                 
         #Clear display at finish
         for disp in range (0,4):
             self.setup_display(disp)
-            time.sleep(0.1)
-                 
-        
+            
+             
+
+              
     def close(self):
         self.ser.close()
     def keypad_read(self):
         keys = [0,0,0,0]
         for i in range(0,4):
             self.write(SELECT_COLUMN[i])
-            time.sleep(0.01)
+            
             key = self.write(CHECK_BUTTON)
-            time.sleep(0.01)
+            
                     
             key = key.lstrip('!')
             key = key.rstrip()
@@ -143,28 +143,40 @@ class PIO:
             print "Invalid button press"
             return None
         
-
+    def readWriteKeypad(self, output = [0,0,0,0]):
+        for sseg in range(0,4):
+            #Clear any left overs from previous run!         
+            self.ser_io.readlines()      
+            gotNum = False 
+            for i in range (0,500):
+                #check if previous loop got a key num
+                if (gotNum == True):
+                    break
+                
+                keys = pio.keypad_read()
+                for col in range (0,4):
+                    if (keys[col] > 0):
+                        output[sseg] = self.keypadSwitch(col, keys[col])
+                        gotNum = True
+                        break
+                    self.display(output)
+        return output
+                    
+        
 
 if __name__ == '__main__':
     
     pio = PIO()
-    #thread = threading.Thread(target=read_from_port, args=(serial_port,))    
+    output = [0,0,0,0]
+    #thread = threading.Thread(target=pio.display())    
 #    test calls for lcd write
     #pio.display([1, 2, 3, 4])
     #pio.display([0, 'C', 5, 9])
     #pio.display([5, 0, 'A', 4])
     #pio.display([1, 2, 3, 4])    
-    
-    #Clear any left overs from previous run!
-    for Num in range(0,4):
-         
-        pio.ser_io.readlines()   
-        for i in range (0,500):
-            keys = pio.keypad_read()
-            for col in range (0,4):
-                if (keys[col] > 0):
-                    num = pio.keypadSwitch(col, keys[col])
-                    pio.display([0, 0, 0, num])
-                                                                      
+    num = pio.readWriteKeypad()
+       
+    for i in range(0,1000):
+        pio.display(num)                                                               
         
     pio.close()
