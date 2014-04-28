@@ -1,5 +1,6 @@
 import serial
 import time
+import io
 
 TTY = '/dev/ttyACM0'
 BAUD = 115200
@@ -9,14 +10,14 @@ END = '\r'
 PORTA_OUTPUT = '@00D000\r' #port A/0 output
 KEY_INPUT = '@00D1FF\r'  # port B/1 input
 LED_OUTPUT = '@00D200\r' # port C/2 output
-#"@00P001\r" select first column
+SELECT_COLUMN = ['@00P001\r','@00P002\r','@00P004\r','@00P008\r'] #select first column
 #"@00P23F\r" write hex code for a 0
-CHECK_BUTTON = '@00P1?\r' #check for button pressed
+CHECK_BUTTON = '@00P1?\r'
 SEG_7 = ['01', '02', '04' ,'08']
 
 class PIO:
     def __init__(self):
-        self.ser = serial.Serial(TTY, baudrate=BAUD)
+        self.ser = serial.Serial(TTY, baudrate=BAUD, timeout=1)
         self.write(PORTA_OUTPUT)
         self.write(KEY_INPUT)
         self.write(LED_OUTPUT)
@@ -29,16 +30,32 @@ class PIO:
     def write(self, cmd):
         self.ser.write(cmd)
     def setup_read(self):
+        self.ser_io = None
         self.ser.write(KEY_INPUT)
         time.sleep(.1)
+        if(self.ser_io is None):
+            self.ser_io = io.TextIOWrapper(io.BufferedRWPair(self.ser, self.ser, 1),  
+                               newline = '\r',
+                               line_buffering = True)
+        time.sleep(.1)
     def read(self):
-        self.ser.write(CHECK_BUTTON)
-        key = self.ser.read(2)
-        if (not "!" in str(key)):
-            key = str(key).rsplit('\r')
-            if(int(key[0]) != 0): 
-                return int(key[0])
-        return -1
+        self.setup_read()
+        keys = [0,0,0,0]
+        for i in range(0,4):
+            self.write(SELECT_COLUMN[i])
+            time.sleep(.01)
+            self.ser.write(CHECK_BUTTON)
+            time.sleep(0.001)
+            key = str(self.ser_io.readline())
+            key = key.lstrip('!')
+            key = key.rstrip()
+            print key
+            if(int(key) != 0): 
+                keys[i] = int(key)
+        return keys
+    # params: num[4] array of size 4 which takes numbers from 0-9 for each lcd item
+    # ToDo: Could just be a number 0-9999 and be broken into components but for now
+    # this works
     def display(self, num):
         #Write values for appox 1 second
         for x in range (0, 100):
@@ -79,19 +96,14 @@ if __name__ == '__main__':
     keypad = PIO()
         
 #    test calls for lcd write
-    keypad.display([1, 2, 3, 4])
-    keypad.display([0, 4, 5, 9])
-    keypad.display([5, 0, 9, 4])
+    #keypad.display([1, 2, 3, 4])
+    #keypad.display([0, 4, 5, 9])
+    #keypad.display([5, 0, 9, 4])     
     
-   
-    
-    """ for x in range(0, 100):
-        time.sleep(.1)
-        key = keypad.read()
-        if (key > 0):
-            print key 
-    
-    """
-
+    while(1):
+        keys = keypad.read()
+        for i in range(0,4):
+            if (keys[i] > 0):
+                print keys[i] 
     
     keypad.close()
