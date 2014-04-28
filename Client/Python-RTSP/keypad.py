@@ -89,9 +89,9 @@ if __name__ == '__main__':
     keypad = PIO()
         
 #    test calls for lcd write
-     keypad.display(1, 2, 3, 4)
-     keypad.display(0, 4, 5, 9)
-     keypad.display(5, 0, 9, 4)
+    keypad.display(1, 2, 3, 4)
+    keypad.display(0, 4, 5, 9)
+    keypad.display(5, 0, 9, 4)
     
    
     
