@@ -3,18 +3,21 @@
 <?php session_start(); ?>
 <html>
 <head>
+	<!-- deleteCustomer.php - deletes a customers details from the database-->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="jumbotron deleteCustomer">
+	<div class="jumbotron narrow">
 		<?php
+			//Check access
 			if (isset($_SESSION["CanView"]))
 			{
 				if ($_SESSION["CanView"] == true)
 				{
 					$id;
 				
+					//If no ID was password with the query string we can't delete anyone
 					if (!isset($_GET['id']))
 					{
 						echo 'No ID was given...';
@@ -32,8 +35,10 @@
 						die('Connect Error (' . $con->connect_errno . ') ' . $con->connect_error);
 					}
 
+					//Build deletion SQL
 					$sql = "DELETE FROM customer WHERE id = $id";
 					
+					//If the result failed, die.
 					if (!$result = $con->prepare($sql))
 					{
 						die('Query failed: (' . $con->errno . ') ' . $con->error);
@@ -44,6 +49,7 @@
 						die('Execute failed: (' . $result->errno . ') ' . $result->error);
 					}
 
+					//Otherwise, display confirmation message and redirect back to the manage users page.
 					if ($result->affected_rows > 0)
 					{
 						echo "<b>Customer Deleted.. Please wait.</b>";

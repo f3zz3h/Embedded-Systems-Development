@@ -43,7 +43,7 @@ class PIO:
                 return int(key[0])
         return -1
     def display(self, num1, num2, num3, num4):
-        for x in range (0, 1000):
+        for x in range (0, 100):
             self.setup_write(SEG_7_1)
             self.write('@00P2' + self.ledSwitch(str(num1)) + END )
             time.sleep(0.001) 
@@ -89,9 +89,9 @@ if __name__ == '__main__':
     keypad = PIO()
         
 #    test calls for lcd write
-#    keypad.display(1, 2, 3, 4)
-#    keypad.display(0, 4, 5, 9)
-#    keypad.display(5, 0, 9, 4)
+     keypad.display(1, 2, 3, 4)
+     keypad.display(0, 4, 5, 9)
+     keypad.display(5, 0, 9, 4)
     
    
     

@@ -3,11 +3,12 @@
 <?php session_start(); ?>
 <html>
 <head>
+<!-- portalHome.php - Home page of the Kiosk portal-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
-    <div class="jumbotron portalHome">
+    <div class="jumbotron narrow">
 		<?php
 			if (isset($_SESSION["CanView"]))
 			{
@@ -17,7 +18,10 @@
 					<a href=\"/userManagement.php\"><button type=\"button\" class=\"btn btn-primary\">Manage Users</button></a>
 					<br/>
 					<br/>
-					<a href=\"/fileManagement.php\"><button type=\"button\" class=\"btn btn-primary\">Manage Files</button></a>";
+					<a href=\"/fileManagement.php\"><button type=\"button\" class=\"btn btn-primary\">Manage Files</button></a>
+					<br/>
+					<br/>
+					<a href=\"/deviceManagement.php\"><button type=\"button\" class=\"btn btn-primary\">Manage Devices</button></a>";
 				}
 				else
 				{

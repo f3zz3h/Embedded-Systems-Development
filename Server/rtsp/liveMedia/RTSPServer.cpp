@@ -18,7 +18,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // A RTSP server
 // Implementation
 
-// MySQL for Museum custom RTSP methods
+// *ESD* MySQL for Museum custom RTSP methods
 #include <mysql_connection.h>
 #include <mysql_driver.h>
 
@@ -569,6 +569,10 @@ void RTSPServer::RTSPClientConnection
   delete[] rtspURL;
 }
 
+// *ESD*
+// Handle MySQL Query
+// Description: Handle the retrieval of and return the results of a MySQL query passed in
+// Return: Result Set from query
 sql::ResultSet * RTSPServer::RTSPClientConnection
 ::handleMySQLQuery(char* query) {
 
@@ -587,7 +591,7 @@ sql::ResultSet * RTSPServer::RTSPClientConnection
 	    std::cout << "\tQuery: " << query << std::endl;
 	    res = stmt->executeQuery(query);
 
-	    //delete res;
+	    // Housekeeping before returning the Result Set
 	    delete stmt;
 	    delete con;
 	    return res;
@@ -606,8 +610,12 @@ sql::ResultSet * RTSPServer::RTSPClientConnection
 
 }
 
+// Handle REQUEST method
+// Description: Handle the REQUEST method
+// Return: None
 void RTSPServer::RTSPClientConnection
-::handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix, char const* fullRequestStr, unsigned pinId, unsigned displayId) {
+::handleCmd_REQUEST(char const* urlPreSuffix, char const* urlSuffix,
+		char const* fullRequestStr, unsigned pinId, unsigned displayId) {
 	do {
 		char *buff;
 		sql::ResultSet *result;
@@ -628,7 +636,7 @@ void RTSPServer::RTSPClientConnection
 			delete result;
 			break;
 		}
-		// Spit out the results.
+		// Spit out the results in a format suitable for the client
 		snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 					"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n"
 					"Language: %s\r\n"
@@ -663,12 +671,12 @@ void RTSPServer::RTSPClientConnection
 
 		// Check if there is a valid record, count number of rows. 1==valid
 		if((result->next()) && (result->getInt(1) == 1)) {
-			// Valid PIN
+			// Valid PIN. Let the client know
 			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 							"RTSP/1.0 200 OK\r\nCSeq: %s\r\nPin: %u\r\n",
 							fCurrentCSeq, pinId);
 		} else {
-			// Not a valid PIN
+			// Not a valid PIN. Let the client know
 			snprintf((char*)fResponseBuffer, sizeof fResponseBuffer,
 								"RTSP/1.0 403 Forbidden\r\nCSeq: %s\r\nPin: %u\r\n",
 								fCurrentCSeq, pinId);
@@ -697,6 +705,7 @@ void RTSPServer::RTSPClientConnection
 
 	} while (0);
 }
+// *ESD* end
 
 static void lookForHeader(char const* headerName, char const* source, unsigned sourceLen, char* resultStr, unsigned resultMaxSize) {
   resultStr[0] = '\0';  // by default, return an empty string
@@ -1089,8 +1098,8 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
     char urlSuffix[RTSP_PARAM_STRING_MAX];
     char cseq[RTSP_PARAM_STRING_MAX];
     char sessionIdStr[RTSP_PARAM_STRING_MAX];
-    unsigned pinId = 0;
-    unsigned displayId = 0;
+    unsigned pinId = 0; // ESD
+    unsigned displayId = 0; // ESD
     unsigned contentLength = 0;
     fLastCRLF[2] = '\0'; // temporarily, for parsing
     Boolean parseSucceeded = parseRTSPRequestString((char*)fRequestBuffer, fLastCRLF+2 - fRequestBuffer,
@@ -1119,6 +1128,7 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
 	  if (clientSession != NULL) clientSession->noteLiveness();
 	}
 	handleCmd_OPTIONS();
+	// *ESD* Handling custom methods.
       } else if (strcmp(cmdName, "AUTH") == 0) {
     	  handleCmd_AUTH(urlPreSuffix, urlSuffix, (char const*)fRequestBuffer, pinId);
       } else if (strcmp(cmdName, "DEAUTH") == 0) {

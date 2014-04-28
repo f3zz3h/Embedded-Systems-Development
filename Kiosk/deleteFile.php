@@ -3,11 +3,12 @@
 <?php session_start(); ?>
 <html>
 <head>
+	<!-- deleteFile.php - Handles the removing of files from the server-->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="jumbotron deleteFile">
+	<div class="jumbotron narrow">
 		<?php
 			if (isset($_SESSION["CanView"]))
 			{
@@ -15,6 +16,7 @@
 				{
 					$id;
 				
+					//Can't delete a file without an ID.
 					if (!isset($_GET['id']))
 					{
 						echo "<p><b>Error: No file ID found.. Please wait.</b></p>";
@@ -27,6 +29,7 @@
 						$id = $_GET['id'];
 					}
 					
+					//If location of the file isn't set, we can't delete it.
 					if (!isset($_GET['loc']))
 					{
 						echo "<p><b>Error: No file location found.. Please wait.</b></p>";
@@ -57,6 +60,7 @@
 						die('Execute failed: (' . $result->errno . ') ' . $result->error);
 					}
 
+					//This isn't actually going to work currently, as the filename isn't specified.
 					if (unlink($loc))
 					{
 						echo "<p><b>File deleted.. Please wait.</b></p>";

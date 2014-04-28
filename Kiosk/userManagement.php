@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<?php session_start(); ?>
+<?php 
+//Start the session to allow use of the session variables.
+session_start(); 
+?>
 <html>
 <head>
+<!-- userManagement.php - User management page, either create a group or customer, or manage customers-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
-    <div class="jumbotron userManagement">
+    <div class="jumbotron narrow">
 		<?php
+			//Check to see if the session variable has been set.
 			if (isset($_SESSION["CanView"]))
 			{
+				//If user can view the page, render the HTML.
 				if ($_SESSION["CanView"] == true)
 				{
 					echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>

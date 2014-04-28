@@ -207,7 +207,7 @@ Boolean parseRTSPRequestString(char const* reqStr,
     }
   }
 
-  // Also: Look for "Content-Length:" (optional, case insensitive)
+  // ESD: Look for "DisplayId:" (optional, case insensitive)
   resultDisplayId = 1; // default value
   for (j = i; (int)j < (int)(reqStrSize-10); ++j) {
     if (_strncasecmp("DisplayId:", &(reqStr[j]), 10) == 0) {
@@ -220,7 +220,7 @@ Boolean parseRTSPRequestString(char const* reqStr,
     }
   }
 
-  // Also: Look for "Content-Length:" (optional, case insensitive)
+  // ESD: Look for "Pin:" (optional, case insensitive)
   resultPinId = 0; // default value
   for (j = i; (int)j < (int)(reqStrSize-4); ++j) {
     if (_strncasecmp("Pin:", &(reqStr[j]), 4) == 0) {

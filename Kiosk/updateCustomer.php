@@ -7,33 +7,43 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	<body>
-    <div class="jumbotron updateCustomer">
+    <div class="jumbotron narrow">
 	<?php
 		if (isset($_SESSION["CanView"]))
 		{
 			if ($_SESSION["CanView"] == true)
 			{
+				//Create the home page link
 				echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>
 				<h1>Museum portal update customer</h1>
 				<br/>";
 			
+				//Get the ID of the customer from the query string.
 				$id = $_GET['id'];
+				
+				//Set the encryption type and password for card numbers
 				$encryptionMethod = 'aes128';
 				$password = 'ESD';
 
+				//Create the MySQL connection object
 				$con = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
-				// Check connection
+				
+				// Check connection success
 				if (mysqli_connect_errno())
 				{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 				}
 
+				//Execute the query and return the resultant MySQL object into the result variable.
 				$result = mysqli_query($con,"SELECT * FROM customer WHERE id = $id");
 
+				//Get the resultant array of data from the result variable
 				$customer = mysqli_fetch_array($result);
 				
+				//Decrypt card number for dispaly purposes
 				$cardNumber = openssl_decrypt($customer[6], $encryptionMethod, $password);
 				
+				//Render page HTML
 				echo "<form action=\"customer.php\" method=\"post\">
 				<input type=\"hidden\" name=\"id\" value=\"$customer[0]\"/>
 				<div class=\"form-group\">

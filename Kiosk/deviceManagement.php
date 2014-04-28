@@ -3,7 +3,7 @@
 <?php session_start(); ?>
 <html>
 <head>
-<!-- fileManagement.php - File management homepage, from here, view files or add a new one-->
+<!-- deviceManagement.php - Device management page, add device or view devices.-->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
@@ -15,12 +15,12 @@
 					if ($_SESSION["CanView"] == true)
 					{
 						echo "<a class=\"homeLink\" href=\"/portalHome.php\"><span class=\"glyphicon glyphicon-home\"></span></a>
-						<h1>Museum Portal File Management</h1>
+						<h1>Museum Portal Device Management</h1>
 						<br/>
-						<a href=\"/uploadFile.php\"><button type=\"button\" class=\"btn btn-primary\">Upload File</button></a>
+						<a href=\"/addDevice.php\"><button type=\"button\" class=\"btn btn-primary\">Add Device</button></a>
 						<br/>
 						<br/>
-						<a href=\"/manageFiles.php\"><button type=\"button\" class=\"btn btn-primary\">Manage Files</button></a>";
+						<a href=\"/manageDevices.php\"><button type=\"button\" class=\"btn btn-primary\">Manage Devices</button></a>";
 					}
 					else
 					{
