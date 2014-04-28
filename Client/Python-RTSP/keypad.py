@@ -2,6 +2,7 @@ import serial
 import time
 import io
 import threading
+import math
 
 TTY = '/dev/ttyACM0'
 BAUD = 115200
@@ -21,6 +22,17 @@ SELECT_COLUMN = ['@00P001\r','@00P002\r','@00P004\r','@00P008\r'] #select first 
 #"@00P23F\r" write hex code for a 0
 CHECK_BUTTON = '@00P1?\r'
 
+BACK = 10
+DOWN = 11
+ACCEPT = 12
+REWIND = 13
+STOP = 0
+PLAY = 14
+FFWD = 15
+KEYPAD = [[ 1 ,2 ,3 ,10 ],
+          [ 4 ,5 ,6 ,11 ],
+          [ 7 ,8 ,9 ,12 ],
+          [ 13,0 ,14,15 ]]
 
 class PIO:
     def __init__(self):
@@ -31,10 +43,11 @@ class PIO:
         time.sleep(0.2)
         self.port_setup(C, OUTPUT)
         time.sleep(0.2)
-        
+                
         self.ser_io = io.TextIOWrapper(io.BufferedRWPair(self.ser, self.ser, 1),  
                               newline = '\r',
-                             line_buffering = True)   
+                             line_buffering = True)
+        self.ser_io.readlines()   
 
     def port_setup(self, port, io):
         if (io == OUTPUT): 
@@ -46,9 +59,13 @@ class PIO:
         
     def write(self,cmd):
         ##Should error check
-        self.ser_io.write(unicode(cmd))
         self.ser_io.flush()
-        return self.ser_io.readline()  
+        self.ser_io.write(unicode(cmd))
+        time.sleep(0.001)
+        retval = self.ser_io.readline()
+        time.sleep(0.001)
+        self.ser_io.flush()
+        return retval
     
     def setup_display(self, display):
         # Clear first
@@ -68,8 +85,8 @@ class PIO:
         x = 0
         ssd = 0
                    
-        #Write values for appox 1 second
-        for x in range(0, 100):
+        #Write values for appox 0.1 second
+        for x in range(0, 10):
             for ssd in range (0,4):
                 self.setup_display(ssd)
                 self.write('@00P2' + self.ledSwitch(str(num[ssd])) + END )
@@ -88,20 +105,15 @@ class PIO:
         keys = [0,0,0,0]
         for i in range(0,4):
             self.write(SELECT_COLUMN[i])
-            time.sleep(0.001)
+            time.sleep(0.01)
             key = self.write(CHECK_BUTTON)
-            time.sleep(0.001)
-            #keyInit = self.ser_io.readlines()
-            self.ser_io.flush()
-            
+            time.sleep(0.01)
+                    
             key = key.lstrip('!')
             key = key.rstrip()
                                    
-            try:
-                if(int(key) != 0): 
-                    keys[i] = int(key)
-            except:
-                continue
+            if(int(key) != 0): 
+                keys[i] = int(key)
         return keys
     def ledSwitch(self, choice):
             return {
@@ -123,14 +135,14 @@ class PIO:
                 'F' : '71',
             }[choice]
     def keypadSwitch(self, column, value):
-        if (column == 3 ):
-            print "Col 1 But " + str(value) 
-        if (column == 2 ):
-            print "Col 2 But " + str(value)
-        if (column == 1 ):
-            print "Col 3 But " + str(value)
-        if (column == 0 ):  
-            print "Col 4 But " + str(value)
+        try:
+            keyPress = KEYPAD[int(math.log(value,2))][column]   
+            print "Col:" + str(column) + " - Button:" + str(keyPress)
+            return keyPress
+        except:
+            print "Invalid button press"
+            return None
+        
 
 
 if __name__ == '__main__':
@@ -141,14 +153,18 @@ if __name__ == '__main__':
     #pio.display([1, 2, 3, 4])
     #pio.display([0, 'C', 5, 9])
     #pio.display([5, 0, 'A', 4])
-    #pio.display([1, 2, 3, 4])     
+    #pio.display([1, 2, 3, 4])    
     
-    while(1):
-        keys = pio.keypad_read()
-        print keys
-        for col in range (0,4):
-            print keys[col]
-            if (keys[col] > 0):
-                pio.keypadSwitch(col, keys[col])                                         
-    
+    #Clear any left overs from previous run!
+    for Num in range(0,4):
+         
+        pio.ser_io.readlines()   
+        for i in range (0,500):
+            keys = pio.keypad_read()
+            for col in range (0,4):
+                if (keys[col] > 0):
+                    num = pio.keypadSwitch(col, keys[col])
+                    pio.display([0, 0, 0, num])
+                                                                      
+        
     pio.close()
