@@ -82,6 +82,3 @@ if __name__ == '__main__':
                      
             print "Starting Steam"
             playAudio(fileDir, str(fileid)+'.mp3')
-        
-        
-        

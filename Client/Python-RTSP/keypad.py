@@ -6,7 +6,7 @@ BAUD = 115200
 
 START = '@00'
 END = '\r'
-#"@00D000\r" port A/0 output
+PORTA_OUTPUT = '@00D000\r' #port A/0 output
 KEY_INPUT = '@00D1FF\r'  # port B/1 input
 LED_OUTPUT = '@00D200\r' # port C/2 output
 #"@00P001\r" select first column
@@ -20,6 +20,9 @@ SEG_7_1 = '08'
 class PIO:
     def __init__(self):
         self.ser = serial.Serial(TTY, baudrate=BAUD)
+        self.write(PORTA_OUTPUT)
+        self.write(KEY_INPUT)
+        self.write(LED_OUTPUT)
     def setup_write(self, display):
         keypad.write(LED_OUTPUT) # port C/2 output
         time.sleep(0.25)
@@ -34,8 +37,9 @@ class PIO:
         self.ser.write(CHECK_BUTTON)
         key = self.ser.read(2)
         if (not "!" in str(key)):
-            if(int(key) != 0): 
-                return int(key)
+            key = str(key).rsplit('\r')
+            if(int(key[0]) != 0): 
+                return int(key[0])
         return -1
     def close(self):
         self.ser.close()
@@ -65,24 +69,27 @@ if __name__ == '__main__':
     keypad = PIO()
         
     
+    """
     #print ser.read(2)
-    """time.sleep(1)
+    time.sleep(1)
     keypad.write('@00P001' + END) # select first column
+    time.sleep(1)
     keypad.write('@00P2' + keypad.ledSwitch(str(1)) + END ) # write hex code for a 0
-    time.sleep(.25)
+    time.sleep(1)
     keypad.write('@00P002' + END) # select first column
     keypad.write('@00P2' + keypad.ledSwitch(str(2)) + END ) # write hex code for a 0
-    time.sleep(.25)
+    time.sleep(1)
     keypad.write('@00P004' + END) # select first column
     keypad.write('@00P2' + keypad.ledSwitch(str(3)) + END ) # write hex code for a 0
-    time.sleep(.25)
+    time.sleep(1)
     keypad.write('@00P008' + END) # select first column
     keypad.write('@00P2' + keypad.ledSwitch(str(4)) + END ) # write hex code for a 0
-    time.sleep(10)"""
+    time.sleep(10)
     keypad.setup_read()
+    """
     
-    for x in range(0, 1000):
-        time.sleep(.5)
+    for x in range(0, 100):
+        time.sleep(.1)
         key = keypad.read()
         if (key > 0):
             print key 
