@@ -2,6 +2,7 @@
 import serial
 import time
 from collections import namedtuple
+
 ENTER_PIN = 1
 INVALID_PIN = 2
 ACCEPTED_PIN = 3
@@ -9,8 +10,9 @@ ENTER_DISPLAY = 4
 INVALID_DISPLAY = 5
 FETCH_DISPLAY = 6
 TRACK_STATUS = 7
+PLAY = 8
 
-class lcd:
+class LCD:
 	def __init__(self):
 		Constants = namedtuple('Constants', ['StartTopLine', 'EndTopLine', 'StartBottomLine', 'EndBottomLine', 'EndOfMemCap'])
 		self.constants = Constants(0, 15, 16, 31, 39)
@@ -21,7 +23,6 @@ class lcd:
 		self.cursorPos = self.constants.StartTopLine
 	
 	def topLineScroll(self, textString):
-		nextString = ""
 		cursorPos = self.constants.StartTopLine
 		firstPass = True #test to see if in first 16 chars
 
@@ -99,12 +100,21 @@ class lcd:
 			INVALID_DISPLAY : "Invalid Display Number, Please Try Again",
 			FETCH_DISPLAY : "Fetching Display Track",
 		#	TRACK_STATUS : "%d: %s" % (trackNumber, trackName),
+			PLAY : "Playing"
 		}[choice]
+	def writeLCD(self, choice):
+		self.clearScreen()
+		self.startAtFirstLine()
+		textString = self.menuSwitch(choice)
+		self.topLineScroll(textString) #send string and serial setup to handling function
+		time.sleep(0.5)
+		myLCD.clearScreen()
 
-#USED IF THIS FILE IS LAUNCHER FROM HERE... otherwise not run
+#USED IF THIS FILE IS LAUNCHER FROM HERE
+# SEB THIS WILL PROBABLY NO LONGER WORK.. will need fixing if you need to debug
 if __name__ == '__main__':
 	
-	myLCD = lcd()
+	myLCD = LCD()
 	myLCD.clearScreen()
 
 	while(True):

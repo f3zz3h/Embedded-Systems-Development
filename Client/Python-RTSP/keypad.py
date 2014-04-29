@@ -1,7 +1,6 @@
 import serial
 import time
 import io
-import thread
 import math
 
 TTY = '/dev/ttyACM0'
@@ -133,27 +132,31 @@ class PIO:
                 'D' : '5E',
                 'E' : '79',
                 'F' : '71',
+                '.' : '80',
+                ' ' : '00'
             }[choice]
     def keypadSwitch(self, column, value):
         try:
             keyPress = KEYPAD[int(math.log(value,2))][column]   
-            print "Col:" + str(column) + " - Button:" + str(keyPress)
+            #print "Col:" + str(column) + " - Button:" + str(keyPress)
             return keyPress
         except:
             print "Invalid button press"
             return None
         
-    def readWriteKeypad(self, output = [0,0,0,0]):
+    def readWriteKeypad(self):
+        output = [' ',' ',' ',' ']
         for sseg in range(0,4):
+            output[sseg] = '.'
             #Clear any left overs from previous run!         
             self.ser_io.readlines()      
             gotNum = False 
-            for i in range (0,500):
+            while(True):
                 #check if previous loop got a key num
                 if (gotNum == True):
                     break
                 
-                keys = pio.keypad_read()
+                keys = self.keypad_read()
                 for col in range (0,4):
                     if (keys[col] > 0):
                         output[sseg] = self.keypadSwitch(col, keys[col])
