@@ -16,11 +16,15 @@ from collections import namedtuple
 ENTER_PIN = 1
 INVALID_PIN = 2
 ACCEPTED_PIN = 3
-ENTER_DISPLAY = 4
-INVALID_DISPLAY = 5
-FETCH_DISPLAY = 6
+ENTER_DISPLAY_NUMBER = 4
+INVALID_DISPLAY_NUMBER = 5
+FETCH_DISPLAY_NUMBER = 6
 TRACK_STATUS = 7
 PLAY = 8
+PAUSE = 9
+STOP = 10
+FAST_FORWARD = 11
+REWIND = 12
 
 class LCD:
 	def __init__(self):
@@ -67,6 +71,7 @@ class LCD:
 		function for shifting bottom line to top line 
 		and writing along the bottom line
 		"""
+		self.clearScreen()
 		for letter in textString:
 			self.lcdWrite(letter)
 	
@@ -128,14 +133,18 @@ class LCD:
 		Return string based on choice
 		"""
 		return {
-			ENTER_PIN : "Please Enter Pin Number: ",
-			ACCEPTED_PIN : "Pin Number Accepted",
-			INVALID_PIN : "Pin Number Declined",
-			ENTER_DISPLAY : "Please Enter Display Number: ",
-			INVALID_DISPLAY : "Invalid Display Number, Please Try Again",
-			FETCH_DISPLAY : "Fetching Display Track",
+			ENTER_PIN : "Please Enter PinNumber:",
+			ACCEPTED_PIN : "Pin Number      Accepted",
+			INVALID_PIN : "Pin Number      Declined",
+			ENTER_DISPLAY_NUMBER : "Please Enter    Display Number:",
+			INVALID_DISPLAY_NUMBER : "Invalid Display Number",
+			FETCH_DISPLAY_NUMBER : "Fetching DisplayTrack",
 		#	TRACK_STATUS : "%d: %s" % (trackNumber, trackName),
-			PLAY : "Playing"
+			PLAY : "Playing",
+			PAUSE : "Paused",
+			STOP : "Stopped",
+			FAST_FORWARD : "Fast Forward",
+			REWIND : "Rewind"
 		}[choice]
 		
 	def writeLCD(self, choice):
@@ -143,8 +152,10 @@ class LCD:
 		A structured write LCD
 		"""
 		self.clearScreen()
+		self.cursorPos = 0
+		self.botLine = ""
 		self.startAtFirstLine()
 		textString = self.menuSwitch(choice)
-		self.topLineScroll(textString) #send string and serial setup to handling function
+		self.pageText(textString)
+		#self.topLineScroll(textString) #send string and serial setup to handling function
 		time.sleep(0.5)
-		myLCD.clearScreen()

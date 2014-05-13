@@ -33,8 +33,8 @@ if __name__ == '__main__':
     
     #Instantiate client classes
     clientMain = client()        
-    clientRTSP = rtsp.RTSP()
-    #clientLCD = lcd.LCD()
+#    clientRTSP = rtsp.RTSP()
+    clientLCD = lcd.LCD()
     clientKeypad = keypad.PIO()
     
     #Overall system loop. Will never exit unless system shutdown 
@@ -44,10 +44,10 @@ if __name__ == '__main__':
             
             #Loop until a Valid pin is received to use the device
             while(authorized is not True):
-                #clientLCD.writeLCD(lcd.ENTER_PIN)
+                clientLCD.writeLCD(lcd.ENTER_PIN)
                 
                 #Aquire pin number from keypad
-                num = clientKeypad.readWriteKeypad()
+                num = clientKeypad.readWriteKeypad() ####something goes wrong here
        
                 #Display finished number for quarter of a second
                 for i in range(0,250):
@@ -55,16 +55,16 @@ if __name__ == '__main__':
                 
                 #Convert our array into a string value 
                 pin = clientMain.makePin(num)    
-                
+                authorized = True
                 #Attempt to authorize client device       
-                if (pin):
-                    authorized = clientRTSP.auth( pin)      
+ #               if (pin):
+  #                  authorized = clientRTSP.auth( pin)      
             
             #Loop until Deauthorized
             while(authorized is True): 
                 
                 #Out LCD message
-                #clientLCD.writeLCD(lcd.ENTER_PIN)
+                clientLCD.writeLCD(lcd.ENTER_DISPLAY_NUMBER)
                 
                 #Get file id from keypad
                 fid = clientKeypad.readWriteKeypad()
@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 fileid = clientMain.makePin(fid)   
                 
                 #Request audio location
-                fileDir = clientRTSP.request(pin)
+   #             fileDir = clientRTSP.request(pin)
                 
                 #Check a valid directory is received
                 try:
@@ -88,5 +88,5 @@ if __name__ == '__main__':
                     print "Unable to compare to none"
                     continue
                 #Write LCD with status and start playing streamed audio
-                #clientLCD.writeLCD(lcd.PLAY)
-                clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
+                clientLCD.writeLCD(lcd.PLAY)
+    #            clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
