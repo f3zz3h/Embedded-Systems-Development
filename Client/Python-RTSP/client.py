@@ -33,7 +33,7 @@ if __name__ == '__main__':
     
     #Instantiate client classes
     clientMain = client()        
-#    clientRTSP = rtsp.RTSP()
+    clientRTSP = rtsp.RTSP()
     clientLCD = lcd.LCD()
     clientKeypad = keypad.PIO()
     
@@ -47,7 +47,7 @@ if __name__ == '__main__':
                 clientLCD.writeLCD(lcd.ENTER_PIN)
                 
                 #Aquire pin number from keypad
-                num = clientKeypad.readWriteKeypad() ####something goes wrong here
+                num = clientKeypad.readWriteKeypad() 
        
                 #Display finished number for quarter of a second
                 for i in range(0,250):
@@ -57,8 +57,8 @@ if __name__ == '__main__':
                 pin = clientMain.makePin(num)    
                 authorized = True
                 #Attempt to authorize client device       
- #               if (pin):
-  #                  authorized = clientRTSP.auth( pin)      
+                if (pin):
+                    authorized = clientRTSP.auth( pin)      
             
             #Loop until Deauthorized
             while(authorized is True): 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 fileid = clientMain.makePin(fid)   
                 
                 #Request audio location
-   #             fileDir = clientRTSP.request(pin)
+                fileDir = clientRTSP.request(pin)
                 
                 #Check a valid directory is received
                 try:
@@ -89,4 +89,4 @@ if __name__ == '__main__':
                     continue
                 #Write LCD with status and start playing streamed audio
                 clientLCD.writeLCD(lcd.PLAY)
-    #            clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
+                clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')

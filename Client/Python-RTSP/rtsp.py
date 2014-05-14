@@ -15,6 +15,42 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 import telnetlib
+import threading
+from subprocess import Popen,PIPE
+import sys
+
+    
+class controls(threading.Thread):
+    def run(self):
+        test = True
+        while test:          
+            #ch = display.myGetch() GET CHARACTER AKA A KEY PRESS
+            if ch==ord('f'):
+                mpgplayer.index += 1
+            elif ch==ord('b'):
+                mpgplayer.index -= 1
+            elif ch==ord('q'): #quit
+                mpgplayer.player.set_state(gst.STATE_NULL)
+                test=False
+                gtk.main_quit()
+            elif ch==ord('u'): #vol up
+                mpgplayer.volume += 1
+                log = Popen(['amixer', 'set', 'Master', '%i'%mpgplayer.volume],stdout=PIPE)
+                print '%2i'%mpgplayer.volume
+            elif ch==ord('d'): # vol down
+                mpgplayer.volume -= 1
+                log = Popen(['amixer', 'set', 'Master', '%i'%mpgplayer.volume],stdout=PIPE)
+                print '%2i'%mpgplayer.volume    
+            elif ch==ord('p'): #pause
+                mpgplayer.player.set_state(gst.STATE_PAUSED)
+                print "paused 'r' to resume"
+            elif ch==ord('r'): #play
+                mpgplayer.player.set_state(gst.STATE_PLAYING)
+                print "Playing"
+            else:
+                print "wrong key, hit any key: "
+                #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
+        #EXIT STATUS
 
 class RTSP:
     """
@@ -29,6 +65,23 @@ class RTSP:
         self.serverURL = 'gold.riotnet.co.uk' #:8554/
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
+        self.index = 0
+        self.volume = 1
+        self.title = 'unknown'
+        self.artist = 'unknown'
+        self.player = gst.element_factory_make("playbin", "player")
+        fakesink = gst.element_factory_make('fakesink', "my-fakesink")
+        self.player.set_property("video-sink", fakesink)
+        bus = self.player.get_bus()
+        bus.add_signal_watch()
+        bus.connect('message',self.onmessage)
+
+    def onmessage(self,bus,message):
+        if message.type == gst.MESSAGE_EOS:
+            self.index += 1
+            Display.newsong()
+        if message.type == gst.MESSAGE_TAG:
+            dogs = message.parse_tag()
 
     def auth(self, pin):
         """
@@ -79,10 +132,18 @@ class RTSP:
         #Create rtsp url for passing to gstreamer 
         rtspURL = 'rtsp://'+self.serverURL+':'+ self.serverPORT+'/'
         #create a grestreamer player and with correct pipeline
-        player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + 
+        self.player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + 
                                   fileName + ' ! rtpmpadepay ! mad ! alsasink sync=false')
         #Set state to playing 
-        player.set_state(gst.STATE_PLAYING)
+        self.player.set_state(gst.STATE_PLAYING)
+               
         #start gtk thread
-        gtk.main()
+        gtk.main()  
+    
+if __name__ == '__main__':
+    log = Popen(['amixer', 'set', 'Master', '1'],stdout=PIPE)
+    gtk.gdk.threads_init()
+    Display = display()
+    mpgplayer = RTSP()
+    controls().start()
     
