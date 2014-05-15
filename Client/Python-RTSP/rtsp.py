@@ -76,11 +76,17 @@ class RTSP:
                 log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
-                self.player.set_state(gst.STATE_PAUSED)
-                print "paused 'r' to resume"
+                if self.player.get_state() == gst.STATE_PLAYING:
+                    self.player.set_state(gst.STATE_PAUSED)
+                    print "paused 'r' to resume"
+                else:
+                    print "Stream not playing"
             elif ch==keypad.PLAY: #play
-                self.player.set_state(gst.STATE_PLAYING)
-                print "Playing"
+                if self.player.get_state() == gst.STATE_PAUSED:
+                    self.player.set_state(gst.STATE_PLAYING)
+                    print "Playing"
+                else:
+                    print "Not paused"
             else:
                 print "wrong key, hit any key: "
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
