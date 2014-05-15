@@ -56,6 +56,11 @@ class RTSP:
     def controlFunc(self):
         playbackControls = keypad.PIO()
         test = True
+        
+        #Wait till stream begins playing before allowing playback controls
+        while self.player.get_state() != gst.STATE_PLAYING:
+            time.sleep(0.1)
+        
         while test:          
             chArr = playbackControls.readWriteKeypad(1)
             ch = chArr[0]
