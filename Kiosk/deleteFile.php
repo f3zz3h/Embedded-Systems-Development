@@ -42,7 +42,7 @@
 						$loc = $_GET['loc'];
 					}
 
-					$con = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
+					$con = mysqli_connect("eu-cdbr-azure-west-a.cloudapp.net", "bea59dbc864a3e", "6d5abbdc", "museum", "3306");
 					if ($con->connect_error)
 					
 					{

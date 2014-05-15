@@ -17,7 +17,7 @@
 						//Generate a random 4 digit pin
 						$pin = rand(1000,9999);
 
-						$connection = mysqli_connect("eu-cdbr-azure-west-b.cloudapp.net", "bc39afe900a22c", "ab25d637", "museum", "3306");
+						$connection = mysqli_connect("eu-cdbr-azure-west-a.cloudapp.net", "bea59dbc864a3e", "6d5abbdc", "museum", "3306");
 						
 						//Fetch our group data from the POST Request
 						$language = $_POST["language"];
