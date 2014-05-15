@@ -18,39 +18,7 @@ import telnetlib
 import threading
 from subprocess import Popen,PIPE
 import sys
-
-    
-class controls(threading.Thread):
-    def run(self):
-        test = True
-        while test:          
-            #ch = display.myGetch() GET CHARACTER AKA A KEY PRESS
-            if ch==ord('f'):
-                mpgplayer.index += 1
-            elif ch==ord('b'):
-                mpgplayer.index -= 1
-            elif ch==ord('q'): #quit
-                mpgplayer.player.set_state(gst.STATE_NULL)
-                test=False
-                gtk.main_quit()
-            elif ch==ord('u'): #vol up
-                mpgplayer.volume += 1
-                log = Popen(['amixer', 'set', 'Master', '%i'%mpgplayer.volume],stdout=PIPE)
-                print '%2i'%mpgplayer.volume
-            elif ch==ord('d'): # vol down
-                mpgplayer.volume -= 1
-                log = Popen(['amixer', 'set', 'Master', '%i'%mpgplayer.volume],stdout=PIPE)
-                print '%2i'%mpgplayer.volume    
-            elif ch==ord('p'): #pause
-                mpgplayer.player.set_state(gst.STATE_PAUSED)
-                print "paused 'r' to resume"
-            elif ch==ord('r'): #play
-                mpgplayer.player.set_state(gst.STATE_PLAYING)
-                print "Playing"
-            else:
-                print "wrong key, hit any key: "
-                #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
-        #EXIT STATUS
+import keypad
 
 class RTSP:
     """
@@ -75,13 +43,49 @@ class RTSP:
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
+        #Create gtk thread
+        gtk.gdk.threads_init()
+        log = Popen(['amixer', 'set', 'Master', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
             self.index += 1
-            Display.newsong()
         if message.type == gst.MESSAGE_TAG:
             dogs = message.parse_tag()
+
+    def controlFunc(self):
+        playbackControls = keypad.PIO()
+        test = True
+        while test:          
+            chArr = playbackControls.readWriteKeypad(1)
+            ch = chArr[0]
+            if ch==keypad.REWIND:
+                self.index += 1
+            elif ch==keypad.FFWD:
+                self.index -= 1
+            elif ch==keypad.STOP:
+                self.player.set_state(gst.STATE_NULL)
+                test=False
+                gtk.main_quit()
+            elif ch==keypad.VOLUP: #vol up
+                self.volume += 10
+                log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
+                print '%2i'%self.volume
+            elif ch==keypad.VOLDOWN: # vol down
+                self.volume -= 10
+                log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
+                print '%2i'%self.volume    
+            elif ch==keypad.PAUSE: #pause
+                self.player.set_state(gst.STATE_PAUSED)
+                print "paused 'r' to resume"
+            elif ch==keypad.PLAY: #play
+                self.player.set_state(gst.STATE_PLAYING)
+                print "Playing"
+            else:
+                print "wrong key, hit any key: "
+                #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
+        #EXIT STATUS
+
 
     def auth(self, pin):
         """
@@ -127,8 +131,7 @@ class RTSP:
         Params: fileLocation - url from request
                 fileName - pin from request
         """
-        #Create gtk thread
-        gtk.gdk.threads_init()
+        
         #Create rtsp url for passing to gstreamer 
         rtspURL = 'rtsp://'+self.serverURL+':'+ self.serverPORT+'/'
         #create a grestreamer player and with correct pipeline
@@ -141,9 +144,8 @@ class RTSP:
         gtk.main()  
     
 if __name__ == '__main__':
-    log = Popen(['amixer', 'set', 'Master', '1'],stdout=PIPE)
-    gtk.gdk.threads_init()
-    Display = display()
-    mpgplayer = RTSP()
-    controls().start()
+    
+    clientRTSP = RTSP()    
+    thread = threading.Thread(target=clientRTSP.controlFunc())
+    thread.start()
     

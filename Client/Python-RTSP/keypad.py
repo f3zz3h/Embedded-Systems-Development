@@ -41,6 +41,9 @@ REWIND = 13
 STOP = 0
 PLAY = 14
 FFWD = 15
+VOLUP = 6
+VOLDOWN = 9
+PAUSE = 8
 KEYPAD = [[ 1 ,2 ,3 ,10 ],
           [ 4 ,5 ,6 ,11 ],
           [ 7 ,8 ,9 ,12 ],
@@ -171,13 +174,13 @@ class PIO:
         except:
             return None
         
-    def readWriteKeypad(self):
+    def readWriteKeypad(self, numberOfValues=4):
         """
         Read keypad one number at a time and display each value
         """
         output = [' ',' ',' ',' ']
         #Loop once for each number required
-        for sseg in range(0,4):
+        for sseg in range(0,numberOfValues):
             output[sseg] = '.'
             #Clear any left overs from previous run!         
             self.ser_io.readlines()      
