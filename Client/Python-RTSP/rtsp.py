@@ -19,6 +19,9 @@ import threading
 from subprocess import Popen,PIPE
 import sys
 import keypad
+import time
+
+TENSECS = 10000000000
 
 class RTSP:
     """
@@ -53,8 +56,7 @@ class RTSP:
         if message.type == gst.MESSAGE_TAG:
             dogs = message.parse_tag()
 
-    def controlFunc(self):
-        playbackControls = keypad.PIO()
+    def controlFunc(self, playbackControls):
         test = True
         
         #Wait till stream begins playing before allowing playback controls
@@ -65,9 +67,23 @@ class RTSP:
             chArr = playbackControls.readWriteKeypad(1)
             ch = chArr[0]
             if ch==keypad.REWIND:
-                self.index += 1
+                pos = self.player.query_position(gst.FORMAT_TIME, None)[0]
+                if pos >= TENSECS:   
+                    pos -= TENSECS
+                else:
+                    pos = 0
+                self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, pos)
+                time.sleep(0.2)
             elif ch==keypad.FFWD:
-                self.index -= 1
+                pos = self.player.query_position(gst.FORMAT_TIME, None)[0]
+                length = self.player.query_duration(gst.FORMAT_TIME, None)[0]
+                
+                if pos+TENSECS >= length:
+                    pos = length
+                else:
+                    pos += TENSECS
+                self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, pos)
+                time.sleep(0.2)
             elif ch==keypad.STOP:
                 self.player.set_state(gst.STATE_NULL)
                 test=False
