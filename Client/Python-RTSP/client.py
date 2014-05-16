@@ -8,6 +8,7 @@ __maintainer__ = "Luke Hart"
 __email__ = "luke2.hart@live.uwe.ac.uk"
 __status__ = "Development"
 
+import threading
 import rtsp, lcd, keypad
 
 class client:
@@ -89,4 +90,7 @@ if __name__ == '__main__':
                     continue
                 #Write LCD with status and start playing streamed audio
                 clientLCD.writeLCD(lcd.PLAY)
+                thread = threading.Thread(target=clientRTSP.controlFunc(),args=(clientKeypad,))
+                thread.start()
                 clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
+                thread.join()
