@@ -19,6 +19,7 @@ import threading
 from subprocess import Popen,PIPE
 import sys
 import keypad
+import lcd
 import time
 
 TENSECS = 10000000000
@@ -56,7 +57,7 @@ class RTSP:
         if message.type == gst.MESSAGE_TAG:
             dogs = message.parse_tag()
 
-    def controlFunc(self, playbackControls):
+    def controlFunc(self, playbackControls, display):
         test = True
         
         #Wait till stream begins playing before allowing playback controls
@@ -67,6 +68,7 @@ class RTSP:
             chArr = playbackControls.readWriteKeypad(1)
             ch = chArr[0]
             if ch==keypad.REWIND:
+                display.writeLCD(lcd.REWIND)
                 pos = self.player.query_position(gst.FORMAT_TIME, None)[0]
                 if pos >= TENSECS:   
                     pos -= TENSECS
@@ -75,6 +77,7 @@ class RTSP:
                 self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, pos)
                 time.sleep(0.2)
             elif ch==keypad.FFWD:
+                display.writeLCD(lcd.FAST_FORWARD)
                 pos = self.player.query_position(gst.FORMAT_TIME, None)[0]
                 length = self.player.query_duration(gst.FORMAT_TIME, None)[0]
                 
@@ -85,24 +88,29 @@ class RTSP:
                 self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, pos)
                 time.sleep(0.2)
             elif ch==keypad.STOP:
+                display.writeLCD(lcd.STOP)
                 self.player.set_state(gst.STATE_NULL)
                 test=False
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
+                ##ADD VOL DISPLAY
                 self.volume += 10
                 log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 10
+                #ADD VOL DISPLAY
                 log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
+                display.writeLCD(lcd.PAUSE)
                 if self.player.get_state() == gst.STATE_PLAYING:
                     self.player.set_state(gst.STATE_PAUSED)
                     print "paused 'r' to resume"
                 else:
                     print "Stream not playing"
             elif ch==keypad.PLAY: #play
+                display.writeLCD(lcd.PLAY)
                 if self.player.get_state() == gst.STATE_PAUSED:
                     self.player.set_state(gst.STATE_PLAYING)
                     print "Playing"
