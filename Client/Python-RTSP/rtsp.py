@@ -59,9 +59,10 @@ class RTSP:
 
     def controlFunc(self, playbackControls, display):
         test = True
-        
+        print "CONTROL FUNC REACHED"
         #Wait till stream begins playing before allowing playback controls
         while self.player.get_state() != gst.STATE_PLAYING:
+            print "gst state is not playing"
             time.sleep(0.1)
         
         while test:          
@@ -118,6 +119,9 @@ class RTSP:
                     print "Not paused"
             else:
                 print "wrong key, hit any key: "
+            if (self.player.get_state == gst.STATE_NULL):
+                test = False
+                gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
         #EXIT STATUS
 
@@ -181,6 +185,6 @@ class RTSP:
 if __name__ == '__main__':
     
     clientRTSP = RTSP()    
-    thread = threading.Thread(target=clientRTSP.controlFunc())
+    thread = threading.Thread(target=clientRTSP.controlFunc)
     thread.start()
     
