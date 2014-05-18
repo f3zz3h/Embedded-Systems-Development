@@ -129,7 +129,7 @@ class RTSP:
                     self.player.set_state(gst.STATE_PLAYING)
                 
                 
-            if (self.player.get_state[1] == gst.STATE_NULL):
+            if (self.player.get_state()[1] == gst.STATE_NULL):
                 test = False
                 gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
