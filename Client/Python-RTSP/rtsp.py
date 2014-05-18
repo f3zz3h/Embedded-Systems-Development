@@ -41,7 +41,7 @@ class RTSP:
         self.serverURL = 'gold.riotnet.co.uk' #:8554/
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
-
+        self.test = False
         self.volume = 0
         self.player = gst.element_factory_make("playbin", "player")
         fakesink = gst.element_factory_make('fakesink', "my-fakesink")
@@ -59,16 +59,18 @@ class RTSP:
             dogs = message.parse_tag()
         
     def controlFunc(self, playbackControls, display):
-        test = True
+        
         print "CONTROL FUNC REACHED"
         time.sleep(2)
-        display.writeLCD(lcd.PLAY)
+        
+        if self.test:
+            display.writeLCD(lcd.PLAY)
         #Wait till stream begins playing before allowing playback controls
         #while (self.player.get_state() != gst.STATE_PLAYING):
         #    print "gst state is not playing"
         #    time.sleep(0.5)
         
-        while test:          
+        while self.test:          
             chArr = playbackControls.readWriteKeypad(1,False)
             ch = chArr[0]
             if ch==keypad.REWIND:
@@ -98,7 +100,6 @@ class RTSP:
                 self.player.set_state(gst.STATE_NULL)
                 test=False
                 time.sleep(0.2)
-                gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 self.volume += 100
                 if self.volume > VOLMAX:
@@ -130,9 +131,9 @@ class RTSP:
                 
             if (self.player.get_state()[1] == gst.STATE_NULL):
                 test = False
-                gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
             time.sleep(.05)
+        gtk.main_quit()
         #EXIT STATUS
 
 
@@ -190,9 +191,10 @@ class RTSP:
         #Set state to playing
         self.player.set_state(gst.STATE_PLAYING)
         
-        print self.player.get_state()
         if (self.player.get_state()[1] != gst.STATE_PLAYING):
             print "FALSE REACHED!"
+            self.test = False
             return False
+        self.test = True
         #start gtk thread
         gtk.main()
