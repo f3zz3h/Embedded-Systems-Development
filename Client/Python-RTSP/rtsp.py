@@ -61,6 +61,8 @@ class RTSP:
     def controlFunc(self, playbackControls, display):
         test = True
         print "CONTROL FUNC REACHED"
+        time.sleep(2)
+        display.writeLCD(lcd.PLAY)
         #Wait till stream begins playing before allowing playback controls
         #while (self.player.get_state() != gst.STATE_PLAYING):
         #    print "gst state is not playing"
@@ -164,7 +166,7 @@ class RTSP:
         self.tn.write("CSeq: 2\r\n")
         self.tn.write("Pin: " + pin + "\r\n\r\n")
         #Read response till the start of the url and ignore it
-        self.tn.read_until("URL: ",1)
+        print self.tn.read_until("URL: ",1)
         #Read rest of response store in retval as this is our directory
         retval = self.tn.read_until("\r\n", 1)
         #Return the url stripped of any whitespace and newline chars

@@ -10,6 +10,7 @@ __status__ = "Development"
 
 import threading
 import rtsp, lcd, keypad
+import time
 
 class client:
     def makePin(self, pinArr):
@@ -97,7 +98,6 @@ if __name__ == '__main__':
                 clientLCD.writeLCD(lcd.FETCH_DISPLAY_NUMBER)
                 
                 #Write LCD with status and start playing streamed audio
-                clientLCD.writeLCD(lcd.PLAY)
                 thread = threading.Thread(target=clientRTSP.controlFunc,args=(clientKeypad,clientLCD,))
                 thread.start()
                 clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
