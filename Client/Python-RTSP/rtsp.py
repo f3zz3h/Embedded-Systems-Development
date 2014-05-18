@@ -47,7 +47,7 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
 
-        log = Popen(['amixer', 'set', 'PCM', '1'],stdout=PIPE)
+        log = Popen(['alsamixer', 'set', 'PCM', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
@@ -96,12 +96,12 @@ class RTSP:
             elif ch==keypad.VOLUP: #vol up
                 display.writeLCD(lcd.VOLUP)
                 self.volume += 50
-                log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
+                log = Popen(['alsamixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 50
                 display.writeLCD(lcd.VOLDOWN)
-                log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
+                log = Popen(['alsamixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
