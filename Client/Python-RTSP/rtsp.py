@@ -48,7 +48,7 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
         #Create self.gtk thread
-        self.gtk.gdk.threads_init()
+        self.gtk = gtk.gdk.threads_init()
         log = Popen(['amixer', 'set', 'PCM', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
