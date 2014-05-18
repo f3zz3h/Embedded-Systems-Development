@@ -47,21 +47,14 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
 
-        log = Popen(['amixer', 'set', 'PCM', '0'],stdout=PIPE)
+        log = Popen(['amixer', 'set', 'PCM', '50%'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
             self.index += 1
         if message.type == gst.MESSAGE_TAG:
             dogs = message.parse_tag()
-
-    def volControl(self,volume):
-        if volume > -1:
-            return str(volume)+'+'
-        else:
-            volume = volume *-1
-            return str(volume)+'-'
-        
+       
     def controlFunc(self, playbackControls, display):
         test = True
         print "CONTROL FUNC REACHED"
@@ -101,17 +94,19 @@ class RTSP:
                 time.sleep(0.5)
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
-                self.volume += 100
-                display.writeLCD(lcd.VOLDOWN,str(self.volume))
+                self.volume += 10
+                if self.volume > 100:
+                    self.volume = 100
+                display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
                 volstr = self.volControl(self.volume)
-                log = Popen(['amixer', 'set', 'PCM', volstr],stdout=PIPE)
-                print '%2i'%self.volume
+                log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
             elif ch==keypad.VOLDOWN: # vol down
-                self.volume -= 100
-                display.writeLCD(lcd.VOLDOWN,str(self.volume))
+                self.volume -= 10
+                if self.volume < 0:
+                    self.volume = 0
+                display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
                 volstr = self.volControl(self.volume)
-                log = Popen(['amixer', 'set', 'PCM', volstr],stdout=PIPE)
-                print '%2i'%self.volume    
+                log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
                 if self.player.get_state()[1] == gst.STATE_PLAYING:
