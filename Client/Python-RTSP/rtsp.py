@@ -104,14 +104,14 @@ class RTSP:
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
-                if self.player.get_state() == gst.STATE_PLAYING:
+                if self.player.get_state()[1] == gst.STATE_PLAYING:
                     self.player.set_state(gst.STATE_PAUSED)
                     print "paused 'r' to resume"
                 else:
                     print "Stream not playing"
             elif ch==keypad.PLAY: #play
                 display.writeLCD(lcd.PLAY)
-                if self.player.get_state() == gst.STATE_PAUSED:
+                if self.player.get_state()[1] == gst.STATE_PAUSED:
                     self.player.set_state(gst.STATE_PLAYING)
                     print "Playing"
                 else:
