@@ -86,7 +86,6 @@ if __name__ == '__main__':
                 #Request audio location
                 fileDir = clientRTSP.request(pin)
                 
-                print fileDir
                 #Check a valid directory is received
                 try:
                     if (fileDir is None):
