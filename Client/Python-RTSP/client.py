@@ -51,15 +51,18 @@ if __name__ == '__main__':
                 num = clientKeypad.readWriteKeypad() 
        
                 #Display finished number for quarter of a second
-                for i in range(0,250):
+                for i in range(0,100):
                     clientKeypad.display(num)
                 
                 #Convert our array into a string value 
                 pin = clientMain.makePin(num)    
                 authorized = True
+                print pin
+        
                 #Attempt to authorize client device       
                 if (pin):
-                    authorized = clientRTSP.auth( pin)      
+                    authorized = clientRTSP.auth(pin)
+                print authorized      
             
             #Loop until Deauthorized
             while(authorized is True): 
@@ -71,7 +74,7 @@ if __name__ == '__main__':
                 fid = clientKeypad.readWriteKeypad()
        
                 #Display number on keypad for quarter of a second
-                for i in range(0,250):
+                for i in range(0,100):
                     clientKeypad.display(fid)
                 
                 #Make array a string    
@@ -90,7 +93,7 @@ if __name__ == '__main__':
                     continue
                 #Write LCD with status and start playing streamed audio
                 clientLCD.writeLCD(lcd.PLAY)
-                thread = threading.Thread(target=clientRTSP.controlFunc(),args=(clientKeypad,clientLCD))
+                thread = threading.Thread(target=clientRTSP.controlFunc(),args=(clientKeypad,clientLCD,))
                 thread.start()
                 clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
                 thread.join()
