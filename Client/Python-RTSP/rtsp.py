@@ -23,6 +23,9 @@ import lcd
 import time
 
 TENSECS = 10000000000
+VOLMAX = 400
+VOLMIN = -3000
+VOLMUTE = -10000
 gtk.gdk.threads_init()
 
 class RTSP:
@@ -54,7 +57,7 @@ class RTSP:
             self.index += 1
         if message.type == gst.MESSAGE_TAG:
             dogs = message.parse_tag()
-       
+        
     def controlFunc(self, playbackControls, display):
         test = True
         print "CONTROL FUNC REACHED"
@@ -95,16 +98,19 @@ class RTSP:
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 self.volume += 100
-                if self.volume > 400:
-                    self.volume = 400
-                display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
+                if self.volume > VOLMAX:
+                    self.volume = VOLMAX
+                display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 100
-                if self.volume < -8000:
-                    self.volume = -8000
-                display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
+                if self.volume < VOLMIN:
+                    self.volume = VOLMIN
+                display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
+            elif ch==keypad.MUTE: # vol down
+                display.writeLCD(lcd.MUTE)
+                log = Popen(['amixer', 'set', 'PCM','--', str(MUTE)],stdout=PIPE)
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
                 if self.player.get_state()[1] == gst.STATE_PLAYING:

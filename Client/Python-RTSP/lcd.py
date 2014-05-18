@@ -27,6 +27,7 @@ FAST_FORWARD = 11
 REWIND = 12
 VOLUP = 13
 VOLDOWN =14
+MUTE = 15
 
 class LCD:
     def __init__(self):
@@ -150,7 +151,8 @@ class LCD:
             FAST_FORWARD : "Fast Forward",
             REWIND : "Rewind",
             VOLUP : "Volume ++",
-            VOLDOWN : "Volume --"
+            VOLDOWN : "Volume --",
+            MUTE : "Muted Volume"
         }[choice]
         
     def writeLCD(self, choice, stringParam=None):
