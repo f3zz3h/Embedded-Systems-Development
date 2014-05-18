@@ -146,7 +146,7 @@ class PIO:
             #Strip white space and preceeding !        
             key = key.lstrip('!')
             key = key.rstrip()
-            
+
             #Check key isnt 0      
             if(int(key) != 0): 
                 keys[i] = int(key)
@@ -168,13 +168,13 @@ class PIO:
         """
         Return a keypad value from the keypad table
         """
-        try:
+        try: 
             keyPress = KEYPAD[int(math.log(value,2))][column]              
             return keyPress
         except:
             return None
         
-    def readWriteKeypad(self, numberOfValues=4):
+    def readWriteKeypad(self, numberOfValues=4, numOnly=True):
         """
         Read keypad one number at a time and display each value
         """
@@ -185,19 +185,22 @@ class PIO:
             #Clear any left overs from previous run!         
             self.ser_io.readlines()      
             gotNum = False 
-            while(True):
-                #check if previous loop got a key num
-                if (gotNum == True):
-                    break
+            while(gotNum == False):
                 #get col values and check each for a key press
                 keys = self.keypad_read()
                 for col in range (0,4):
                     #Make sure a button and only one button is pressed
                     if ((keys[col] > 0) and (keys[col] < 9)):
-                        if ((keys[col] % 2) == 0) :
-                            if (keys[col] != 6):
+                        if (( ((keys[col] % 2) == 0) or (keys[col] == 1) ) and (keys[col] != 6) ):
                                 output[sseg] = self.keypadSwitch(col, keys[col])
-                                gotNum = True
-                                break
+                                if (numOnly == True):
+                                    if ((output[sseg] >= 0) and (output[sseg] < 10)):
+                                        gotNum = True                
+                                        break  
+                                    else:
+                                        output[sseg] = '.'
+                                else:
+                                    gotNum = True
+                                    break
                     self.display(output)
         return output
