@@ -191,6 +191,7 @@ class RTSP:
         self.player.set_state(gst.STATE_PLAYING)
         
         print self.player.get_state()
-               
+        if (self.player.get_state()[1] != gst.STATE_PLAYING):
+            return False
         #start gtk thread
         gtk.main()
