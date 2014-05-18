@@ -102,13 +102,13 @@ class RTSP:
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 self.volume += 50
-                display.writeLCD(lcd.VOLDOWN,self.volume)
+                display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 volstr = self.volControl(self.volume)
                 log = Popen(['alsamixer', 'set', 'PCM', volstr],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 50
-                display.writeLCD(lcd.VOLDOWN,self.volume)
+                display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 volstr = self.volControl(self.volume)
                 log = Popen(['alsamixer', 'set', 'PCM', volstr],stdout=PIPE)
                 print '%2i'%self.volume    
