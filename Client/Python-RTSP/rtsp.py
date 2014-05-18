@@ -98,14 +98,12 @@ class RTSP:
                 if self.volume > 100:
                     self.volume = 100
                 display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
-                volstr = self.volControl(self.volume)
                 log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 10
                 if self.volume < 0:
                     self.volume = 0
                 display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
-                volstr = self.volControl(self.volume)
                 log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
