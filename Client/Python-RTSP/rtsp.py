@@ -59,18 +59,18 @@ class RTSP:
             dogs = message.parse_tag()
         
     def controlFunc(self, playbackControls, display):
-        
-        print "CONTROL FUNC REACHED"
         time.sleep(2)
         
         if self.test:
+            print "Playing"
             display.writeLCD(lcd.PLAY)
         #Wait till stream begins playing before allowing playback controls
         #while (self.player.get_state() != gst.STATE_PLAYING):
         #    print "gst state is not playing"
         #    time.sleep(0.5)
         
-        while self.test:          
+        while self.test:
+            print "Playback controls"  
             chArr = playbackControls.readWriteKeypad(1,False)
             ch = chArr[0]
             if ch==keypad.REWIND:
@@ -134,11 +134,7 @@ class RTSP:
                 test = False
                 time.sleep(0.2)
                 gtk.main_quit()
-                #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
             time.sleep(.05)
-        
-        #EXIT STATUS
-
 
     def auth(self, pin):
         """
@@ -169,7 +165,7 @@ class RTSP:
         self.tn.write("CSeq: 2\r\n")
         self.tn.write("Pin: " + pin + "\r\n\r\n")
         #Read response till the start of the url and ignore it
-        print self.tn.read_until("URL: ",1)
+        self.tn.read_until("URL: ",1)
         #Read rest of response store in retval as this is our directory
         retval = self.tn.read_until("\r\n", 1)
         #Return the url stripped of any whitespace and newline chars
@@ -188,14 +184,12 @@ class RTSP:
         #Create rtsp url for passing to gstreamer 
         rtspURL = 'rtsp://'+self.serverURL+':'+ self.serverPORT+'/'
         #create a grestreamer player and with correct pipeline
-        print rtspURL+fileLocation+fileName
         self.player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + 
                                   fileName + ' ! rtpmpadepay ! mad ! alsasink sync=false')
         #Set state to playing
         self.player.set_state(gst.STATE_PLAYING)
         
         if (self.player.get_state()[1] != gst.STATE_PLAYING):
-            print "FALSE REACHED!"
             self.test = False
             return False
         self.test = True
