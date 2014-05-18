@@ -17,13 +17,11 @@ class client:
         Take pinarray[4] and return str pin
         """
         #First number from array
-        keys = pinArr[0]
+        keys = str(pinArr[0])
         #Loop for rest of numbers in array
         for i in range(1,4):
             #Move number left making space for next number
-            keys = keys * 10
-            #now add new key value
-            keys += pinArr[i]
+            keys += str(pinArr[i])
         return str(keys)        
         
 if __name__ == '__main__':

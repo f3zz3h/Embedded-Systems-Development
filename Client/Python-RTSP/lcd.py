@@ -152,7 +152,7 @@ class LCD:
             REWIND : "Rewind",
             VOLUP : "Volume ++",
             VOLDOWN : "Volume --",
-            MUTE : "Muted Volume"
+            MUTE : "Playing: Muted  Press V-/V+"
         }[choice]
         
     def writeLCD(self, choice, stringParam=None):

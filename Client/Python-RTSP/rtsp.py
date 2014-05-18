@@ -116,9 +116,7 @@ class RTSP:
                 display.writeLCD(lcd.PLAY)
             elif ch==keypad.MUTE: # vol down
                 display.writeLCD(lcd.MUTE)
-                log = Popen(['amixer', 'set', 'PCM','--', str(VOLMUTE)],stdout=PIPE)
-                time.sleep(0.25)
-                display.writeLCD(lcd.PLAY)
+                log = Popen(['amixer', 'set', 'PCM','--', str(VOLMUTE)],stdout=PIPE)                
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
                 if self.player.get_state()[1] == gst.STATE_PLAYING:
