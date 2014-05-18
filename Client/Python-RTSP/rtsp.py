@@ -39,7 +39,7 @@ class RTSP:
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
 
-        self.volume = 50
+        self.volume = 0
         self.player = gst.element_factory_make("playbin", "player")
         fakesink = gst.element_factory_make('fakesink', "my-fakesink")
         self.player.set_property("video-sink", fakesink)
@@ -47,7 +47,7 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
 
-        log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
+        log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
@@ -94,17 +94,17 @@ class RTSP:
                 time.sleep(0.5)
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
-                self.volume += 10
-                if self.volume > 100:
-                    self.volume = 100
+                self.volume += 100
+                if self.volume > 400:
+                    self.volume = 400
                 display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
-                log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
+                log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
             elif ch==keypad.VOLDOWN: # vol down
-                self.volume -= 10
-                if self.volume < 0:
-                    self.volume = 0
+                self.volume -= -100
+                if self.volume < -8000:
+                    self.volume = -8000
                 display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
-                log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
+                log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
                 if self.player.get_state()[1] == gst.STATE_PLAYING:
