@@ -38,10 +38,8 @@ class RTSP:
         self.serverURL = 'gold.riotnet.co.uk' #:8554/
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
-        self.index = 0
+
         self.volume = 1
-        self.title = 'unknown'
-        self.artist = 'unknown'
         self.player = gst.element_factory_make("playbin", "player")
         fakesink = gst.element_factory_make('fakesink', "my-fakesink")
         self.player.set_property("video-sink", fakesink)
@@ -61,12 +59,13 @@ class RTSP:
         test = True
         print "CONTROL FUNC REACHED"
         #Wait till stream begins playing before allowing playback controls
-        #while self.player.get_state() != gst.STATE_PLAYING:
+        #while (self.player.get_state() != gst.STATE_PLAYING):
         #    print "gst state is not playing"
         #    time.sleep(0.5)
         
         while test:          
-            chArr = playbackControls.readWriteKeypad(1)
+            print self.player.get_state()
+            chArr = playbackControls.readWriteKeypad(1,False)
             ch = chArr[0]
             if ch==keypad.REWIND:
                 display.writeLCD(lcd.REWIND)
@@ -95,11 +94,11 @@ class RTSP:
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 display.writeLCD(lcd.VOLUP)
-                self.volume += 100
+                self.volume += 50
                 log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
-                self.volume -= 100
+                self.volume -= 50
                 display.writeLCD(lcd.VOLDOWN)
                 log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume    
@@ -123,6 +122,7 @@ class RTSP:
                 test = False
                 gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
+            time.sleep(.5)
         #EXIT STATUS
 
 
@@ -174,6 +174,7 @@ class RTSP:
         #Create rtsp url for passing to gstreamer 
         rtspURL = 'rtsp://'+self.serverURL+':'+ self.serverPORT+'/'
         #create a grestreamer player and with correct pipeline
+        print rtspURL+fileLocation+fileName
         self.player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + 
                                   fileName + ' ! rtpmpadepay ! mad ! alsasink sync=false')
         #Set state to playing
@@ -181,11 +182,4 @@ class RTSP:
         self.player.set_state(gst.STATE_PLAYING)
                
         #start gtk thread
-        gtk.main()  
-    
-if __name__ == '__main__':
-    
-    clientRTSP = RTSP()    
-    thread = threading.Thread(target=clientRTSP.controlFunc)
-    thread.start()
-    
+        gtk.main()

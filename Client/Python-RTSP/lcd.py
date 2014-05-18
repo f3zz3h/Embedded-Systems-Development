@@ -92,7 +92,7 @@ class LCD:
 	
 			self.cursorPos = self.cursorPos + 1 #increase cursor number
 	
-			time.sleep(0.15)#delay between printing letter
+			time.sleep(0.01)#delay between printing letter
 	
 	def scrollLeftOne(self):
 		"""

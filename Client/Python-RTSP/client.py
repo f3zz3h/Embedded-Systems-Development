@@ -51,7 +51,7 @@ if __name__ == '__main__':
                 num = clientKeypad.readWriteKeypad() 
        
                 #Display finished number for quarter of a second
-                for i in range(0,100):
+                for i in range(0,20):
                     clientKeypad.display(num)
                 
                 #Convert our array into a string value 
@@ -74,7 +74,7 @@ if __name__ == '__main__':
                 fid = clientKeypad.readWriteKeypad()
        
                 #Display number on keypad for quarter of a second
-                for i in range(0,100):
+                for i in range(0,20):
                     clientKeypad.display(fid)
                 
                 #Make array a string    
