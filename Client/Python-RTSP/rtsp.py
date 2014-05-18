@@ -99,7 +99,7 @@ class RTSP:
                 self.player.set_state(gst.STATE_NULL)
                 test=False
                 time.sleep(0.2)
-                #gtk.main_quit()
+                gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 self.volume += 100
                 if self.volume > VOLMAX:
@@ -132,7 +132,7 @@ class RTSP:
             if (self.player.get_state()[1] == gst.STATE_NULL):
                 test = False
                 time.sleep(0.2)
-                #gtk.main_quit()
+                gtk.main_quit()
             time.sleep(.05)
 
     def auth(self, pin):
