@@ -49,7 +49,7 @@ class RTSP:
         bus.connect('message',self.onmessage)
         #Create gtk thread
         gtk.gdk.threads_init()
-        log = Popen(['amixer', 'set', 'Master', '1'],stdout=PIPE)
+        log = Popen(['amixer', 'set', 'PCM', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
@@ -95,12 +95,12 @@ class RTSP:
             elif ch==keypad.VOLUP: #vol up
                 ##ADD VOL DISPLAY
                 self.volume += 10
-                log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
+                log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 10
                 #ADD VOL DISPLAY
-                log = Popen(['amixer', 'set', 'Master', '%i'%self.volume],stdout=PIPE)
+                log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
