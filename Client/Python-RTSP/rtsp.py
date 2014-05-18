@@ -55,6 +55,13 @@ class RTSP:
         if message.type == gst.MESSAGE_TAG:
             dogs = message.parse_tag()
 
+    def volControl(self,volume):
+        if volume > -1:
+            return str(volume)
+        else:
+            volume = volume *-1
+            return str(volume)+'-'
+        
     def controlFunc(self, playbackControls, display):
         test = True
         print "CONTROL FUNC REACHED"
@@ -94,14 +101,16 @@ class RTSP:
                 time.sleep(0.5)
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
-                display.writeLCD(lcd.VOLUP)
                 self.volume += 50
-                log = Popen(['alsamixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
+                display.writeLCD(lcd.VOLDOWN,self.volume)
+                volstr = self.volControl(self.volume)
+                log = Popen(['alsamixer', 'set', 'PCM', volstr],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 50
-                display.writeLCD(lcd.VOLDOWN)
-                log = Popen(['alsamixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
+                display.writeLCD(lcd.VOLDOWN,self.volume)
+                volstr = self.volControl(self.volume)
+                log = Popen(['alsamixer', 'set', 'PCM', volstr],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)

@@ -68,13 +68,13 @@ class LCD:
 			cursorPos = cursorPos + 1
 			time.sleep(0.2)
 	
-	def pageText(self, textString):
+	def pageText(self, textString, stringParam=None):
 		"""
 		function for shifting bottom line to top line 
 		and writing along the bottom line
 		"""
 		self.clearScreen()
-		for letter in textString:
+		for letter in textString+" "+stringParam:
 			self.lcdWrite(letter)
 	
 			#if printing to the second line, save the deails to the botLine variable for re-use
@@ -151,7 +151,7 @@ class LCD:
             VOLDOWN : "Volume --"
 		}[choice]
 		
-	def writeLCD(self, choice):
+	def writeLCD(self, choice, stringParam=None):
 		"""
 		A structured write LCD
 		"""
@@ -160,6 +160,6 @@ class LCD:
 		self.botLine = ""
 		self.startAtFirstLine()
 		textString = self.menuSwitch(choice)
-		self.pageText(textString)
+		self.pageText(textString, stringParam)
 		#self.topLineScroll(textString) #send string and serial setup to handling function
 		time.sleep(0.5)
