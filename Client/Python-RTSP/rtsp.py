@@ -91,6 +91,7 @@ class RTSP:
                 display.writeLCD(lcd.STOP)
                 self.player.set_state(gst.STATE_NULL)
                 test=False
+                time.sleep(0.5)
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 display.writeLCD(lcd.VOLUP)
