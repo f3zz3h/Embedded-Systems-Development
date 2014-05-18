@@ -90,11 +90,12 @@ if __name__ == '__main__':
                 #Check a valid directory is received
                 try:
                     if (fileDir is None):
-                        clientLCD.writeLCD(lcd.FETCH_DISPLAY_NUMBER)
                         continue
                 except:
                     clientLCD.writeLCD(lcd.INVALID_DISPLAY_NUMBER)
                     continue
+                
+                clientLCD.writeLCD(lcd.FETCH_DISPLAY_NUMBER)
                 
                 #Write LCD with status and start playing streamed audio
                 clientLCD.writeLCD(lcd.PLAY)
