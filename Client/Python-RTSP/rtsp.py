@@ -69,7 +69,6 @@ class RTSP:
         #    time.sleep(0.5)
         
         while test:          
-            print self.player.get_state()
             chArr = playbackControls.readWriteKeypad(1,False)
             ch = chArr[0]
             if ch==keypad.REWIND:
@@ -189,8 +188,9 @@ class RTSP:
         self.player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + 
                                   fileName + ' ! rtpmpadepay ! mad ! alsasink sync=false')
         #Set state to playing
-        print "State set to play" 
         self.player.set_state(gst.STATE_PLAYING)
+        
+        print self.player.get_state()
                
         #start gtk thread
         gtk.main()
