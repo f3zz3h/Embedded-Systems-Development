@@ -59,8 +59,9 @@ class RTSP:
             dogs = message.parse_tag()
         
     def controlFunc(self, playbackControls, display):
-        time.sleep(2)
-        
+        time.sleep(3)
+        print "Thread reached"
+        print self.test
         if self.test:
             print "Playing"
             display.writeLCD(lcd.PLAY)
