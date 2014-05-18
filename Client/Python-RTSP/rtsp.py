@@ -100,7 +100,7 @@ class RTSP:
                 display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
                 log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
             elif ch==keypad.VOLDOWN: # vol down
-                self.volume -= -100
+                self.volume -= 100
                 if self.volume < -8000:
                     self.volume = -8000
                 display.writeLCD(lcd.VOLDOWN,str(self.volume)+'%')
