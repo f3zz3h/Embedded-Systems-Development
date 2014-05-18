@@ -39,7 +39,7 @@ class RTSP:
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
 
-        self.volume = 1
+        self.volume = 50
         self.player = gst.element_factory_make("playbin", "player")
         fakesink = gst.element_factory_make('fakesink', "my-fakesink")
         self.player.set_property("video-sink", fakesink)
@@ -47,7 +47,7 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
 
-        log = Popen(['amixer', 'set', 'PCM', '50%'],stdout=PIPE)
+        log = Popen(['amixer', 'set', 'PCM', self.volume+'%'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
