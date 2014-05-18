@@ -100,5 +100,6 @@ if __name__ == '__main__':
                 #Write LCD with status and start playing streamed audio
                 thread = threading.Thread(target=clientRTSP.controlFunc,args=(clientKeypad,clientLCD,))
                 thread.start()
-                clientRTSP.playAudio(fileDir, str(fileid)+'.mp3')
+                if (clientRTSP.playAudio(fileDir, str(fileid)+'.mp3') == False):
+                    clientLCD.writeLCD(lcd.INVALID_DISPLAY_NUMBER)
                 thread.join()

@@ -192,6 +192,7 @@ class RTSP:
         
         print self.player.get_state()
         if (self.player.get_state()[1] != gst.STATE_PLAYING):
+            print "FALSE REACHED!"
             return False
         #start gtk thread
         gtk.main()
