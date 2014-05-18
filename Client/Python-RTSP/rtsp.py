@@ -47,7 +47,7 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
 
-        log = Popen(['amixer', 'set', 'PCM', self.volume+'%'],stdout=PIPE)
+        log = Popen(['amixer', 'set', 'PCM', str(self.volume)+'%'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
