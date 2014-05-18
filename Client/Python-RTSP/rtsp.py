@@ -78,7 +78,8 @@ class RTSP:
                 else:
                     pos = 0
                 self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, pos)
-                time.sleep(0.2)
+                time.sleep(0.25)
+                display.writeLCD(lcd.PLAY)
             elif ch==keypad.FFWD:
                 display.writeLCD(lcd.FAST_FORWARD)
                 pos = self.player.query_position(gst.FORMAT_TIME, None)[0]
@@ -89,12 +90,13 @@ class RTSP:
                 else:
                     pos += TENSECS
                 self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, pos)
-                time.sleep(0.2)
+                time.sleep(0.25)
+                display.writeLCD(lcd.PLAY)
             elif ch==keypad.STOP:
                 display.writeLCD(lcd.STOP)
                 self.player.set_state(gst.STATE_NULL)
                 test=False
-                time.sleep(0.5)
+                time.sleep(0.2)
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 self.volume += 100
@@ -102,32 +104,32 @@ class RTSP:
                     self.volume = VOLMAX
                 display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
+                time.sleep(0.25)
+                display.writeLCD(lcd.PLAY)
             elif ch==keypad.VOLDOWN: # vol down
                 self.volume -= 100
                 if self.volume < VOLMIN:
                     self.volume = VOLMIN
                 display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 log = Popen(['amixer', 'set', 'PCM','--', str(self.volume)],stdout=PIPE)
+                time.sleep(0.25)
+                display.writeLCD(lcd.PLAY)
             elif ch==keypad.MUTE: # vol down
                 display.writeLCD(lcd.MUTE)
                 log = Popen(['amixer', 'set', 'PCM','--', str(MUTE)],stdout=PIPE)
+                time.sleep(0.25)
+                display.writeLCD(lcd.PLAY)
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
                 if self.player.get_state()[1] == gst.STATE_PLAYING:
                     self.player.set_state(gst.STATE_PAUSED)
-                    print "paused 'r' to resume"
-                else:
-                    print "Stream not playing"
             elif ch==keypad.PLAY: #play
                 display.writeLCD(lcd.PLAY)
                 if self.player.get_state()[1] == gst.STATE_PAUSED:
                     self.player.set_state(gst.STATE_PLAYING)
-                    print "Playing"
-                else:
-                    print "Not paused"
-            else:
-                print "wrong key, hit any key: "
-            if (self.player.get_state == gst.STATE_NULL):
+                
+                
+            if (self.player.get_state[1] == gst.STATE_NULL):
                 test = False
                 gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...

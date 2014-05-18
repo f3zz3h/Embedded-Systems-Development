@@ -62,7 +62,11 @@ if __name__ == '__main__':
                 #Attempt to authorize client device       
                 if (pin):
                     authorized = clientRTSP.auth(pin)
-                print authorized      
+                    
+                if (authorized):
+                    clientLCD.writeLCD(lcd.ACCEPTED_PIN)
+                else:
+                    clientLCD.writeLCD(lcd.INVALID_PIN)
             
             #Loop until Deauthorized
             while(authorized is True): 
@@ -86,11 +90,12 @@ if __name__ == '__main__':
                 #Check a valid directory is received
                 try:
                     if (fileDir is None):
-                        "Print invalid track, try again"
+                        clientLCD.writeLCD(lcd.FETCH_DISPLAY_NUMBER)
                         continue
                 except:
-                    print "Unable to compare to none"
+                    clientLCD.writeLCD(lcd.INVALID_DISPLAY_NUMBER)
                     continue
+                
                 #Write LCD with status and start playing streamed audio
                 clientLCD.writeLCD(lcd.PLAY)
                 thread = threading.Thread(target=clientRTSP.controlFunc,args=(clientKeypad,clientLCD,))
