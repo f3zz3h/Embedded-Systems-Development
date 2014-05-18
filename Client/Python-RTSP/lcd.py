@@ -148,7 +148,7 @@ class LCD:
 			FAST_FORWARD : "Fast Forward",
 			REWIND : "Rewind",
             VOLUP : "Volume ++",
-            VOLDOWN : "Volume --""
+            VOLDOWN : "Volume --"
 		}[choice]
 		
 	def writeLCD(self, choice):
