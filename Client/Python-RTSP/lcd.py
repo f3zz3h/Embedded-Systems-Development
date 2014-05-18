@@ -25,6 +25,8 @@ PAUSE = 9
 STOP = 10
 FAST_FORWARD = 11
 REWIND = 12
+VOLUP = 13
+VOLDOWN =14
 
 class LCD:
 	def __init__(self):
@@ -145,6 +147,8 @@ class LCD:
 			STOP : "Stopped",
 			FAST_FORWARD : "Fast Forward",
 			REWIND : "Rewind"
+            VOLUP : "Volume ++"
+            VOLDOWN : "Volume --""
 		}[choice]
 		
 	def writeLCD(self, choice):

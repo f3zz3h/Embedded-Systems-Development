@@ -38,7 +38,7 @@ class RTSP:
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
         self.index = 0
-        self.volume = 1
+        self.volume = -1405
         self.title = 'unknown'
         self.artist = 'unknown'
         self.player = gst.element_factory_make("playbin", "player")
@@ -61,9 +61,9 @@ class RTSP:
         test = True
         print "CONTROL FUNC REACHED"
         #Wait till stream begins playing before allowing playback controls
-        while self.player.get_state() != gst.STATE_PLAYING:
-            print "gst state is not playing"
-            time.sleep(0.1)
+        #while self.player.get_state() != gst.STATE_PLAYING:
+        #    print "gst state is not playing"
+        #    time.sleep(0.5)
         
         while test:          
             chArr = playbackControls.readWriteKeypad(1)
@@ -94,13 +94,13 @@ class RTSP:
                 test=False
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
-                ##ADD VOL DISPLAY
-                self.volume += 10
+                display.writeLCD(lcd.VOLUP)
+                self.volume += 100
                 log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
-                self.volume -= 10
-                #ADD VOL DISPLAY
+                self.volume -= 100
+                display.writeLCD(lcd.VOLDOWN)
                 log = Popen(['amixer', 'set', 'PCM', '%i'%self.volume],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
@@ -176,7 +176,8 @@ class RTSP:
         #create a grestreamer player and with correct pipeline
         self.player = gst.parse_launch('rtspsrc location = '+ rtspURL + fileLocation + 
                                   fileName + ' ! rtpmpadepay ! mad ! alsasink sync=false')
-        #Set state to playing 
+        #Set state to playing
+        print "State set to play" 
         self.player.set_state(gst.STATE_PLAYING)
                
         #start gtk thread
