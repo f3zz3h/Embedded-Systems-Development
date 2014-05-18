@@ -23,6 +23,7 @@ import lcd
 import time
 
 TENSECS = 10000000000
+gtk.gdk.threads_init()
 
 class RTSP:
     """
@@ -38,7 +39,7 @@ class RTSP:
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
         self.index = 0
-        self.volume = -1405
+        self.volume = 1
         self.title = 'unknown'
         self.artist = 'unknown'
         self.player = gst.element_factory_make("playbin", "player")
@@ -47,8 +48,7 @@ class RTSP:
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
-        #Create self.gtk thread
-        self.gtk = gtk.gdk.threads_init()
+
         log = Popen(['amixer', 'set', 'PCM', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
@@ -92,7 +92,7 @@ class RTSP:
                 display.writeLCD(lcd.STOP)
                 self.player.set_state(gst.STATE_NULL)
                 test=False
-                self.gtk.main_quit()
+                gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 display.writeLCD(lcd.VOLUP)
                 self.volume += 100
@@ -121,7 +121,7 @@ class RTSP:
                 print "wrong key, hit any key: "
             if (self.player.get_state == gst.STATE_NULL):
                 test = False
-                self.gtk.main_quit()
+                gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
         #EXIT STATUS
 
@@ -180,8 +180,8 @@ class RTSP:
         print "State set to play" 
         self.player.set_state(gst.STATE_PLAYING)
                
-        #start self.gtk thread
-        self.gtk.main()  
+        #start gtk thread
+        gtk.main()  
     
 if __name__ == '__main__':
     
