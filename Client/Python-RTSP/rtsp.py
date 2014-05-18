@@ -60,7 +60,6 @@ class RTSP:
         
     def controlFunc(self, playbackControls, display):
         time.sleep(3)
-        print self.test
         if self.test:
             display.writeLCD(lcd.PLAY)
         #Wait till stream begins playing before allowing playback controls
@@ -68,8 +67,7 @@ class RTSP:
         #    print "gst state is not playing"
         #    time.sleep(0.5)
         
-        while self.test:
-            print "Playback controls"  
+        while self.test:  
             chArr = playbackControls.readWriteKeypad(1,False)
             ch = chArr[0]
             if ch==keypad.REWIND:

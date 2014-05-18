@@ -56,7 +56,6 @@ if __name__ == '__main__':
                 #Convert our array into a string value 
                 pin = clientMain.makePin(num)    
                 authorized = True
-                print pin
         
                 #Attempt to authorize client device       
                 if (pin):
