@@ -57,7 +57,7 @@ class RTSP:
 
     def volControl(self,volume):
         if volume > -1:
-            return str(volume)
+            return str(volume)+'+'
         else:
             volume = volume *-1
             return str(volume)+'-'
