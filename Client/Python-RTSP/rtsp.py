@@ -47,7 +47,7 @@ class RTSP:
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
 
-        log = Popen(['alsamixer', 'set', 'PCM', '1'],stdout=PIPE)
+        log = Popen(['amixer', 'set', 'PCM', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
         if message.type == gst.MESSAGE_EOS:
@@ -101,16 +101,16 @@ class RTSP:
                 time.sleep(0.5)
                 gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
-                self.volume += 50
+                self.volume += 100
                 display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 volstr = self.volControl(self.volume)
-                log = Popen(['alsamixer', 'set', 'PCM', volstr],stdout=PIPE)
+                log = Popen(['amixer', 'set', 'PCM', volstr],stdout=PIPE)
                 print '%2i'%self.volume
             elif ch==keypad.VOLDOWN: # vol down
-                self.volume -= 50
+                self.volume -= 100
                 display.writeLCD(lcd.VOLDOWN,str(self.volume))
                 volstr = self.volControl(self.volume)
-                log = Popen(['alsamixer', 'set', 'PCM', volstr],stdout=PIPE)
+                log = Popen(['amixer', 'set', 'PCM', volstr],stdout=PIPE)
                 print '%2i'%self.volume    
             elif ch==keypad.PAUSE: #pause
                 display.writeLCD(lcd.PAUSE)
@@ -132,7 +132,7 @@ class RTSP:
                 test = False
                 gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
-            time.sleep(.5)
+            time.sleep(.25)
         #EXIT STATUS
 
 
