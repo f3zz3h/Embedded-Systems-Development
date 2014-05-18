@@ -146,8 +146,8 @@ class LCD:
 			PAUSE : "Paused",
 			STOP : "Stopped",
 			FAST_FORWARD : "Fast Forward",
-			REWIND : "Rewind"
-            VOLUP : "Volume ++"
+			REWIND : "Rewind",
+            VOLUP : "Volume ++",
             VOLDOWN : "Volume --""
 		}[choice]
 		

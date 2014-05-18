@@ -47,8 +47,8 @@ class RTSP:
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.connect('message',self.onmessage)
-        #Create gtk thread
-        gtk.gdk.threads_init()
+        #Create self.gtk thread
+        self.gtk.gdk.threads_init()
         log = Popen(['amixer', 'set', 'PCM', '1'],stdout=PIPE)
 
     def onmessage(self,bus,message):
@@ -92,7 +92,7 @@ class RTSP:
                 display.writeLCD(lcd.STOP)
                 self.player.set_state(gst.STATE_NULL)
                 test=False
-                gtk.main_quit()
+                self.gtk.main_quit()
             elif ch==keypad.VOLUP: #vol up
                 display.writeLCD(lcd.VOLUP)
                 self.volume += 100
@@ -121,7 +121,7 @@ class RTSP:
                 print "wrong key, hit any key: "
             if (self.player.get_state == gst.STATE_NULL):
                 test = False
-                gtk.main_quit()
+                self.gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
         #EXIT STATUS
 
@@ -180,8 +180,8 @@ class RTSP:
         print "State set to play" 
         self.player.set_state(gst.STATE_PLAYING)
                
-        #start gtk thread
-        gtk.main()  
+        #start self.gtk thread
+        self.gtk.main()  
     
 if __name__ == '__main__':
     
