@@ -127,7 +127,7 @@ class RTSP:
                 test = False
                 gtk.main_quit()
                 #display.myGetch() PRESS ENTER OR ANY KEY TO GET TO NEXT...
-            time.sleep(.25)
+            time.sleep(.05)
         #EXIT STATUS
 
 
