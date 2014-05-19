@@ -28,6 +28,7 @@ REWIND = 12
 VOLUP = 13
 VOLDOWN =14
 MUTE = 15
+DEAUTH = 16
 
 class LCD:
     def __init__(self):
@@ -152,7 +153,8 @@ class LCD:
             REWIND : "Rewind",
             VOLUP : "Volume ++",
             VOLDOWN : "Volume --",
-            MUTE : "Playing: Muted  Press V-/V+"
+            MUTE : "Playing: Muted  Press V-/V+",
+            DEAUTH : "Deauthing user now"
         }[choice]
         
     def writeLCD(self, choice, stringParam=None):

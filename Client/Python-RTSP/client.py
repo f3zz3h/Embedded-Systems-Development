@@ -10,7 +10,6 @@ __status__ = "Development"
 
 import threading
 import rtsp, lcd, keypad
-import time
 
 class client:
     def makePin(self, pinArr):
@@ -39,11 +38,10 @@ if __name__ == '__main__':
     
     #Overall system loop. Will never exit unless system shutdown 
     while(True):
-            authorized = None
             pin = None
             
             #Loop until a Valid pin is received to use the device
-            while(authorized is not True):
+            while(clientRTSP.authorized is not True):
                 clientLCD.writeLCD(lcd.ENTER_PIN)
                 
                 #Aquire pin number from keypad
@@ -55,19 +53,18 @@ if __name__ == '__main__':
                 
                 #Convert our array into a string value 
                 pin = clientMain.makePin(num)    
-                authorized = True
         
                 #Attempt to authorize client device       
                 if (pin):
-                    authorized = clientRTSP.auth(pin)
+                    clientRTSP.auth(pin)
                     
-                if (authorized):
+                if (clientRTSP.authorized):
                     clientLCD.writeLCD(lcd.ACCEPTED_PIN)
                 else:
                     clientLCD.writeLCD(lcd.INVALID_PIN)
             
             #Loop until Deauthorized
-            while(authorized is True): 
+            while(clientRTSP.authorized is True): 
                 
                 #Out LCD message
                 clientLCD.writeLCD(lcd.ENTER_DISPLAY_NUMBER)

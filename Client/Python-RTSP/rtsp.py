@@ -38,6 +38,7 @@ class RTSP:
         """
         Setup telnet ports and connection
         """
+        self.authorized = False
         self.serverURL = 'gold.riotnet.co.uk' #:8554/
         self.serverPORT = '8554'
         self.tn = telnetlib.Telnet(self.serverURL,self.serverPORT)
@@ -125,7 +126,13 @@ class RTSP:
                 display.writeLCD(lcd.PLAY)
                 if self.player.get_state()[1] == gst.STATE_PAUSED:
                     self.player.set_state(gst.STATE_PLAYING)
-                
+            elif ch==keypad.DEAUTH:
+                display.writeLCD(lcd.DEAUTH)
+                self.deauth()
+                self.player.set_state(gst.STATE_NULL)
+                test=False
+                time.sleep(0.2)
+                gtk.main_quit()               
                 
             if (self.player.get_state()[1] == gst.STATE_NULL):
                 test = False
@@ -148,9 +155,14 @@ class RTSP:
         
         #Return true false based on retval
         if ('OK' in retval):
+            self.authorized = True
             return True
         else:
+            self.authorized = False
             return False
+
+    def deauth(self):
+        self.authorized = False
 
     def request(self, pin):   
         """
